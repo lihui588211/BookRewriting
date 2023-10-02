@@ -1,0 +1,31 @@
+\documentclass[lang=cn,newtx,10pt,scheme=chinese]{../elegantbook}
+
+% 书籍信息
+\title{\LaTeX 入门}
+\author{刘海洋}
+\institute{GitHub lihui588211/BookRewriting}
+\date{2023/10/2}
+\bioinfo{书籍模板}{ElegantBook}
+\extrainfo{重写书籍只为学习，请勿商用}
+\setcounter{tocdepth}{3}
+\logo{BookRewriting.png}
+\cover{IntroductionToLatex.jpg}
+
+\usepackage{array}
+\newcommand{\ccr}[1]{\makecell{{\color{#1}\rule{1cm}{1cm}}}}
+
+\definecolor{customcolor}{RGB}{32,178,170}
+\colorlet{coverlinecolor}{customcolor}
+\usepackage{cprotect}
+
+\addbibresource[location=local]{reference.bib}
+
+\begin{document}
+\maketitle
+\frontmatter
+
+\tableofcontents
+
+\mainmatter
+\include{./chapters/zero}
+\end{document}
