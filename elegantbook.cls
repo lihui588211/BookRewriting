@@ -1481,3 +1481,16 @@
 
 % restore the tt default family to lmodern tt family
 \renewcommand\ttdefault{lmtt}
+
+% 脚注
+\renewcommand*{\thefootnote}{[\arabic{footnote}]}
+
+% 文本框
+\tcbuselibrary{breakable} 
+\newcommand{\storybox}[2]{%
+  \begin{tcolorbox}[colback=blue!5!white,breakable,colframe=blue!60!white,title=\heiti \zihao{4}#1]
+    #2
+  \end{tcolorbox}
+}
+
+\RequirePackage{float}
