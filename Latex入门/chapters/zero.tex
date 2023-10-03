@@ -262,7 +262,91 @@ ImageMagick 是个很复杂的软件，包括 10多个不同的命令行工具�
 
     \qquad 专门的联机文档或在线文档是比较通用的帮助形式，如在 Windows 下，由 “开始”菜单栏进入联机帮助，以“命令行”、“cmd”等关键字搜索，很容易就能得到详尽的命令行帮助。有时帮助文档则以专门的文件储存，如 GhostScript 和 ImageMagick 在 Windows 下都提供网页形式的帮助文档，可以在“开始”菜单栏中找到。也有很多程序提供 CHM 、 PDF 格式的文档。
 
-    \qquad 另一种方式是直接在命令行下得到帮助，这通常是通过特殊的命令行参数得到的。通常， Windows 命令行的基本命令后加 \lstinline{\/?} 参数获得帮助。如输入 \lstinline{dir \/?}可以在屏幕上获取到 \lstinline{dir}命令的帮助信息。来自类 UNIX 系统的程序命令行选项以 \lstinline{-}开头，命令行帮助通常可以在命令后加上 \lstinline{--help}获得。如输入\lstinline{ convert --help } 将会在屏幕上得到关于 ImageMagick 的所有命令行选项的说明。
+    \qquad 另一种方式是直接在命令行下得到帮助，这通常是通过特殊的命令行参数得到的。通常， Windows 命令行的基本命令后加 \lstinline{\/?} 参数获得帮助。如输入 \lstinline{dir \/?}可以在屏幕上获取到 \lstinline{dir} 命令的帮助信息。来自类 UNIX 系统的程序命令行选项以 \lstinline{-}开头，命令行帮助通常可以在命令后加上 \lstinline{--help} 获得。如输入\lstinline{ convert --help } 将会在屏幕上得到关于 ImageMagick 的所有命令行选项的说明。
 
     \qquad 类 UNIX 系统在命令行下还有一个 \lstinline{man} 命令，可以用来调出文档。如用 \lstinline{ man ls } 将在命令行中直接调出 \lstinline{ ls }命令 （相当于 Windows 系统下的 \lstinline{dir} 命令）的详细帮助，类似的文档程序还有 \lstinline{info} 。在 Windows 中，用 \lstinline{ help } 可以达到类似的效果，不过效果与使用  \lstinline{\/?}  选项差不多。 \TeX 系统继承了 UNIX 中 \lstinline{man} 的用法，也提供了一个 \lstinline{texdoc} 程序，可以在命令行下 调出 \TeX 宏包、工具和字体等的文档。
+}
+
+\subsection{“ Happy \TeX ing 与 “特可爱排版”}
+
+在做完所有的准备工作后，我们一起来运行一个简单的例子，测试整个系统。
+
+首先，打开你的 \TeX 编辑器，如 TeXworks ，新建一个文件，输入下面的内容：
+\begin{lstlisting}[numbers=left]
+    \documentclass{article}
+
+    \begin{document}
+    This is my first document.
+
+    Happy \TeX ing !
+    \end{document}
+\end{lstlisting}
+
+新建一个测试用的目录，将刚刚输入的文件保存到这个目录里面，选择 PDFLaTeX 或者 XeLaTeX 命令，点击编辑器上对应的排版按钮。如果一切顺利，将在 PDF 预览窗口看到编译的结果，内容类似下面的样子：
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{第一段代码.png}
+\end{figure}
+
+这个文件中有一些以反斜杠\verb|\| 开头的语句，大多没有出现在最终的 PDF 文档中。虽然我们之前没有接触过这些语句，不过不难猜测其涵义：\verb|\documentclass{article}| 声明了文档的类型是一篇文章；\verb|\begin{document}| 和 \verb|\end{document}| 语句标识出正文的范围；至于正文中的 \TeX ，看结果就知道它表示“\TeX” 这个高低不平的符号。这是我们的第一个例子，看起来很简单。
+
+可是，如果你马上兴致勃勃地把里面的内容换成汉字，再点击按钮看结果时，就会发现汉字并没有出现在 PDF 中，只有英文字符出现，这是因为 \TeX 原本是面向西文写作的，默认并没有加载中文字体。
+
+通过更换文档类型，下面这个稍稍复杂的例子可以正确显示出中文：
+\begin{lstlisting}[numbers=left]
+    \documentclass[UTF8]{ctexart}
+
+    \begin{document}
+    \section{汉字}
+    特可爱排版
+    \section{数学}
+    \[
+        a^2 + b^2 = c^2
+    \]
+    \end{document}
+\end{lstlisting}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{第一段ctex代码.png}
+\end{figure}
+
+这段代码其实也不难看懂：文档类换成了 \verb|ctexart|, 即中文 \TeX 的文章（ article ）类型，这个文档类使得中文可以正确地显示；在\verb|ctexart| 前面的 \verb|UTF8| 是使用这个文档类的选项，表明了中文所使用的编码；两个 \verb|\section| 命令各自生成了一节的标题；唯一不大直观的是由 \verb|\[| 和 \verb|\]| 包裹起来的数学公式，不过 \LaTeX 数学公式的能力太出名了，你一定早就听说过它了。
+
+上面两个简单的例子给了我们一个 \LaTeX 的直观印象，而且正确运行它们也许能够增强你学习 \LaTeX 的信心。粗略地看，\LaTeX 是一种标记式排版语言，有相关背景的人大概会觉得\LaTeX 的代码与 HTML 代码有很多相似之处，整个文档通过一些标记（命令）分成结构化的部分。\LaTeX 的命令以反斜线 \verb|\| 开头，命令一般以英文单词命名，有的可以带参数。通过一个程序的处理，我们称为 \textbf{编译} 过程， \LaTeX 源代码就能生成对应的输出结果，通常就是一个 PDF 文档。
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{latex写作流程.pdf}
+    \caption{\LaTeX 文档的写作流程}
+    \label{fig:5}
+\end{figure}
+
+\LaTeX 的写作流程见图\ref{fig:5}。通常这个流程都是自动化完成的，编写 \TeX 源文件通常是在专门的 \TeX 编辑器中进行，例如 TeXworks ，而后按下一个按钮，源文件就会被送给 \TeX 的编译程序进行处理，输出 PDF 文件，此时编辑器调用 PDF 阅读器查看结果。如果出了问题，需要根据输出的结果或程序的错误信息修改源文件或编译方式。
+
+\storybox{编译程序}
+{
+    \qquad TeXworks 等编辑器里面给出了许多编译程序的按钮，往往让人有种应接不暇的感觉，如果你留心来自各种书籍、文档和网络的资料，上面介绍的编译方法五花八门。如果是使用命令行编译，则输入起来更觉头疼，那么，这些不同的编译程序做了什么？该如何选择和使用呢？
+
+    \qquad 高纳德设计的 \TeX 原本只是一个相对简单的程序，命令 \lstinline{tex} 可以调用最基本的 \TeX 程序。它使用高纳德定义的一个相对简单的格式 Plain \TeX 进行排版。 \lstinline{tex} 读入 \TeX 源文件，输出一种 “与设备无关”（  DeVive Independent ）的格式，即 DVI 文件， DVI 文件曾经是 \TeX 的标准输出格式，但功能比较受限，不能嵌入字体和图形等，但在 PostScript 和 PDF 流行之后， DVI 格式就主要成为一种到 PS 或 PDF 的中间格式了。
+
+    \qquad 程序 Dvips 将 DVI 文件转换为 PostScript 文件，可以直接拿到支持 PostScript 的 ps2pdf 或 Adobe Acrobat 提供的 Distiller 等程序再从 PostScript 转换到 PDF 文件。 PDF 流行之后，又有了能直接把 DVI 文件直接转换成 PDF 的 dvipdf 程序，后来又出现了更为先进的 dvipdfm 和 dvipdfmx ，可以支持更丰富的 PDF 功能和东亚字体等，现在新的发行版中主要还在使用的是 dvipdfmx （常常写作 DVIPDFMx ）。这类把 DVI 文件转换为其他实用格式的程序常被称为 \TeX 输出的驱动 （ driver ）。
+
+    \qquad 除了最初的 \TeX 程序，后来有很多人对\TeX 进行了拓展。先是有了 $\varepsilon-$ \TeX ，后来在 $\varepsilon-$ \TeX 的基础上，$\text{H}\grave{a}\text{n Th}\hat{e} \text{ Th}\grave{a}\text{nh} $ 设计了能够直接输出 PDF 格式的 PDF\TeX 。不过  PDF\TeX 程序也保留了输出 DVI 格式的能力，因而现在很多输出 DVI 格式的命令内部也是使用的 PDF\TeX 程序 。PDF\TeX 的后续是 Lua\TeX，这是一种把脚本语言 Lua 和 \TeX 结合起来的程序。$\varepsilon-$ \TeX 的另一发展则是 XeTeX ，它将中间层 DVI 格式扩充为更强大的 xdv 格式，一般会直接调用 dvipdfmx 的后继 xdvipdfmx ， 直接输出 PDF 格式。Lua\TeX 和 XeTeX 都将原来 \TeX 支持的 ASCII 编码改为 UTF-8 编码，并且可以更方便地使用各种字体。 \TeX 程序连同这些扩展被称为不同的 \TeX 引擎 （ engine ）。
+
+    \qquad 不同的引擎都可以编译 Plain \TeX 、 \LaTeX 或是 Con\TeX 等不同格式的文档，不同的组合就使用不同的命令，如下表所示，我们主要关注 PDFTeX 和 XeTeX 引擎使用 \LaTeX 格式的命令。
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.5\textwidth]{tex引擎.jpg}
+    \end{figure}
+
+    \qquad 使用 \LaTeX 格式的排版得到 PDF 文件的方式也有好几种。其中使用 \lstinline{latex + dvips} 的方式最为古老，不便于中文文档的排版。用 \lstinline{latex} 和 \lstinline{pdflatex} 命令排版在处理中文时都使用 CJK 宏包的机制，而 \lstinline{xelatex} 则使用新的 xeCJK 宏包的机制。功能上 \lstinline{xelatex} 最为方便，尤其是在处理中文时；而用 \lstinline{pdflatex} 编译，一些宏包的兼容性会更好一些。不过本书的大部分内容并不限于任何一种模式，只是在处理中文时，将主要讨论 \lstinline{xelatex}。
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.5\textwidth]{编译成pdf.pdf }
+    \end{figure}
 }
