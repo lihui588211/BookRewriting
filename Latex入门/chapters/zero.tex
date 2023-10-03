@@ -165,3 +165,104 @@ PostScript 阅读器 GSview 和 PS\_View 也都可以当做 PDF 阅读器来使�
     \qquad 现代的 \TeX 输出引擎几乎都以 PDF 为输出格式。同时 PDF 格式 也可以像 EPS 格式一样作为图形格式被 \TeX 和其他软件使用。现在能够输出 PDF 图形的软件和支持嵌入 PDF 图形的 \TeX 引擎比 EPS 格式的还要多些， PDF 也成为现在 \TeX 系统中最重要的图形格式。
 
 }
+
+\subsubsection{命令行工具}
+
+\textbf{一、命令行}
+
+尽管大多数常用编译操作可以在编辑器中完成，\texlive 还给出了图形界面的配置工具，但 \TeX 发行版的主体仍然是命令行下的程序。不了解命令行，就难以了解 \TeX 的处理流程，也不能很好地使用诸如 Makeindex 这样的基本 \LaTeX 工具。因此，有必要对命令行和一些命令行工具的使用做一个了解。
+
+命令行是以文字形式与计算机交互的方式，与图形方式相对。在 Windows 系统中，命令行通常由命令行解释程序 \verb|cmd.exe| 处理；在 Linux 及其他类 UNIX 操作系统中，命令行解释程序通常称为 Shell ，最常见的 Shell 是 Bash 。 在命令行下可以执行一些基本的文件操作，也可以运行其他程序，批处理脚本也是由命令行解释程序执行的。 Linux 中 shell 的使用一般远比在 Windows 中频繁，因此这里仍以 Windows 为例。
+
+Windows 中默认的命令行解释程序 \verb|cmd.exe| 可以在“开始”菜单搜索框中输入 \verb|cmd| 查找到 “命令提示符” 进入。如果使用频繁，可以在桌面或任务栏中创建快捷方式，或设定快捷键随时使用。
+
+使用 \TeX 经常需要在特定文件所在的目录进行命令行操作，这时只需要在资源管理器的地址栏内输入 \verb|cmd| 回车。
+
+打开命令行窗口之后，会显示命令提示符，默认的命令提示符由当前盘符、目录和一个大于号 \verb|>| 组成，如
+\begin{lstlisting}
+    C:\>
+\end{lstlisting}
+表示当前目录是 C 盘的根目录 \verb|>| 。后面的光标等待输入命令， Windows 命令行命令和文件名不区分大小写，输入一行命令按下回车键即开始执行。
+
+使用最频繁的命令是文件列表命令 \verb|dir| （ directory 的缩写 ），直接输入 \verb|dir| 后按下回车就会显示当前目录下所有文件的详细列表。 \verb|dir| 命令后可以指定要列出的盘符、目录和文件名，如
+\begin{lstlisting}
+    dir C:\WINDOWS
+\end{lstlisting}
+将列出 C 盘 WINDOWS 目录下的所有文件。
+
+目录和文件名可以使用 \verb|?| 和 \verb|*| 作为通配符。 \verb|?| 可以替代任意一个字符， \verb|*| 可以代替任意多个字符。例如，命令
+\begin{lstlisting}
+    dir book*.tex
+\end{lstlisting}
+将列出所有以 \verb|book| 开头，后缀为 \verb|.tex| 的文件。目录和文件名可以用 \verb|Tab| 键自动补全，如输入 \verb|book| 后，连按 \verb|Tab| 将交替地补全当前目录所有以 \verb|book| 开头的文件。有两个特殊的目录名 \verb|.| 和 \verb|..| 分别用来表示当前目录（可省略不写）和当前目录的上一级目录。
+
+\verb|cd| 命令 （或 \verb|chdir| ， change directory 的缩写）用来改变当前所在的目录。如
+\begin{lstlisting}
+    cd pictures
+\end{lstlisting}
+将进入当前目录下的 \verb|pictures| 目录（如果有的话），而从 C 盘用命令
+\begin{lstlisting}
+    cd \WINDOWS\Fonts
+\end{lstlisting}
+则进入 Windows 的字体目录。注意更换盘符不能用 \verb|cd| 命令，而要单独使用盘符后加冒号 \verb|:| 进入，如输入
+\begin{lstlisting}
+    D:
+    cd \test
+\end{lstlisting}
+将进入 D 盘根目录下的 \verb|test| 目录。
+
+把多个命令行写到一个文件中，保存为后缀为 \verb|.bat| 或 \verb|.cmd| 的文件，就得到一个批处理文件（又称为批处理脚本）。在命令行下可以像运行其他程序一样调用批处理文件，也可以在图形界面鼠标点击批处理文件执行。批处理可以一次完成多项任务，如完成多道工序的 \TeX 源文件编译工作。批处理还提供命令行参数、变量定义、文件判断等简单的编程功能，详细内容可参见微软的联机帮助。
+
+\textbf{GhostScript}
+
+GhostScript 是一种 PostScript 的解释器，它的主体也是命令行工具。 Windows 版本的 \texlive 附带安装了一份简化版本的 GhostScript ， 程序名为 \verb|rungs| 。 一般还是最好单独下载安装完全版本的 GhostScript\footnote{\href{https://www.ghostscript.com/releases/gsdnld.html}{https://www.ghostscript.com/releases/gsdnld.html}} ， 因为一些 \LaTeX 输出引擎有时仍会调用它。
+
+可以用 GhostScript 查看 PostScript 或 PDF 格式的文件， PostScript 文件查看器 GSview 和 PS\_View 都是调用 GhostScript 工作的。 GhostScript 更常用的功能是进行文档格式转换，做 PS 、 PDF 格式的相互转换，或把它们转换为点阵图片格式，如 PDF 输出引擎 DVIPDFMx 就会在处理 ERS 图片时自动调用 GhostScript 。
+
+GhostScript 为一些常用的转换提供简单的命令，最常见的是从 \verb|.ps| 到 \verb|.pdf| 文件的转换，可以用 \verb|ps2pdf| 命令完成，如
+\begin{lstlisting}
+    ps2pdf foo.ps
+\end{lstlisting}
+命令会将 \verb|foo.ps| 文件转换为 \verb|foo.pdf| 。类似的命令还包括 \verb|pdf2ps| 和 \verb|ps2eps|等。
+
+所有显示和转换的工作都可以通过 GhostScript 的主程序完成。 GhostScript 的主程序是一个命令行程序，在 Windows 下名叫 \verb|gswin64.exe|，在 Linux 等系统下通常叫做 \verb|gs| ， 也可以使用 \texlive 的 \verb|rungs| ，这里统一用 \verb|GS| 表示。一个调用 \verb|GS| 的命令通常带有许多命令行参数，以完成各种复杂的操作，例如，
+\begin{lstlisting}
+    GS -dBATCH foo.ps
+\end{lstlisting}
+将使 GhostScript 在屏幕上显示 \verb|foo.eps| 的内容并退出；下面的命令（第一行末的\verb||| 并不存在，只表示延续到下一行）：
+\begin{lstlisting}
+    GS -q -sDEVICE=png256 -dEPSCrop -r128 -dGraphicsAlphaBits=4 \
+        -dTextAlphaBits=4 -o bar.png foo.eps
+\end{lstlisting}
+则把 \verb|foo.eps| 转换为 256色 PNG 图像 \verb|bar.png| ，使用128dpi 的分辨率，裁剪到适当大小，并对文字和图像做边缘抗锯齿处理。关于 GhostScript 的详细命令行参数可以参考 GhostScript 的联机文档。
+
+\textbf{三、 ImageMagick}
+
+ImageMagick 是一款优秀的基于命令行的位图处理软件，可以在超过100种不同的图像格式之间转换，或对图像进行各种变换和处理。熟悉平面设计的人可以把它看做是 Adobe Photoshop 这类软件的一些图像滤镜的命令行版本。 ImageMagick 并不直接与 \TeX 相关，但 \TeX 用户经常用它来做一些有关图形转换的工作，个别与 \TeX 相关的软件（如 Asymptote ）也会调用 ImageMagick 。
+
+ImageMagick 是自由软件，可以在 \href{https://imagemagick.org/script/download.php}{https://imagemagick.org/script/download.php}进行下载安装。
+
+在 Windows 下安装 ImageMagick 可以在开始菜单栏中找到它的帮助文档和 ImageMagick 中唯一的图形界面程序 IMDisplay 。 但注意 IMDisplay 只是一个图片查看器，并不具备任何 ImageMagick 的图像处理功能，我们主要还是在命令行下使用 ImageMagick 。
+
+ImageMagick 是个很复杂的软件，包括 10多个不同的命令行工具，具有 200多种不同的命令行参数。这里只介绍 ImageMagick 最基本的图像类型转换功能，也是最常用的功能，更详细的功能可以参见 ImageMagick 的联机帮助文档。
+
+命令 \verb| convert | 用于图像的转换，即把一幅图像转换为另一幅图像，尽管功能复杂，但基本的使用方法是十分简明的，如：
+\begin{lstlisting}
+    convert foo.bmp bar.png
+\end{lstlisting}
+是将 BMP 格式的图像  \verb| foo.bmp | 转换为 PNG 格式的图像 \verb| bar.png | ，类似地，
+\begin{lstlisting}
+    convert foo.eps bar.jpg
+\end{lstlisting}
+则是把 EPS 格式的图片 \verb| foo.eps | 转换为 JPG 格式的图片 \verb| bar.jpg |  。不过 ImageMagick 在处理涉及 PostScript 和 PDF 格式的图片时，内部实际还是调用 GhostScript 来完成的，这时可以把它看做是 GhostScript 命令的一种方便的变形。
+
+\storybox{获取命令行帮助}
+{
+    \qquad 熟练的用户使用命令行完成一些工作比使用图形界面的软件更高效快捷。不过对于刚接触命令行不久的人来说，命令行的最大问题就是记不住命令的用法，因此应该了解如何在命令行下获取帮助信息。
+
+    \qquad 专门的联机文档或在线文档是比较通用的帮助形式，如在 Windows 下，由 “开始”菜单栏进入联机帮助，以“命令行”、“cmd”等关键字搜索，很容易就能得到详尽的命令行帮助。有时帮助文档则以专门的文件储存，如 GhostScript 和 ImageMagick 在 Windows 下都提供网页形式的帮助文档，可以在“开始”菜单栏中找到。也有很多程序提供 CHM 、 PDF 格式的文档。
+
+    \qquad 另一种方式是直接在命令行下得到帮助，这通常是通过特殊的命令行参数得到的。通常， Windows 命令行的基本命令后加 \lstinline{\/?} 参数获得帮助。如输入 \lstinline{dir \/?}可以在屏幕上获取到 \lstinline{dir}命令的帮助信息。来自类 UNIX 系统的程序命令行选项以 \lstinline{-}开头，命令行帮助通常可以在命令后加上 \lstinline{--help}获得。如输入\lstinline{ convert --help } 将会在屏幕上得到关于 ImageMagick 的所有命令行选项的说明。
+
+    \qquad 类 UNIX 系统在命令行下还有一个 \lstinline{man} 命令，可以用来调出文档。如用 \lstinline{ man ls } 将在命令行中直接调出 \lstinline{ ls }命令 （相当于 Windows 系统下的 \lstinline{dir} 命令）的详细帮助，类似的文档程序还有 \lstinline{info} 。在 Windows 中，用 \lstinline{ help } 可以达到类似的效果，不过效果与使用  \lstinline{\/?}  选项差不多。 \TeX 系统继承了 UNIX 中 \lstinline{man} 的用法，也提供了一个 \lstinline{texdoc} 程序，可以在命令行下 调出 \TeX 宏包、工具和字体等的文档。
+}
