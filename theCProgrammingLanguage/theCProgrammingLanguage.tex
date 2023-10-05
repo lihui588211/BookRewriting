@@ -1,0 +1,33 @@
+\documentclass[lang=en,newtx,10pt,color=green]{../elegantbook}
+
+% 书籍信息
+\title{The C Programming Language}
+\author{Brian W. Kernighan \& Dennis Ritchie}
+\institute{GitHub lihui588211/BookRewriting}
+\date{2023/10/4}
+\bioinfo{LaTeX Template}{ElegantBook}
+\extrainfo{Rewriting the book is for learning purposes only, please do not use it for commercial purposes.}
+\setcounter{tocdepth}{3}
+\logo{BookRewriting.png}
+\cover{封面.jpg}
+
+\usepackage{array}
+\newcommand{\ccr}[1]{\makecell{{\color{#1}\rule{1cm}{1cm}}}}
+\newcommand{\texlive}{\TeX \ Live}
+
+\definecolor{customcolor}{RGB}{32,178,170}
+\colorlet{coverlinecolor}{customcolor}
+\usepackage{cprotect}
+
+\addbibresource[location=local]{reference.bib}
+
+\usepackage{xeCJK}
+\begin{document}
+\maketitle
+\frontmatter
+
+\tableofcontents
+
+\mainmatter
+\include{./chapters/one}
+\end{document}
