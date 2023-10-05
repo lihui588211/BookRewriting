@@ -206,3 +206,153 @@
 
 使用 XeLaTeX 引擎， OpenType 字体时，可以方便地使用 fontspec 宏包的 \verb|Ligature| 字体选项选择连字的有无和程度。
 
+在键盘上，可以直接使用的符号有 16 种：
+
+, \quad . \quad ; \quad : \quad ! \quad ? \quad ` \quad ' \quad ( \quad ) \quad [ \quad ] \quad - \quad /  \quad * \quad @
+
+标点\ ,\ .\ ;\ :\ !\ ?\ 用来分隔句子或部分句子，在每个标点之后应该加上空格，以保证正确的距离和换行。在特殊情况下，这些标点有空格还有一些更微妙的关系。
+
+引号在 \LaTeX 中用 \verb|`|和 \verb|'| 两个符号表示。单引号就用一遍，双引号用两遍。如果遇到单引号和双引号连续出现的情形，则在中间用 \verb|\,|命令分开：
+
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{lstlisting}
+    ``\,`A' or `B?' \,'' he asked.
+    \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \vspace{0.1cm}
+    \hspace{0.5cm}
+    ``\,`A' or `B?' \,'' he asked.
+\end{minipage}
+这里\verb|\,| 命令产生很小的间距，注意\LaTeX 并不会忽略以符号命名的宏前后的空格，所以在它前后都不要加多余的空格。符号\verb|'| 同时也是表示所有格和省字的撇号 （ apostrophe ，如 ``It's Knuth's book'' ）。
+
+引号和括号通常要在前后加空格分割单词。逗号、句号等标点何时放在引号和括号内，何时放在引号和括号外，可参见英文写作的格式指导。
+
+除了在数学模式中表示减号，符号 - 在\LaTeX 正文中也有多种用途：单独使用时它是连字符（ hyphen ）；两个连用（ -- ），是 en dash ，用来表示数字范围；三个连用 （ --- ），是 em dash ，即破折号：
+
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{lstlisting}
+        
+    An inter-word dash or , hyphen, as in X-ray.
+
+    A medium dash for number ranges, like 1--2.
+
+    A punctuation dash --- like this.
+    \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \vspace{0.1cm}
+    \hspace{0.5cm}
+
+    An inter-word dash or , hyphen, as in X-ray.
+
+    A medium dash for number ranges, like 1--2.
+
+    A punctuation dash --- like this.
+\end{minipage}
+
+不过，按中文写作习惯，表示数字范围也常使用符号 $\sim$ (\verb|$\sim$|) ，有时也用汉字的全角破折号或半个汉字破折号。
+
+西文的省略号（ ellipsis ）使用\verb|\ldots| 或 \verb|\dots| 命令产生，相比直接输入三个句号，它所拉开的距离要合理些：
+
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{lstlisting}
+    Good: One, two, three \ldots
+
+    Bad: One, two, three...
+    \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \vspace{0.1cm}
+    \hspace{0.5cm}
+
+    Good: One, two, three \ldots
+
+    Bad: One, two, three...
+\end{minipage}
+
+\verb|\ldots| 和 \verb|\dots| 命令在正文中是等价的，它们会在每个点后面增加一个小的间距，因而直接在 \verb|\ldots| 后面再加逗号、句号、叹号等标号，也能得到正确的间距。西文省略号的用法在不同的格式手册中往往有详细规定，通常在句中使用时，前后都要加空格，而在句末使用则应该使用 4 个点。这是因为 \verb|\ldots| 的后面也有间距，所以使用\verb|H\ldots.| 能得到正确的 “ H\ldots. ”，但直接使用 \verb|H \ldots\ H| 却将得到错误的间距 “ H \ldots\ H ”（后一个间距比前面大 ）。解决的办法是把省略号放进数学模式：
+
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{lstlisting}
+    She $\ldots$ she got it.
+
+    I've no idea\ldots.
+    \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \vspace{0.1cm}
+    \hspace{0.5cm}
+
+    She $\ldots$ she got it.
+
+    I've no idea\ldots.
+\end{minipage}
+
+标准键盘上不能直接录入的标点符号有10个，它们占据了主键盘上面一大排的一大半：
+
+\~{} \quad \# \quad \$ \quad \% \quad \^{} \quad \& \quad \{ \quad \} \quad \_ \quad \textbackslash 
+
+他们都有特殊作用，其中的许多我们已经熟知：数学模式符号 \$ 、注释符号 \% 、上标 \^{} 、分组 \{\} 、宏命令 \textbackslash，只有个别例外：
+
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{lstlisting}[language = java]
+    \~{} \quad \# \quad \$ \quad \% 
+    \quad \^{} \quad \& \quad \{ \quad \} 
+    \quad \_ \quad \textbackslash 
+    \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \vspace{0.1cm}
+    \hspace{0.5cm}
+
+    \~{} \quad \# \quad \$ \quad \% \quad \^{} \quad \& \quad \{ \quad \} \quad \_ \quad \textbackslash 
+\end{minipage}
+
+可以用没有字母的重音\verb|\~{}| 和 \verb|\^{}| 输出 \~{} 和 \^{} ，但这两个符号一般不直接在普通正文中出现，而出现其他地方：可以是重音符号；可以出现在程序代码中；此外还有一个数学符号 $\sim$。
+
+符号
+
+| \quad < \quad > \quad + \quad =
+
+虽然可以接受，但它们一般用在数学公式中，其文本形式的效果不好或有错，一般不直接使用它们。键盘上的双引号 \verb|"| 一般也极少使用在正文中，而常被另外定义移作他用。
+
+中文使用的标点与西文标点不同 中文写作使用全角标点：
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ccccccccccc}
+        句号 & 。或\ . & &
+        逗号 & ， & &
+        顿号 & 、& &
+        分号 & ； \\
+        冒号 & ： &&
+        问号 & ？ &&
+        感叹号 & ! &&
+        间隔号 & · \\ 
+        单引号 & ‘ \quad ’ &&
+        双引号 & “ \quad ” &&
+        单书名号 & <\quad  > &&
+        双书名号 & 《\quad 》 \\
+        括号 & () [] ﹝﹞ &&
+        省略号 & …… && 
+        破折号 & —— 
+    \end{tabular}
+\end{table}
+
+在计算机中使用中文输入法录入全角标点通常是很直接的。特别需要说明的是破折号（ —— ）和 省略号 （……），它们都占两个中文字符，在大部分输入法中可以使用 \verb|Shift+-| 和 \verb|Shift+6| 得到。
+
+在科技文章中，为与数字、字母区分，中文的句号一般也用一个圆点表示，此时应该使用全角的“.” 而非混用西文句点。这个标点在大部分中文输入法下可能不易输入，可以先统一使用句号“。”，最后统一替换。
+
+也有一种科技文章的写作风格，是中文与西文统一使用西文的标点，只有顿号、破折号和省略号仍用中文标点。但这样可能造成标点大小、位置与汉字对不准，以及字体风格的不统一，应该小心使用。
+
+\LaTeX 并不会自动处理好汉字标点的宽度和间距，甚至不能保证标点的禁则（如句号不允许出现在一行的开始）。使用 XeTeX 作为排版引擎时，中文标点一般是由 xeCJK 宏包控制的。 xeCJK 提供了多种标点格式，默认是全角式，即所有标点占一个汉字宽度，只有在行末或个别标点之间进行标点挤压。还支持其他一些标点格式，可以使用\verb|\punctstyle| 命令修改：
+
+\begin{center}
+    \includegraphics[width=0.6\textwidth]{标点形式.png} \centering
+\end{center}
