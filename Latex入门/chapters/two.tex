@@ -1,0 +1,208 @@
+\chapter{组织你的文本}
+
+从这一章开始，我们将要深入 \LaTeX 编辑的各个方面，首先来看\LaTeX 文档中文本的编辑和组织，在探究中，我们会从一个一个空格、一个标点开始分析，但深入细节的同时也不要忘记整个文档的结构和组织性，要见树木更见森林。
+
+\section{文字与符号}
+
+\subsection{字斟句酌}
+
+简单正文的输入没有太多特别之处，\TeX 传统上使用扩展 ASCII 字符集，较新的\TeX 引擎使用 UTF-8 编码。在接受的字符集之内，除了个别特殊符号，大部分字符可以直接录入。
+
+\subsubsection{从字母表到单词}
+
+在 \LaTeX 中可以从标准键盘上直接打出 26 个字母的大小写形式。当然，从字母表到单词只有一步之遥，即用空格和标点把字母分开。但事实上总免不了要遇到一些稀奇古怪的词汇或人名，试试输入下面的词：
+\begin{center}
+    café \quad Gödel \quad Antonín Dvořák \quad Øster Vrå \quad Kιrkağaç
+\end{center}
+
+或者这些：
+\begin{center}
+    χαïδεύηζ \quad КpЮковa
+\end{center}
+
+上面的例子中，前一组词是来自拉丁字母，但明显增加了许多符号；后一组则是希腊语词汇和俄语人名。我们常用的字母表包括扩展的拉丁字母、希腊字母和西里尔字母（ Cyrillic alphabet ），这比标准键盘上所能直接输入的 52 个字母要多得多。不过不用担心，数以万计的汉字我们也搞定了，区区几个字母也不在话下。
+
+解决输入超过 ASCII 码范围的字母的问题有传统和现代两类方案，先来看一下现代的方案。
+
+现代的方案就是使用 UTF-8 编码直接输入。在 XeTeX 这样的排版引擎下， UTF-8 编码是原生的，不需要任何多余的设置：
+
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{lstlisting}
+    % UTF-8 编码
+    café \quad Gödel \quad Antonín Dvořák
+
+    χαïδεύηζ \quad КpЮковa
+    \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \vspace{0.1cm}
+    \hspace{0.5cm}
+
+    café \quad Gödel \quad Antonín Dvořák
+
+    χαïδεύηζ \quad КpЮковa
+\end{minipage}
+
+不过，要想正确输入、显示并输出所有这些符号，仍然不是一件简单的事。
+
+输入特殊的字母需要计算机键盘布局或输入法的支持，例如在法语键盘中（一般可以在操作系统中设置），标准键盘 7 8 9 0 位置上的字符分别是 \verb|è _ ç à| ，这种键盘布局对需要大量录入法语的人来说特别有用。如果不方便使用特殊键盘来设置，操作系统或编辑器往往还提供了“字符映射表”一类的程序或插件，可以用鼠标选取一些字符输入；中文输入法的软键盘也可以用来输入一小部分特殊的外文字母。
+
+显示 ASCII 以外的字母表需要编辑器使用的字体的支持。大部分西文字体都支持扩展拉丁字母，如 è 、ç ，但不是所有字体都有希腊字母和西里尔字母，即使是一些罕用的拉丁字母（如 ř 也有可能缺失。编辑器常用的等宽字体中， Windows 和 Mac 系统都预装的 Courier New ， Windows 下的 Consolas 、 Lucida Sans Typewriter 等都能显示上面所列的所有字母， Linux 下常用的 Bitstream Vera Sans Mono 、 Inconsolata 则只支持到扩展拉丁字母，因此配置编辑器时也需要仔细选择。
+
+最后但却最重要的是， \TeX 系统输出时所使用的字体，也必须要能直接显示这些字母。 \LaTeX 默认的 Computer Modern 在一个字体中只覆盖很小的字符集， XeLaTeX 下默认的 Latin Modern 字体要好得多，一般都支持到拉丁字母（这通常就足够了），但希腊、西里尔这些字体需要更换其他字体。要完整显示其他语言的字母，就必须频繁地更换不同的字体，或在 \TeX 中使用覆盖更大字符集的字体。比如为了能正确显示前面例子中的三种字母，我们在前面已经设置了 Windows 系统预装的 Times New Roman 字体。
+
+而传统的解决方案是使用特殊的命令，给字母加上重音的标记，使用特殊字母或者整体更换字母表。
+
+所谓重音（ accents ），是指加在字母上的标记，实际包括抑音符、锐音符、抑扬符等等多种符号。 \LaTeX 支持的重音标记及其命令见表\ref{tab:zhongyin}，命令名称大多取象形的符号。将重音加之于普通的拉丁字母上，可以得到一大批扩展的拉丁字母。
+
+\begin{table}[H]
+    \centering
+    \caption{\LaTeX 中的重音命令，以字母 o 为例}
+    \label{tab:zhongyin}
+    \begin{tabular}{ccccccccccc}
+        \toprule
+        \`o & \verb|\`o| 
+        & \qquad &
+        \'o & \verb|\'o| 
+        & \qquad &
+        \^o & \verb|\^o| 
+        & \qquad &
+        \"o & \verb|\"o| \\
+        \~o & \verb|\~o| 
+        & \qquad &
+        \=o & \verb|\=o| 
+        & \qquad &
+        \.o & \verb|\.o| 
+        & \qquad &
+        \u{o} & \verb|\u{o}| \\
+        \v{o} & \verb|\v{o}| 
+        & \qquad &
+        \H{o} & \verb|\H{o}| 
+        & \qquad &
+        \t{oo} & \verb|\t{oo}| 
+        & \qquad &
+        \r{o} & \verb|\r{o}| \\
+        \c{o} & \verb|\c{o}| 
+        & \qquad &
+        \d{o} & \verb|\d{o}| 
+        & \qquad &
+        \b{o} & \verb|\b{o}| 
+        & \qquad &
+         &  \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+使用命令可以输入的 \LaTeX 字母，见表\ref{tab:special}。其中，\i ， \j 就是字母 i ， j ，只是在加上重音命令时需要去掉上面的点。 \ij,\IJ,\SS 是字母连写，在默认的字体中没有区别。
+
+\begin{table}[H]
+    \centering
+    \caption{\LaTeX 中的特殊字母}
+    \label{tab:special}
+    \begin{tabular}{ccccccccccc}
+        \toprule
+        \AA & \verb|\AA| 
+        & \qquad &
+        \aa & \verb|\aa| 
+        & \qquad &
+        \AE & \verb|\AE| 
+        & \qquad &
+        \ae & \verb|\ae| \\
+        \OE & \verb|\OE| 
+        & \qquad &
+        \oe & \verb|\oe| 
+        & \qquad &
+        \SS & \verb|\SS| 
+        & \qquad &
+        \ss & \verb|\ss| \\
+        \IJ & \verb|\IJ| 
+        & \qquad &
+        \ij & \verb|\ij| 
+        & \qquad &
+        \L & \verb|\L| 
+        & \qquad &
+        \l & \verb|\l| \\
+        \O & \verb|\O| 
+        & \qquad &
+        \o & \verb|\o| 
+        & \qquad &
+        \i & \verb|\i| 
+        & \qquad &
+        \j & \verb|\j| \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+如果还要输入希腊字母和西里尔字母，默认的字体就不够用了，需要更换其他编码和字体。为此，\LaTeX 提供了 babel 宏包，可以方便地同时访问多种语言的字母表。 babel 宏包可带有一个或多个语言的可选参数，支持不同的语言，如
+\begin{lstlisting}
+    \usepackage[greek,english]{babel}
+\end{lstlisting}
+将使用英语和希腊语，其中作为最后一个参数的英语是默认语言，此时希腊语就可以用 ASCII 字符代替：
+\begin{lstlisting}
+    \textgreek{abcde}
+\end{lstlisting}
+上述代码输出 αβζδε 。需要少量俄文的西里尔字母，可以换用 OT2 编码的字体德奥。
+
+例如：
+
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{lstlisting}
+% 导言区 \usepackage[OT2,OT1]{fontenc}
+{\fontencoding{OT2} \selectfont ABCabc}
+    \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \vspace{0.1cm}
+    \hspace{0.5cm}
+    {\fontencoding{OT2} \selectfont ABCabc}
+\end{minipage}
+如果排版全文是俄文的文章，也可以用 \verb|russian| 参数使用 \verb|babel| 宏包，不过输入时就不使用 ASCII 码，而使用俄文专用的编码。由于这些语言很少用，这里不做更多说明。
+
+使用 pdfTeX 这样的传统排版引擎也可以使用 UTF-8 编码输入文字，此时需要使用 inputenc 宏包并选用 \verb|utf8| 选项，它会将 UTF-8 的输入编码自动转换为当前字体编码所对应的符号，字体编码的设置仍然与原来一样，如：
+\begin{lstlisting}
+    % coding: utf-8
+    % pdflatex 命令编译
+    \documentclass{article}
+    \usepackage[OT2,OT1]{fontenc}
+    \usepackage[utf8]{inputenc}
+    \begin{document}
+    café \quad Gödel
+    {\fontencoding{OT2} \selectfont КpЮковa}
+    \end{document}
+\end{lstlisting}
+
+\LaTeX 在排版中会将单词中的一些字母连写成为一个符号，即连字 （ ligature ）。连字的有无和多少一般是由使用的字体决定的，在默认的 Computer Modern 和 Latin Modern 字体中，小写字母组合 \verb|ff,fi,fl,ffi,ffl| 都有连字：
+
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{lstlisting}
+    differ find flight difficult ruffle 
+    \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.45\textwidth}
+    \hspace{0.5cm}
+    \includegraphics[width=0.6\textwidth]{连字1.png}
+\end{minipage}
+
+本书中主要使用的 Times 字体则只有 \verb|fi| 和 \verb|fl| 的连字 （ fi,fl），而一些专业字体可能用的更多：
+
+\includegraphics[width=0.3\textwidth]{连字2.png}
+
+偶尔出于意义或美观的考虑，需要取消连字。此时可以借用\verb|\/|命令。
+
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{lstlisting}
+    fleet f\/leet
+    \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[b]{0.45\textwidth}
+    \hspace{0.5cm}
+
+    fleet f\/leet
+\end{minipage}
+
+使用 XeLaTeX 引擎， OpenType 字体时，可以方便地使用 fontspec 宏包的 \verb|Ligature| 字体选项选择连字的有无和程度。
+
