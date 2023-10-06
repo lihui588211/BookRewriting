@@ -521,3 +521,91 @@ Roman number XII\@. Yes.
 \end{align*}    
 \end{minipage}
 
+\subsection{特殊符号}
+
+除了一般的文字，有时还需要一些特殊的符号，其中在正文中最为常用的如表\ref{tab:teshu}所示。
+\begin{table}[H]
+    \centering
+    \caption{正文中常用的部分特殊符号}
+    \label{tab:teshu}
+    \begin{tabular}{ccccccccccc}
+        \toprule
+        \S & \verb|\S| && \dag & \verb|\dag| &&
+        \ddag & \verb|\ddag| && \P & \verb|\P| \\ 
+        \copyright & \verb|\copyright| && \textregistered & \verb|\textregistered| &&
+        \texttrademark & \verb|\texttrademark| && \pounds & \verb|\pounds| \\ 
+        \textbullet & \verb|\textbullet| \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+上面几种符号中，不带\verb|\text| 前缀的是在文本模式和数学模式通用的。特殊符号依赖于当前使用的字体。
+
+
+\LaTeX 定义了一批常用的符号命令，但实际使用时仍然捉襟见肘。在不同的字体包中，也定义了其他大量的符号，例如最常用的\LaTeX 的基本工具宏包 textcomp 就定义了大量用于文本的符号，例如欧元符号\verb|\texteuro| （\texteuro）、千分符\verb|\textperthousand| （\textperthousand）等；  tipa 宏包提供了国际音标字体的访问（比如\textipa{["lAtEk]} (\verb|\textipa{["lAtEk]}|) ）；dingbat 、 bbding 、 pifont 等宏包提供了许多指示、装饰性的小符号，如 \leftpointright \footnote{这里用的是 dingbat 的 \lstinline{\\leftpointright} 命令} ，等等。在这里一一枚举所有这些宏包和命令冗长无味，也没有必要， Pakin 编写的“ \LaTeX 符号大全 ” 是查找各种古怪符号的绝佳参考，它收集了约 70 个宏包的近 6000 个文本或数学符号，日常使用的各种符号一般都能在上面找到，同时这个文档也讲述了符号字体的一些一般知识及制作新符号的办法。
+
+使用宏包来调用特殊符号时，需要注意的是，有些宏包只提供符号命令（如 bbding ），可以随意调用；有些宏包提供一套符号字体的选择方式（如 tipa），可以通过与此符号对应的 ASCII 符号或符号的数字编码来使用符号；有些宏包则实际上是完整的正文字体包（如 fourier ），使用它会整体改变全文的默认字体，同时提供一些额外的符号。“符号大全”对这些情况并没有仔细区分，可能需要查看相应宏包的文档才能进一步了解它们的用法和注意事项。
+
+xunicode 宏包重定义了 XeTeX 的 UTF-8 编码下（EU1字体编码）的大量符号的命令，使得在新编码下，\verb|\textbullet| 之类的命令也能正常工作，而像\verb|\'e|  这样的符合重音标记也会自动转为字体中带有重音的字母。 xunicode 宏包会自动被 fontspec 或 ctex 宏包载入，但在旧的系统下可能需要手工完成。不过，当字体本身缺少需要的符号时，需要的符号就无法显示，即使使用的是\verb|\'| 这样的复合形式，你也可能需要更换其他字体或切换编码来显示这些符号。
+
+其实，使用 XeTeX 引擎时，输入特殊符号最简捷的办法就是在 UTF-8 编码下直接输入：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+    ® © £ § ¶ † ‡ • ™ € ‰
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    ® © £ § ¶ † ‡ • ™ € ‰
+\end{minipage}
+
+当然，与输入特殊字母一样，这种方式也要求输入法、编辑器字体和输出字体的共同支持。通过更换字体，可以输入任何可以找得到的符号。
+
+即使并非使用 XeTeX 引擎，依然可能直接输入标准 ASCII 编码以外的特殊符号。这依然需要使用比 ASCII 更大的输入编码。 inputenc 宏包允许使用诸如 \verb|ascii| （默认值， ASCII）、\verb|latin1| （ ISO 8859-1 ）、\verb|utf8| （UTF-8）等参数表示使用的输入编码。用这种方式也可以直接输入特殊字母与特殊符号，不过这里的 UTF-8 编码也只支持西文的拼音文字，无法支持汉字。
+
+使用 XeTeX 或其他引擎直接指定字体输入特殊符号时，一个很大的问题是，并非所有符号都可以使用键盘输入，即使借助特殊输入法、字符映射表等工具输入了这些符号，在源代码编辑器中仍然可能无法显示。为此，\LaTeX 提供了命令\verb|\symbol| 来直接用符号在字体中的编码来输入符号。\verb|\symbol| 命令带有一个参数，就是一个表示字符编码的数字。在\TeX 中数字除了普通的十进制，也可以用八进制、十六进制或编码对应的字符本身表示，其语法形式如表所示。其中字符形式中的字符如果是特殊字符，需要在前面加\verb|\| 转义，如用\verb|\symbol{`\%}| 就得到 \% 本身，与 \% 类似。\symbol{`\%}
+
+\begin{table}[H]
+    \centering
+    \caption{\TeX 中不同的数字表示形式}
+    \label{tab:number}
+    \begin{tabular}{ccccc}
+        \toprule
+        表示法 && 语法形式 && 例 \\ 
+        \midrule
+        十进制 && \verb|数字| && \verb|90| \\ 
+        十六进制 && \verb|"数字| && \verb|"5A| \\ 
+        八进制 && \verb|'数字| && \verb|'132| \\ 
+        字符形式 && \verb|`数字| && \verb|`Z| \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+要得到字符的编码，对于传统的\TeX 字体，可以参见字体的符号码表，许多字体宏包（ 如 txfonts ） 在文档都列出了很长的字体号码表，选定字体后，就可以利用\verb|\symbol| 命令输入用键盘难以输入的符号，例如：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+    \usefont{T1}{t1xr}{m}{n}
+    \symbol{"DE}\symbol{"FE}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \usefont{T1}{t1xr}{m}{n}
+    \symbol{"DE}\symbol{"FE}
+\end{minipage}
+
+而对于 XeTeX 调用的 OpenType ， TrueType 字体，一般编码均为 Unicode ，可以查通用的 Unicode 码表或利用字符映射表等外部工具，查看符号的编码，输入对应的符号，例如：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+    \symbol{28450}\symbol{35486}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \symbol{28450}\symbol{35486}
+\end{minipage}
+
+使用这种方式，就可以只使用 ASCII 编码的源文件，排版出任何字体的任何符号。
