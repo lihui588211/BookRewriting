@@ -206,6 +206,8 @@
 
 使用 XeLaTeX 引擎， OpenType 字体时，可以方便地使用 fontspec 宏包的 \verb|Ligature| 字体选项选择连字的有无和程度。
 
+\subsubsection{正确使用标点}
+
 在键盘上，可以直接使用的符号有 16 种：
 
 , \quad . \quad ; \quad : \quad ! \quad ? \quad ` \quad ' \quad ( \quad ) \quad [ \quad ] \quad - \quad /  \quad * \quad @
@@ -356,3 +358,166 @@
 \begin{center}
     \includegraphics[width=0.6\textwidth]{标点形式.png} \centering
 \end{center}
+
+\subsubsection{看不见的字符——空格与换行}
+
+文本中的空格起分隔单词的作用，任意多个空格的功能与一个空格相同；只有字符后面的空格是有效的，每行最前面的空格则被忽略，这样有利于复杂代码的对齐；单个换行也被看成一个空格。例如（我们仍然用 \lstinline[showspaces=true]{ } 表示空格：
+
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{lstlisting}[showspaces=true]
+This is     a short
+sentence.  This is
+             another.
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.45\textwidth}
+This is     a short
+sentence.  This is
+             another.
+\end{minipage}
+
+以字母命名的宏，后面空格会被忽略。如果需要再命令后面使用空格，可以使用\lstinline[showspaces=true]{\ }，它表示两个普通字母间的空格距离；也可以在命令后加一个空白的分组\verb|{}|，有时也可以把命令用一个分组包裹起来：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}[showspaces=true]
+Happy \TeX ing. Happy \TeX\ ing.
+Happy  \TeX{} ing. Happy {\TeX} ing.
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+Happy \TeX ing. Happy \TeX\ ing.
+
+Happy  \TeX{} ing. Happy {\TeX} ing.
+\end{minipage}
+
+有一种不可打断的空格，在\TeX 中称为带子（ ties ），用\verb|~| 表示。 \TeX 禁止在这种空格之间分行，因而可以用来表示一些不宜分开的情况，例如：
+\begin{lstlisting}
+    Question~1              % 名称与编号间
+    Donald~E. Knuth         % 教名之间，但姓可以断行
+    Mr.~Knuth               % 称谓缩写与名字间
+    function~$f(x)$         % 名字后面的短公式
+    1,~2,and~3              % 序列的部分符号间
+\end{lstlisting}
+
+西文的逗号、句号、分号等标点后面应该加空格，这不仅能保证正确的间距，也能保证正确的换行。这是因为标点后如果没有空格，就不能换行。\LaTeX 在西文句末（包括句号\verb|.|问号\verb|?|和叹号\verb|!|）后面使用的距离会比单词间的距离大些，这在上面的例子中已经可以看到。更确切地说，\LaTeX 会把大写字母后的点看作是缩写标记，把小写后面的点看作是句子结束，并对它们使用不同的间距；但偶尔也有大写字母结束的句子，或小写字母的缩写，这就必须明确地告诉 \LaTeX 使用普通单词间的空格 \lstinline[showspaces=true]{\ } ，或用\verb|\@|，指明\verb|.| 是大写字母后的句末。例如：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}[showspaces=true]
+A sentence. And another.
+
+U.S.A. means United States Army?
+
+Tinker et al.\ made the double play.
+
+Roman number XII\@. Yes.
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+A sentence. And another.
+
+U.S.A. means United States Army?
+
+Tinker et al.\ made the double play.
+
+Roman number XII\@. Yes.
+\end{minipage}
+有时也需要整体禁止这种在标点后的不同的间距，法语排版的习惯就是如此。此时可以使用\verb|\frenchspacing| 命令来禁止标点后的额外间距。
+
+汉字后的空格会被忽略。使用 xelatex 编译中文文档时，汉字和其他内容之间如果没有空格， xeCJK 宏包会自动添加：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}[showspaces=true]
+中文和English的混排效果并不依赖 space 的有无 
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    中文和English的混排效果并不依赖 space 的有无
+\end{minipage}
+
+个别时候需要忽略汉字与其它内容之间由 xeCJK 自动产生的空格，这时可以把汉字放进一个盒子里面：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}[showspaces=true]
+\mbox{条目}a 不同于条目b
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\mbox{条目}a 不同于条目b
+\end{minipage}
+
+还有时需要完全禁用汉字与其他内容之间的空格，这时可以使用\verb|\CJKsetecglue| 手工设置汉字与其他内容之间的内容为空\footnote{好像现在这个方法已经失效}（默认是一个空格）：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\CKJsetecglue{}
+汉字word
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\mbox{汉字}word 
+\end{minipage}
+
+在空格之中，最神奇的一种可能就是被称为幻影（ phantom ）的空格。幻影命令\verb|\phantom| 有一个参数，作用是产生与参数内容一样大小的空盒子，没有内容，就像是参数的一个幻影一样。偶尔可以使用幻影完成一些特殊的占位和对齐效果：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+    幻影\phantom{参数}速速隐形
+
+    幻影参数速速显形
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    幻影\phantom{参数}速速隐形
+
+    幻影参数速速显形
+\end{minipage}
+
+类似地有\verb|\hphantom| 和 \verb|\vphantom| ，分别表示水平方向和垂直方向的幻影（在另一个方向为零）。
+
+空行，即用连续两个换行表示分段，段与段之间会自动得到适合的缩进。任意多个空行有一个空行的效果相同。
+
+分段也可用用\verb|\par| 命令生成，这种方法一般只在命令或环境定义的内部使用，而普通行文中不宜出现。与连续的空行类似，连续的\verb|\par| 命令也只产生一次分段效果。
+
+除了分段，也可以让\LaTeX 直接另起一行，并不分段。优良中相关的命令：\verb|\\| 命令直接另起一行，上一行保持原来的样子；而\verb|\linebreak| 则指定一行的断点，上一行仍按照一行散开对齐：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+    这是一行文字\\另一行
+
+    这是一行文字\linebreak 另一行
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    这是一行文字 \\ 另一行
+
+    这是一行文字\linebreak 另一行
+\end{minipage}
+
+\verb|\\| 一般用于特殊的环境中，如排版诗歌的 \verb|verse| 环境，特别是在对齐、表格和数学公式中使用广泛，但很少用在普通正文的行文中；\verb|\linebreak| 命令则用于对个别不适合分行的手工精细调整上。为了完成精细调整分行的功能，\verb|\linebreak| 可以带一个从 0 到 4 的可选参数，表示允许断行的程度， 0 表示不允许断行， 默认的 4 表示必须断行。类似地，也有一个\verb|\nolinebreak| 命令，只是参数意义与\verb|\linebreak| 相反。注意在正常的行文中，这两个命令都不会被用到。
+
+\verb|\\| 命令可以带一个可选的长度参数，表示换行后增加的额外垂直间距。如\verb|\\[2cm]| 。因此必须注意在命令\verb|\\| 后面如果确实需要使用方括号（即使括号在下一行），则应该在\verb|\\| 后面加空的分组以示分隔，否则会发生错误，这种情况在数学公式中非常常见：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\begin{align*}
+[2 - (3+5)] \times 7 & = 42 \\ {}
+[2 + (3-5)] \times 7 & = 0
+\end{align*}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\begin{align*}
+[2 - (3+5)] \times 7 & = 42 \\ {}
+[2 + (3-5)] \times 7 & = 0
+\end{align*}    
+\end{minipage}
+
