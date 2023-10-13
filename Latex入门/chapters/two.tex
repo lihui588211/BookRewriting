@@ -612,7 +612,7 @@ xunicode 宏包重定义了 XeTeX 的 UTF-8 编码下（EU1字体编码）的大
 
 \subsection{字体}
 
-\subsection{字体的坐标}
+\subsubsection{字体的坐标}
 
 当我们说“换一个字体”的时候，指的是什么意思呢？可能是想换掉文字的整体感觉，如 “{\ttfamily TEXT}”和“ {\sffamily TEXT} ”；可能是想把直立的的文字改成倾斜的 ，如 “TEXT”和“\textit{TEXT}”；可能是想把细的文字加粗 ，如 “TEXT”和“\textbf{TEXT}”；可能是想把包含一些符号的字体改为包含另一种符号的； 还可能只是想改变字体的大小，如“文字”和“{\zihao{3} TEXT}”。尽管所使用的文字内容都是一样的（“ TEXT ”）。
 
@@ -781,7 +781,7 @@ Bold `\textbf{leaf}'
     {\fangsong 仿宋} \quad {\kaishu 楷书}
 \end{minipage}
 
-ctex 宏包及文档类（如 ctexart ）另外定义了一些组合字体，可以让中文也具备使用粗体 （\verb|\bfseries| 和意大利体 （\verb|\itshape| 的功能，并且重定义 \verb|rmfamily| 使它同时对中文起作用。默认的中文字体族是 \verb|rm| ，粗体是黑体，意大利体是楷体，如：
+ctex 宏包及文档类（如 ctexart ）另外定义了一些组合字体，可以让中文也具备使用粗体 （\verb|\bfseries|） 和意大利体 （\verb|\itshape| 的功能，并且重定义 \verb|rmfamily| 使它同时对中文起作用。默认的中文字体族是 \verb|rm| ，粗体是黑体，意大利体是楷体，如：
 
 \begin{minipage}[t]{0.45\textwidth}
 \begin{lstlisting}
@@ -843,3 +843,293 @@ PostScript Bookman Demibold Normal
     \usefont{T1}{pbk}{db}{n}
     PostScript Bookman Demibold Normal
 \end{minipage}
+
+\subsubsection{使用更多字体}
+
+使用 \verb|\rmfamily,\bfseries,\itshape,\kaishu| 这类命令时，只能选择预定义的少数几种字体。对于西文，就是 Computer Modern 或 Latin Modern 系列的几款成套的字体；对于中文，就是 6 种预定义的 Windows 字体。这些对于简单的文章并没有问题，但如果想改变文章的整体风格，或者缺少预装的字体文件（如中文 Linux 用户就不会有 Windows 预装的中文字体），那么就需要用到预设之外的更多字体。
+
+选择非默认的字体的方法有两类：当不使用 XeTeX 引擎时，可以通过字体宏包或 \LaTeX 底层字体命令调用在 \TeX 系统中安装的中西文字体；当使用 XeTeX 引擎时，可以调用操作系统安装的中西文字体。由于质量可靠的中文字体几乎都是商用的，因此 \TeX 系统中只安装了很少几种质量较差的中文字体，一般总要调用操作系统中的字体来使用 XeTeX 引擎的功能。
+
+一个\TeX 发行版通常都同时安装了大量的西文字体，直接使用 \LaTeX 底层命令指定字体通常很难用，特别是一些字体同时还包括对应的数学字体和符号命令的设置，非常繁琐，因此很多西文字体都做成了方便调用的字体宏包，可以直接更换整套的西文字体（或数学字体）。其中，最为常见的要求是把整套字体换为 Times Roman 的衬线字体（罗马体）或  Helvetica 的无衬线字体，Times 字体也能与中文宋体很好地配合。有几个宏包可以达到这个目的，最简单的是 times 宏包，只更换正文字体，没有更换配套的数学字体，很少使用； mathptmx 在 times 宏包的基础上增加了数学字体的支持；效果最好的免费字体则是 txfonts 宏包，对整套西文字体和数学符号给出了完整的解决方案。使用字体宏包非常简单，通常只需要导入该宏包即可：
+
+\begin{lstlisting}
+\documentclass{article}
+\usepackage{txfonts}
+\begin{document}
+Test text
+\end{document}
+\end{lstlisting}
+
+txfonts 的效果见图 \ref{fig:txfonts}。
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{字体1.png}
+    \caption{Times 字体效果（ txfonts ）}
+    \label{fig:txfonts}
+\end{figure}
+
+为文章的不同部分选用字体应该协调配合，因此通常带有配套数学字体的字体包时最为常用的，但有时也需要分别定义正文字体和与之配套的数学字体，此时就必须手工指定不同的字体包，例如使用高德纳的 Concrete 正文字体与 Zapf 的 Euler 数学字体配合时（这正是 Concrete 字体设计时的用法），就需要综合使用字体包 ccfonts 和 euler:
+
+\begin{lstlisting}
+\usepackage{article}
+\usepackage{T1}{fontenc}
+\usepackage{ccfonts,eulervm}
+\begin{document}
+Test text
+\end{document}
+\end{lstlisting}
+
+这一字体组合比较清晰，它与无衬线字体包（如 arev ， cmbright ）都比较适合于在幻灯片演示中使用，效果见图\ref{fig:euler}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{字体2.png}
+    \caption{Concrete 字体和 Euler 字体效果（ T1 编码，ccfonts，euler）}
+    \label{fig:ruler}
+\end{figure}
+
+在使用 Concrete 与 Euler 字体时，我们使用了一个新的宏包 fontenc 来选择字体的编码。 fontenc 宏包可以包含多个选项，表示文档所使用的正文字体编码，最后一个选项的编码是文档默认使用的编码。字体的编码决定字体包含的符号，同一组的字体可能有不同编码的版本。除了 XeLaTeX 使用的 Unicode 编码（在 NFSS 中一般是 EU1 ），传统的 \LaTeX 字体编码有一般正文字体 OT1 、 拓展正文字体 T1 、 数学字母 OML 、 数学符号 OMS 、数学符号拓展 OMX 等。需要手工设置的通常只有正文字体的编码，默认的正文字体编码是 OT1 ， 而拓展编码 T1 则包含更多的符号，特别是带重音的拉丁字母等。许多字体包都要求使用 T1 编码，才能获得更好的效果，在字体包的说明文档中一般都会提及。注意字体编码是指符号在字体中位置的编码，与输入文档使用的文档编码不是一回事。
+
+初拥 \LaTeX 的最大的问题往往是并不知道 \LaTeX 中哪些字体可用，因为作为一门排版语言，\LaTeX 并没有把可用的字体放在一个下拉菜单中等待选择，因此必须自己查看 \TeX 发行版的字体安装目录或综述性的字体文档。一个带有说明、例子、使用方法和详细功能比较的综述性文档是 Stephen 的 HartkeFree\_Math\_Font\_Survey\footnote{\href{https://www.ctan.org/tex-archive/info/Free\_Math\_Font\_Survey/en}{https://www.ctan.org/tex-archive/info/Free\_Math\_Font\_Survey/en}}，里面介绍了 20 多种带有数学支持的免费 \TeX 字体。该文档在 \texlive 和 CTeX 套装中都有收录 ， 是使用成套字体的很好的参考。一个收录更为全面的 \LaTeX 字体目录是 FontCatalogue \footnote{\href{https://tug.org/FontCatalogue/}{https://tug.org/FontCatalogue/}}，它展示了 Linux 源中的 \texlive 所能使用的近 200 种西文字体族。
+
+下面来看现代的方法，使用 XeTeX 来选择字体。在 XeLaTeX 中，主要使用 fontspec 宏包的机制来调用字体。最基本的是设置正文罗马字体族、无衬线字体族和打字机字体族的命令：
+
+\begin{lstlisting}
+    \setmainfont[可选选项]{字体名}
+    \setsansfont[可选选项]{字体名}
+    \setmonofont[可选选项]{字体名}
+\end{lstlisting}
+
+（可用的可选选项参见 fontspec 文档 \footnote{\href{https://ctan.org/tex-archive/macros/unicodetex/latex/fontspec}{https://ctan.org/tex-archive/macros/unicodetex/latex/fontspec}} ）
+
+例如：
+\begin{lstlisting}
+    % 在导言区设置全文学体为 Windows 提供的
+    % Times New Roman， Verdana， Courier New 字体
+    \usepackage{fontspec}
+    \setmainfont{Times New Roman}
+    \setsansfont{Verdana}
+    \setmonofont{Courier New}
+\end{lstlisting}
+
+此时\verb|\rmfamily| ，\verb|\sffamily|和\verb|\ttfamily| 就分别对应设置的三种字体，而且 fontspec会自动找到并匹配对应的粗体、斜体等变体，尽量使 \verb|\bfseries|，\verb|\itshape|等命令也有效。
+
+也可以定义新的字体族命令：
+\begin{lstlisting}
+    \newfontfamily{命令}[可选选项]{字体名}
+\end{lstlisting}
+
+例如为Java运行库附带的 Lucida Sans 字体定义一个命令\verb|\lucidasans| ：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+% 导言区使用
+\newfontfamily{\lucidasans}{Lucida Sans}
+% 正文使用
+{\lucidasans This is Lucida Sans.}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{lucida.png}
+\end{figure}
+\end{minipage}
+
+XeLaTeX 下中文字体的设置使用 xeCJK 宏包（ctex宏包或文档类会自动调用它）。xeCJK 提供了与 fontspec 对应的中文字体设置命令：
+\begin{lstlisting}
+    \setCJKmainfont[可选选项]{字体名}
+    \setCJKsansfont[可选选项]{字体名}
+    \setCJKmonofont[可选选项]{字体名}
+    \setCJKfamilyfont{中文字体族}[可选选项]{字体名}
+\end{lstlisting}
+
+这些命令对于 Linux 等系统下的中文用户特别有用，因为 ctex 宏包默认是针对 Windows的字体配置的，可以用 \verb|nofonts| 选项禁用预定义的中文字体设置而来自已定义字体，例如使用文鼎公司免费发布的字体：
+\begin{lstlisting}
+    % 在导言区设置全文字体为 “文鼎 PL 报宋 GBK”
+    % 并设置中文的 kai 字体族为 “文鼎 PL 简中楷”
+    \setCJKmainfont{AR PLBaosong2GBK Light}
+    \setCJKfamilyfont{kai}{AR PL KaitiM GB}
+\end{lstlisting}
+
+此后使用 \verb|\CJKfamily{kai}|就会使用文鼎的楷体。
+
+fontspec 所能使用的字体是 fontconfig 库所能找到的所有字体，也就是在 \TeX 发行版和操作系统中所安装的字体，通常是 OpenType 和 TrueType 的字体，也包括一些 PostScript 格式字体，需要注意的就是要使用正确的字体名。字体的列表可以在命令行下使用 fc-1st 命今来列出，通常列出的学体信息会非多，不能在一屏内完全显示。 Windows 下还会因编码不统一品出现乱码，此时可以利用命令重定向操作符把结果输
+出到文件中：
+\begin{lstlisting}
+    fc-list > fontlist.txt
+\end{lstlisting}
+
+\verb|fc-list|命令输出的结果类似这样（这里只选取了一小部分，并稍做重新排列）：
+
+\begin{lstlisting}
+D:/application/texlive/2023/texmf-dist/fonts/truetype/public/dejavu/DejaVuSerifCondensed-Italic.ttf: DejaVu Serif,DejaVu Serif Condensed:style=Condensed Italic,Italic
+D:/application/texlive/2023/texmf-dist/fonts/opentype/public/domitian/Domitian-Bold.otf: Domitian:style=Bold
+D:/application/texlive/2023/texmf-dist/fonts/opentype/google/roboto/RobotoSerif-ExtraLight.otf: Roboto Serif,Roboto Serif ExtraLight:style=ExtraLight,Regular
+D:/application/texlive/2023/texmf-dist/fonts/opentype/public/drm/drmdozittc9.otf: drmdozittc9:style=Regular
+D:/application/texlive/2023/texmf-dist/fonts/opentype/public/drm/drmdozl7.otf: drmdozl7:style=Regular
+D:/application/texlive/2023/texmf-dist/fonts/opentype/public/cm-unicode/cmunoti.otf: CMU Concrete:style=Italic
+D:/application/texlive/2023/texmf-dist/fonts/opentype/public/archivo/Archiv0-MediumItalic.otf: Archiv0 Medium:style=Medium Italic,Italic
+D:/application/texlive/2023/texmf-dist/fonts/opentype/public/kerkis/Kerkis-BoldSmallCaps.otf: Kerkis:style=BoldSmallCaps
+C:/Windows/fonts/LHANDW.TTF: Lucida Handwriting:style=Italic,kursiv,Cursiva,Kursivoitu,Italique,Corsivo,Cursief,Itálico
+C:/Windows/fonts/vgasysr.fon: System:style=Regular
+\end{lstlisting}
+
+\verb|fc-1ist|列出的是字体名（对应于字体族）和同族字体变体（对应于 \LaTeX 的字体系列和形状）。在冒号前面的是字体族名称，\verb|style=|后面的是字体的变体，用逗号分隔开的是同一个字体（或变体）在不同语言下的名称。通常 fontspec 宏包会自动处理好字体的变体，因此只要知道前面的字体名称。
+
+\verb|fc-1ist|可以带许多参数来控制输出的格式。例如，我们通常只需要字体族名而不需要变体的名称，就可以加\verb|-f"%{family}\n"|选项只输出字体族；又如，使用\verb|:lang=zh|选项可以只输出中文学体，而\verb|:outline|则可以只显示矢量字体。下面的命
+令就可以将所有中文字体族的列表输出到 \verb|zhfont.txt|中：
+\begin{lstlisting}[language=sh]
+    fc-list -f "%{family}\n" :lang=zh > zhfont.txt
+\end{lstlisting}
+
+fontspec 宏包为字体，尤其是 OpenType 字体提供了多种字体性质的选项。例如 Minion Pro 字体使用带斜线的数字 0，以与字母 O 区分：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\newfontfamily{\minion}[Numbers=SlashedZero]{Minion Pro}
+\minion 100, 0K
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{minion.png}
+\end{figure}
+\end{minipage}
+
+字体选项的选择可参见 The XeTeX Companion-TeX meets OpenType and Unicode \footnote{ \href{https://xml.web.cern.ch/XML/lgc2/}{https://xml.web.cern.ch/XML/lgc2/}} 、fontspec 宏包文档 \footnote{\href{https://ctan.org/pkg/fontspec}{https://ctan.org/pkg/fontspec}}。OpenType
+字体提供的性质可通过命令行工具 \verb|otfinfo|或 opentype-info 宏包查看。
+
+对中文字体来说，尤其有用的一组 fontspec 命令选项是设置斜体、粗体、粗斜体的选项\verb|ItalicFont|，\\
+\verb|BoldFont|，\verb|BoldItalicFont|，这几个选项可以把字体的变体用另一种字体来代替。如可以设置正文学体为宋体，其粗体为黑体、斜体为楷体，粗斜体为隶书，以弥补中文字体一般没有一族成套变体的问题：
+
+\begin{lstlisting}
+\setCJKmainfont[BoldFont=SmHei,ItalicFont=KaiTi,BoldItalicFont=LiSu]{SimSun}
+\end{lstlisting}
+
+ctex 宏包默认设置 Windows 字体时正是采用类似以的方法。如果不指定中文字体的变体形式，ctex 调用 xeCJK 时会增加选项使用伪粗体和伪斜体代替。不过中文排版没有斜体的概念，因此在非 Windows环境一般也都需要设置这种中文的复合字体，避免斜体的使用。
+
+fontspec 主要用于设置正文字体，通常不用来设置数学字体，不过一些数学字体（如\verb|\mathrm|）默认与正文字体一致，则正文字体的设置会影响到数学字体。 fontspec 的\verb|\setmathrm|，\verb|\setmathsf|，\verb|\setmathtt|等命令可以用来以与正文同样的方式设置这些受影响的数学字体，它们的用法和\verb|\setmainfont|等命令类似。此外， fontspec 宏包的 \verb|no-math| 选项可以禁用其对数学字体的所有影响（包括\verb|\setmahtrm|等命令的作用），在加载许多数学字体包时，这个选项都会自动生效，对于不自动加载\verb|no-math|选项的宏包，我们可以自已加上这个选项。为了使用正确的字体编码，fontspec 应该放在数学字体包的后面。当然，fontspec 几乎总会令字体宏包原来的正文字体设置失效，可以使用 fontspec 的方式再另行设置搭配的字体，例如：
+\begin{lstlisting}
+    \documentclass{article}
+    \usepackage{ccfonts} %公式使用 Concrete 系列字体
+    \usepackage[no-math]{fontspec} % \mathrm 等也使用 Concrete 系列字体
+    \setmainfont{Latin Modern Mono Prop} % 正文使用 Latin Modern Mono 字体
+\end{lstlisting}
+
+处理中文时的情况可能更复杂一些。如果使用 xeCJK 或 ctex/ctexcap 宏包，可以在它们之前使用数学字体包，需要时可以带 \verb|no-math| 选项加载fontspec，用法和前面西文的文档类似。使用 ctex 中文文档类时，如果需要，fontspec 的no-math选项可以传递给文档类。当 fontspec 是由文档类加载时，就不可能在这之前加载数学字体包了，但由于个别字体包会改变字体编码，此时可能需要在数学字体包之后以 EU1 编码为最后一个选项加载 fontenc 宏包，以保证使用正确的字体编码，例如：
+\begin{lstlisting}
+\documentclass[no-math]{ctexart}
+\usepackage[utopia]{mathdesign} % 数学字体使用 mathdesign 与 Utopia
+\usepackage[EU1]{fontenc} % 恢复正文字体的 Unicode 编码
+\setmainfont{Utopia Std} % 正文字体使用 OpenType 格式的 Adobe Utopia
+\end{lstlisting}
+
+在使用数学字体包时同时加载对应的 OpenType 或 TrueType 格式的正文字体，是在 XeLaTeX 下使用复杂字体的一般方法。
+
+一种更方便的方式是使用传统的字体包设置全文的字体（数学或正文字体），只把其他字体（如汉字）留给 fontspec 和 xecJK 。也就是说，我们要将旧的字体选择机制和新的学体选择机制混合使用，这同样可以做到，与前面的区别仅仅是使用 fontenc 宏包将传统的 Unicode字体编码设置为默认的编码，即最后一个选项。这种方法不影响使用 fontspec 中\verb|\newfontfamily|声明的字体和 XeTeX 声明的汉字字体。但 \verb|\setmainfont|，\verb|setsansfont| 和 \verb|setmonofont| 这三人命令会因字体编码而失效，需要时在文档中使用\verb|\fontencoding|命令临时切换编码，或者直接重定义\verb|\rmfamily|、\verb|\sffamily|和\verb|\ttfamily|，让它们增加切换编码的功能。下面给出一个在设置字体方面比较复杂的例子，以西文的 T1 编码为默认编码调 fourier 字体包，西文用 fontspec 的两种方式定义其他字体，汉字也使用 OpenType 的字体：
+\begin{lstlisting}
+    \documentclass[UTF8]{ctexart}
+    % 西文正文和数学字体
+    \let\hbar\relax % 解决 xunicode 与 fourier 的符号冲突
+    \usepackage{fourier}
+    % 设置默认编码为 T1，以支持fourier 宏包
+    \usepackage[T1]{fontenc}
+    % 定义新的西文 Times 字体族
+    \newfontfamily{\times}{Times New Roman}
+    % 设置西文等宽字体，并重定义 \ttfamily 来切换到 EU1 编码
+    \setmonofont{Consolas}
+    \let\oldttfamily\ttfamily
+    \def\ttfamily{\oldttfamily \fontencoding{EU1} \selectfont}
+    % 设置中文字体
+    \setCJKmainfont{Adobe Kaiti Std}
+    \begin{document}
+    Utopia text and $\sum math$ fonts.
+    汉字楷书与 {\times Times New Roman} 字体。
+    \texttt{Consolas 0123}
+    \end{document}
+\end{lstlisting}
+
+XeTeX 通常不影响符号字体包的使用，但偶尔会因为字体编码不同而造成问题：注意 XeTeX 在同一时刻只能使用一种字体编码，多种字体编码要手工切换。例如
+通常由 fontspec 自动加载的 xunicode 宏包\footnote{现在好像不会自动加载了}会把国际音标字体包 tipa 的功能对应到 Unicode 编码字体上，但这会使原来的\verb|\textipa|命令改用 fontspec 管理的 Unicode 编码字体。因此默认的正文体 Latin Modern 因为符号不全就不能用于国际音标输出，应该改用包含音标符号的字体，如Linux Libertine O、Times New Roman等。例如：
+
+\begin{lstlisting}
+    % XeLaTeX 编译
+    \documentclass[UTF8]{ctexart}
+    % \usepackage{xunicode} 我这里加这行才能编译
+    % 不需要 tipa 宏包，xunicode 已经实现其功能
+    \setmainfont{CMU Serif} % Computer Modern Roman 的 Unicode 版本
+    \begin{document}
+    \LaTeX{}读音为\textipa{["lA:tEx]}。
+    \end{document}
+\end{lstlisting}
+
+如果不愿意使用 OpenType 或 TrueType 格式的 Unicode 编码国际音标字体，仍然可以在 XeTeX 下使用 T3 编码的 tipa 的功能：
+
+\begin{lstlisting}
+    % XeLaTeX 编译
+    \documentclass[UTF8]{ctexart}
+    \usepackage{tipa} % 宏包已经正确加载fontenc
+    % \mytipa 的定义参考原来的 \textipa 的旧定义，手工切换编码
+    \newcommand\mytipa[1]{{\fontencoding{T3}\selectfont#1}}
+    \begin{document}
+    \LaTeX{}读音为\mytipa{["lA:tEx]}。
+    \end{document}
+\end{lstlisting}
+
+有时调用一个字体并没有对应的字体包，就必须通过文档了解字体在 NFSS 下的坐标，手工进行选定。如使用 Computer Modern 的 Fibonacci 字体，就可以直接设置字体族：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+    \fontfamily{cmfib} \selectfont
+    Computer Modern Fibonacci Roman
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \fontfamily{cmfib} \selectfont
+    Computer Modern Fibonacci Roman
+\end{minipage}
+
+而如果要将 Fibonacci 字体设置为全文的默认字体，并且让\verb|\rmfamily|和\verb|\textrm|都指
+向 Fibonacci 字体，就需要在导言区重定义默认的罗马字体族\verb|\rmdefault|：
+
+\begin{lstlisting}
+    % 导言区修改全文默认字体 Computer Modern Fibonacci 字体族
+    \renewcommand\rmdefault{cmfib}
+\end{lstlisting}
+
+类似地，可以重定义\verb|\sfdefault|和\verb|\ttdefault|来修改\verb|\rmfamily|和\verb|\ttfamily| 表示的字体族。进一步，如果希望让全文的默认学体是无衬线的字体族，那么还可以重定义\verb|\familydefault|，如：
+\begin{lstlisting}
+    % 导言区修改全文默认字体为无衬线字体族 phv（Helvetica）
+    \renewcommand\familydefault{\sfdefault}
+    \renewcommand\sfdefault{phv}
+\end{lstlisting}
+
+这正是 helvet 宏包的主要工作。当然，在有对应宏包的情况下，还是应该尽量使用宏包提供的功能，这样可能有针对特定字体的更详细的设置。
+
+类似地，较新版本的 XeTeX 也提供 \verb|\CJKrmdefault|，\verb|\cJKsfdefault|，\verb|\CJKttdefault| 和\\ \verb|\CJKfamilydefault| 命令，其用法与 NFSS 中的几个命令类似。在排版中文文档时，如果重定义了\\\verb|\familydefault|设置全文为无衬线字体族，那么也应该同时设置中文：
+\begin{lstlisting}
+    \renewcommand\CJKfamilydefault{\CJKsfdefault}
+\end{lstlisting}
+
+最后介绍一个有用的宏包 fonttable，可以用它输出字体的符号表，这对于使用\verb|\symbol|命令时查找符号代码特别有用。在导言区使用
+\begin{lstlisting}
+    \usepackage{fonttable}
+\end{lstlisting}
+之后， 就可以使用命令
+\begin{lstlisting}
+    \fonttable{原始字体名}
+    \xfonttable{编码}{族}{系列}{形状}
+\end{lstlisting}
+得到字体的符号表。例如，我们可以列举出 T1 编码下 Latin Modern Roman 的字体符号表：
+\begin{lstlisting}
+    \xfonttable{T1}{lmr}{m}{n}
+\end{lstlisting}
+
+\xfonttable{T1}{lmr}{m}{n}
+
