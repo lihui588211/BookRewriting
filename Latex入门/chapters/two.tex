@@ -1133,3 +1133,176 @@ XeTeX 通常不影响符号字体包的使用，但偶尔会因为字体编码�
 
 \xfonttable{T1}{lmr}{m}{n}
 
+\subsubsection{强调文字}
+
+现在回到我们最初认识的第一个字体命令：\verb|\emph|。\verb|\emph|命令表示强调，用于把直立体改为意利体，把意大利体改为直立体：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+You \emph{should} use fonts carefully.
+
+\textit{You \emph{should} use fonts carefully.}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    You \emph{should} use fonts carefully.
+    
+    \textit{You \emph{should} use fonts carefully.}
+\end{minipage}
+
+与其他字体命令一样，\verb|\emph| 也有一个声明形式，可以用在分组或环境中：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+This is {\em emphasized\/} text
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    This is {\em emphasized\/} text
+\end{minipage} \\
+但注意此时要在合适的地方使用倾斜校正命令\verb|\/|。
+
+在西文中通常使用意大利体表示夹在正文中的强调词，这种轻微的字体变化不像粗体那样显眼突兀，因而与正文可以良好的切合。不过，有时仍然使用大写、小型大写或粗体进行更醒自的强调，比如在参考文献的一些项目、书籍索中的部分页码，或其他类似的内容。假设我们需要用粗体表示比\verb|\emph| 更强烈的强调，就可以为此定义一个新的\verb|\Emph|命令，实际内容就是\verb|\textbf|：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\newcommand\Emph{\textbf}
+This is \Emph{emphasized} text.
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \newcommand\Emph{\textbf}
+    This is \Emph{emphasized} text.
+\end{minipage}
+
+下划线是另一种颇具手稿风格的强调方式，\LaTeX 命令\verb|\underline|可以给文字或公式加下划线：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\underline{Emphasized} text and \underline{another}.
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \underline{Emphasized} text and \underline{another}.
+\end{minipage}
+
+不过\verb|\underline| 的一个很大的缺点是下划线的部分不能行，如果仔细看上面的例子还会发现下划线与文字的距离不整齐。ulem 宏包的\verb|\uline| 命令解决了这些问题，并且默认情况下还会把 \verb|\emph|命令也改为使用下划线：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+% 导言区使用 \usepackage{ulem}
+\uline{Emphasized} text and 
+\uline{another}.
+
+A \emph{very very very very very very 
+very very very very very very} 
+long sentence.
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \uline{Emphasized} text and \uline{another}.
+
+A \emph{very very very very very
+very very very very very very very} long sentence.
+\end{minipage}
+
+如果不希望用下划线代替标准的\verb|\emph| 命令定义，可以给ulem 宏包加 \verb|normalem| 参数，或使用\verb|\normalem| 和\verb|\ULforem| 命令切换两种强调。除了下画线，ulem 宏包也提供了其他一些修饰文字的命令：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\uuline{urgent} \qquad 
+\uwave{boat} \qquad
+\sout{wrong} \qquad 
+\xout{removed} \qquad
+\dashuline{dashing} \qquad 
+\dotuline{dotty}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \uuline{urgent} \qquad \uwave{boat} \qquad
+    \sout{wrong} 
+    \qquad \xout{removed} \qquad
+    \dashuline{dashing} \qquad \dotuline{dotty}
+\end{minipage}
+
+CJKfntef 宏包对汉字也提供了类似的功能，同时也进行了一些扩充：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\CJKunderdot{汉字，下加点} \\
+\CJKunderline{汉字，下画线} \\
+\CJKunderdblline{汉字，下画线} \\
+\CJKunderwave{汉字，下画线} \\
+\CJKsout{汉字，删除线} \\
+\CJKxout{汉字，删除线}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \CJKunderdot{汉字，下加点} \\
+    \CJKunderline{汉字，下画线} \\
+    \CJKunderdblline{汉字，下画线} \\
+    \CJKunderwave{汉字，下画线} \\
+    \CJKsout{汉字，删除线} \\
+    \CJKxout{汉字，删除线}
+\end{minipage}
+
+此外，CJKfntef 还提供了指定宽度，让汉字分散对齐的环境：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\begin{CJKfilltwosides}{5cm}
+汉字，分散对齐
+\end{CJKfilltwosides}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{CJKfilltwosides}{5cm}
+        汉字，分散对齐
+    \end{CJKfilltwosides}
+\end{minipage}
+
+使用 CJKfntef 宏包后\verb|\emph| 命令也被改为下画线的格式，同样可以用\verb|\normalem| 改回原来的意大利体定义。在 ctex 宏包及文档类中，可以使用 \verb|fntef| 选项调用 CJKfntef ，
+此时\verb|\emph| 的定义不会被改变为下画线格式。
+
+\storybox{从 METAFONT 到 OpenType}
+{
+    \qquad 使用各种字体是任何排版软件都应具备的重要功能。今天\TeX 引擎可以使用很多格式的字体，如 METAFONT ，PostScript ，TrueType ，OpenType 等，这些又都是些什么呢？
+
+    \qquad 高德纳教授最初设计 \TeX 系统时，也同时为 \TeX 设计了配套的字体格式和字体描述语言，这就是 METAFONT 。\TeX 默认 Computer Modern 系列字体就是使用 METAFONT 描述的。METAFONT ，顾名思义，就是“元字体”。它是一门通过曲线路径描述字体信息的宏语言，把字符用坐标绘图的方式“画出来”。例如 cryst 字体中的一个箭头符号 $\to$ 就是用下面的代码画出来的：
+
+    {\ttfamily
+\qquad beginchar(9,120u\#,68u\#,0);
+
+\qquad "2, 0 Grad";
+
+\qquad z1=(Ou,37u); z2=(88u,37u); z3=(88u,31u); z4=(0,31u);
+
+\qquad z5=(116u,34u); z6=(73u,17u); z7=(72u,19u);
+
+\qquad z8=(84u,34u) ; z9=(72u,49u) ; z10=(73u,51u) ;
+
+\qquad fill z10{dir -28}..{dir -15}z5..z5{dir -165}..{dir -152}z6
+--z7--z8--z9--cycle;
+
+\qquad fill z1--z2--z3--z4--cycle;
+
+\qquad labels(range 1 thru 6) ;
+
+\qquad endchar ;}
+
+\qquad METAFONT 使用坐标作图的命令猫描述字符的曲线，然后把曲线计算为三次 Bézier 样条，再转换为光栅格式的通用字体文件（ generic font ） \lstinline{.gf}，同时生成\TeX 字体度量文件（TeXfontmetric） \lstinline{.tfm} 。\TeX 引擎从 \lstinline{.tfm}文件中读入字符尺寸信息，生成 DVI 文件；驱动程序在打印输出或屏幕显示时从 \lstinline{.gf}文件（一般转换为压缩的 \lstinline{.gk}文件）中读入字符图形信息，生成最终打印或显示的结果。尽管 METAFONT 在描述字符时使用的是曲线方式，但生成的结果却是光栅点阵形式的，在字体放大和使用电子文档时质量不够好；而且这种用数学坐标的方式描述符号很不直观，因此，现在 METAFONT 格式的字体使用得越来越少了。倒是 METAFONT 这种绘图方式，催生了绘图语言 METAPOST 的产生。
+
+\qquad Adobe公司推出 PostScript 时，也定义了 PostScript 字体的格式，Type 1 和 Type 3 是其中的两个类型。很多高质量的商业字体都是 PostScript Type 1 格式的，它支持字体信息的微调（hinting），后来当 Adobe 开放 Type1 格式的使用后，\TeX 中原来用 METAFONT 描述的字体也都纷纷转换为 TyPe1 字体了。Type 3格式不支持微调，不过也可以表示点阵字体，当输出 PostScript 或
+PDF 文件时，METAFONT 生成的 PK 字体就被转换为 Type3 格式。TyPe1 字体一般使用 \lstinline{.pfb} 后缀作为字体扩展名，用 \lstinline{.afm} 作为字体度量文件的扩展名，不过 \TeX 使用时仍然要使用转换得到的 \lstinline{.tfm}度量文件。目前输出 PostScript 或 PDF 文件的 \TeX 驱动和引擎都支持 PostScript 字体。
+
+\qquad TrueType 是苹果公司与 Adobe 竞争而于1991年发布的字体格式，微软得到授权后，它已成为 Windows 操作系统中最为常见的字体格式；OpenType 是微软公司和 Adobe 公司于1996年发布的字体格式，它继承了 PostScript 字体的许多特性。TrueType 字体以 \lstinline{.ttf} 和 \lstinline{.ttc} 为后缀，OpenType 字体以 \lstinline{.otf} 和 \lstinline{.ttf} 为后缀。新的驱动和引擎 dvipdfmx，pdfTeX，XeTeX 和 LuaTeX 都支持 TrueType 和 OpenType 字体格式，不过 dvipdfmx 和 pdfTeX 使用 TrueType
+和 OpenType 时仍然需要事先生成 .tfm 文件并进行配置，功能上也有一些限制，而 XeTeX 和 LuaTeX 则支持直接读取系统字体及全部 OpenType 字体特性。
+}
