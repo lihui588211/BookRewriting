@@ -612,7 +612,7 @@ xunicode 宏包重定义了 XeTeX 的 UTF-8 编码下（EU1字体编码）的大
 
 \subsection{字体}
 
-\subsubsection{字体的坐标}
+\subsubsection{字体的坐标} \label{sec:font}
 
 当我们说“换一个字体”的时候，指的是什么意思呢？可能是想换掉文字的整体感觉，如 “{\ttfamily TEXT}”和“ {\sffamily TEXT} ”；可能是想把直立的的文字改成倾斜的 ，如 “TEXT”和“\textit{TEXT}”；可能是想把细的文字加粗 ，如 “TEXT”和“\textbf{TEXT}”；可能是想把包含一些符号的字体改为包含另一种符号的； 还可能只是想改变字体的大小，如“文字”和“{\zihao{3} TEXT}”。尽管所使用的文字内容都是一样的（“ TEXT ”）。
 
@@ -1306,3 +1306,137 @@ PDF 文件时，METAFONT 生成的 PK 字体就被转换为 Type3 格式。TyPe1
 \qquad TrueType 是苹果公司与 Adobe 竞争而于1991年发布的字体格式，微软得到授权后，它已成为 Windows 操作系统中最为常见的字体格式；OpenType 是微软公司和 Adobe 公司于1996年发布的字体格式，它继承了 PostScript 字体的许多特性。TrueType 字体以 \lstinline{.ttf} 和 \lstinline{.ttc} 为后缀，OpenType 字体以 \lstinline{.otf} 和 \lstinline{.ttf} 为后缀。新的驱动和引擎 dvipdfmx，pdfTeX，XeTeX 和 LuaTeX 都支持 TrueType 和 OpenType 字体格式，不过 dvipdfmx 和 pdfTeX 使用 TrueType
 和 OpenType 时仍然需要事先生成 .tfm 文件并进行配置，功能上也有一些限制，而 XeTeX 和 LuaTeX 则支持直接读取系统字体及全部 OpenType 字体特性。
 }
+
+\subsection{字号与行距}
+
+字号指文字的大小，它原本是字体的性质，也被 NFSS 作为字体的坐标之一。例如 Computer Modern Roman 字体族的中等直立体就有 5,6,7,8,9，10,12,17 点共 8 种大小的不同字号，其中点（point,pt）是长度单位，为 1/72.27 英寸（ inch ）。不过当可缩放的矢量字体流行起来以后，字体只有一款，通过缩放达到不同的尺寸，字号也就经常作为独立于字体的单独性质了。
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+{\tiny tiny}\\
+{\scriptsize script size} \\ 
+{\footnotesize footnote size} \\ 
+{\small small} \\ 
+{\normalsize normal size}  \\  
+{\large large} \\ 
+{\Large larger} \\  
+{\LARGE even larger}  \\ 
+{\huge huge} \\ 
+{\Huge largest}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    {\tiny tiny}\\
+    {\scriptsize script size} \\ 
+    {\footnotesize footnote size} \\ 
+    {\small small} \\ 
+    {\normalsize normal size}  \\  
+    {\large large} \\ 
+    {\Large larger} \\  
+    {\LARGE even larger}  \\ 
+    {\huge huge} \\ 
+    {\Huge largest}
+\end{minipage}
+
+字号命令表示的具体尺寸随着所使用的文档类和大小选项的不同司而不同。在标准 \LaTeX 文档类 article,
+report 和 book 中，可以设置文档类选项 10 pt,11 pt 和 12 pt,全局地设置文档的字号，默认为10 pt，即\verb|\normalsize|的大小为 10 pt，这个数值表示字体中一个\verb|\quad| 的长度，通常也就是整个符号所占盒子的高度（对汉字来说，一般也相当于汉字宽度）。
+
+上述字号命令除了会修改文字大小外，同时对\verb|\normalsize|、\verb|\small|和\verb|\footnotesize| 也会修改文字的基本行距（默认是文字大小的1.2倍）、列表环境的各种间距、显示数学公式的垂直间距。因此这些命令比原始的\verb|\fontsize|、\verb|\zihao| 更方便使用。
+
+中文字号可以使用同样的命令设置（字号命令不区分中西文）。不过为了明确字号的具体大小，也可以使用 ctex 宏包或 ctexart 等文档类提供的\verb|\zihao| 命令设置。\verb|\zihao| 命令带一个参数，表示中文的字号，它影响分组或环境内命令后面所有的文字。\verb|\zihao| 命令可用的参数见表 \ref{tab:zihao}。
+
+\begin{table}[h]
+    \centering
+    \caption{中文字号}
+    \label{tab:zihao}
+    \begin{tabular}{ccccc}
+        \toprule 
+        命令 && 大小(bp) && 意义 \\
+        \midrule
+        \verb|\zihao{0}| && 42 && \zihao{0} 初号 \\
+        \verb|\zihao{-0}| && 36 && \zihao{-0} 小初号 \\
+        \verb|\zihao{1}| && 26 && \zihao{1} 一号 \\
+        \verb|\zihao{-1}| && 24 && \zihao{-1} 小一号 \\
+        \verb|\zihao{2}| && 22 && \zihao{2} 二号 \\
+        \verb|\zihao{-2}| && 18 && \zihao{-2} 小二号 \\
+        \verb|\zihao{3}| && 16 && \zihao{3} 三号 \\
+        \verb|\zihao{-3}| && 15 && \zihao{-3} 小三号 \\
+        \verb|\zihao{4}| && 14 && \zihao{4} 四号 \\
+        \verb|\zihao{-4}| && 12 && \zihao{-4} 小四号 \\
+        \verb|\zihao{5}| && 10.5 && \zihao{5} 五号 \\
+        \verb|\zihao{-5}| && 9 && \zihao{-5} 小五号 \\
+        \verb|\zihao{6}| && 7.5 && \zihao{6} 六号 \\
+        \verb|\zihao{-6}| && 6.5 && \zihao{-6} 小六号 \\
+        \verb|\zihao{7}| && 5.5 && \zihao{7} 七号 \\
+        \verb|\zihao{8}| && 5 && \zihao{8} 八号 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+类似地，ctexart,ctexrep 和 ctexbook 文档类也提供了两个选项 \verb|c5size| 和 \verb|cs4size| 影响全文的字体大小和 \verb|\normalsize| 等命令的意义 （见表\ref{tab:size}） 。 \verb|c5size| 和 \verb|cs4size|分别表示 \verb|\normalsize|为五号字和小四号字，默认为 \verb|c5size|。
+
+\begin{table}[h]
+    \centering
+    \caption{不同文档类选项下的字体命令。这里给出不同字号命令对应的字号尺寸。正文的默认学号是\\ \lstinline{\normalfont} 。西文文档类默认选项是 10pt ，字体尺寸以 pt 为单位；ctex 文档类的默认选项是 c5size ，使用中文字号}
+    \linespread{1.4}
+    \selectfont
+    \label{tab:size}
+    \begin{tabular}{ccccccccccc}
+        \toprule 
+        命令 && 10pt && 11pt && 12pt && c5size && cs4size \\ 
+        \midrule 
+        \verb|\tiny| && 5 && 6 && 6 && 七 && 小六 \\
+        \verb|\scriptsize| && 7 && 8 && 8 && 小六 && 六 \\
+        \verb|\footnotesize| && 8 && 9 && 10 && 六 && 小五 \\ 
+        \verb|\small| && 9 && 10 && 10.95 && 小五 && 五 \\
+        \verb|\normalsize| && 10 && 10.95 && 12 && 五 &&小四 \\
+        \verb|\large| && 12 && 12 && 14.4 && 小四 && 小三 \\
+        \verb|\Large| && 14.4 && 14.4 && 17.28 && 小三 && 小二 \\
+        \verb|\LARGE| && 17.28 && 17.28 && 20.74 && 小二&& 二 \\
+        \verb|\huge| && 20.74 && 20.74 && 24.88 && 二 && 小一 \\
+        \verb|\Huge| && 24.88 && 24.88 && 24.88 && 一 && 一 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+\LaTeX 中的行距是与字号直接相关的。在设置字号时，同时也就设置了基本行距为文字大小的 1.2 倍。行距一词指的是一行文字的基线（base line）到下一行文字的基线的距离。
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{linespread.png}
+\end{figure}
+
+可以使用命令\verb|\linespread{因子}| 来设置实际行距为基本行距的倍数。与许多其他底层字体命令一样，它也在 \verb|\selectfont| 命令（或等效的字体变更）后生效。对 article 等标准文档类来说，默认值为 1，即行距是字号大小的 1.2 倍；而对ctexart等中文文档类来说，默认值为1.3，即行距是字号大小的1.56倍。
+
+setspace 宏包提供了一组命令和环境，用于在修改行距因子的同时保证数学公式、浮动体、脚注间距的值也相对合理。基本的命令是\verb|\setstretch{因子}|，大致相当于使用了\verb|\linespread|后再加\verb|\selectfont| 生效。除此之外，setspace 也提供了几个环境用来产生宏包定义的单倍、一倍半和双倍行距，不过要注意其“倍数”的意义并不是\verb|\setstretch|的行距因子，而是指行距相比字号尺寸的倍数，这也与其他一些软件（如微软的字处理器 Word）不同，见表\ref{tab:setspace}。
+
+\begin{table}[h]
+    \centering
+    \caption{setspace 提供的命令和环境}
+    \label{tab:setspace}
+    \linespread{1.4}
+    \selectfont
+    \begin{tabular}{ccccc}
+        \toprule
+        命令形式 && 环境形式 && 意义 \\
+        \midrule 
+        \verb|\setstretch| && spacing && 与\verb|\linespread|功能相当 \\ 
+        \verb|\singlespacing| &&  singlespace && 正常行距 \\
+        \verb|\onehalfspacing| && onehalfspace && 基线间距是字号大小的 1.5 倍 \\
+        \verb|\doublespacing| && doublespace && 基线间距是字号大小的 2 倍 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+可以使用\ref{sec:font}节的\verb|\fontsize| 直接指定文字的字号和基本行距，注意这里字号和基本行距是 NFSS 坐标中的一部分，只有在使用了\verb|\selectfont|后才能生效。
+
+除了设置两行基线间的距离，\TeX 还提供了两个基本尺寸，用来设置两行文字内容间的距离。\TeX 中行距默认由基线间的距离\verb|\baselineskip|控制（\LaTeX 的 \verb|\fontsize| 和\verb|\linespread| 间接控制 \verb|\baselineskip|。\verb|\lineskiplimit| 是一个界限值，当前一行盒子的底部与后一行盒子的顶部距离小于这个界限时，行距改由 
+\verb|\lineskip| 控制，它将设置行距，使得前一行底到后一行顶的距离等于\verb|\lineskip|。在文档中设置合适的 
+\verb|\lineskiplimit| 和 \verb|\lineskip| 值可以避免两行因包含太高的内容（如分式 $\displaystyle \frac{1}{2}$）而距离过紧，如设置为:
+
+\begin{lstlisting}
+    \setlength{\lineskiplimit}{2.625bp} % 五号字 1/4 字高
+    \setlength{\lineskip}{2.625bp}
+\end{lstlisting}
+
+即要求两行间至少有 1/4 五号字字号高度的距离。
