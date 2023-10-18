@@ -359,7 +359,7 @@
     \includegraphics[width=0.6\textwidth]{标点形式.png} \centering
 \end{center}
 
-\subsubsection{看不见的字符——空格与换行}
+\subsubsection{看不见的字符——空格与换行}\label{sec:space}
 
 文本中的空格起分隔单词的作用，任意多个空格的功能与一个空格相同；只有字符后面的空格是有效的，每行最前面的空格则被忽略，这样有利于复杂代码的对齐；单个换行也被看成一个空格。例如（我们仍然用 \lstinline[showspaces=true]{ } 表示空格：
 
@@ -1440,3 +1440,203 @@ setspace 宏包提供了一组命令和环境，用于在修改行距因子的�
 \end{lstlisting}
 
 即要求两行间至少有 1/4 五号字字号高度的距离。
+
+\subsection{水平间距与盒子}
+
+\subsubsection{水平间距}
+
+现在我们来继续 \ref{sec:space} 节有关空格的话题，来说说如何正确地产生和使用水平间距。说到长度，就不能不说说单位。在\TeX 中，可以使用的长度单位有以下几种：
+\begin{itemize}
+    \item \verb|pt| \qquad point点（ 欧美传统排版的长度单位，有时叫做“磅” ）
+    \item \verb|pc| \qquad pica（1pc = 12pt，相当于四号字大小）
+    \item \verb|in| \qquad inch 英寸（1in = 72.27pt）
+    \item \verb|bp| \qquad big point 大点（在 PostScript 等其他电子排版领域的 point 都指大点，1in = 72bp ）
+    \item \verb|cm| \qquad centimeter 厘米（2.54 cm =1in）
+    \item \verb|mm| \qquad millimeter 毫米 （10mm = 1 cm ）
+    \item \verb|dd| \qquad didot point（欧洲大陆使用，1157 dd =1238pt）
+    \item \verb|cc| \qquad cicero（欧洲大陆使用，pica 的对应物，1cc =12dd
+    \item \verb|sp| \qquad scaled point（ \TeX 中最小的长度单位，所有长度都是它的倍数 65536 sp = 1 pt ）
+    \item \verb|em| \qquad 全身（字号对应的长度，等于一个\verb|\quad|的长度，也称为“全方”，本义是大写字母 M 的宽度）
+    \item \verb|ex| \qquad x-height（ 与字号相关，由字体定义。本义是小写字母 x 的高度）
+\end{itemize}
+
+一个长度必须数字和单位齐全，正确的长度如下所示：
+\begin{lstlisting}
+    2cm  1.5pc  -.1cm  +72.dd  1234567sp
+\end{lstlisting}
+
+在正文中可以使用下面的命令表示不可换行的水平间距：
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ccccc}
+    \verb|\thinspace| 或 \verb|\,| && 0.1667 em && $\longrightarrow$\negthinspace|\thinspace| \\
+    \verb|\negthinspace| 或 \verb|\!| && -0.1667 em && $\longrightarrow$\negthinspace|\negthinspace\negthinspace| \\
+    \verb|\enspace|  && 0.5 em && $\longrightarrow$\negthinspace|\enspace| \\
+    \verb|\nobreakspace|或\verb|~|  &&  空格 && $\longrightarrow$\negthinspace|\nobreakspace| \\
+    \end{tabular}
+\end{table}
+
+可以使用下面的命令表示可以换行的水平间距：
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ccccc}
+    \verb|\quad| && 1 em && $\longrightarrow$\negthinspace|\quad| \\
+    \verb|\qquad|  && 2 em && $\longrightarrow$\negthinspace|\qquad| \\
+    \verb|\enskip|  && 0.5 em && $\longrightarrow$\negthinspace|\enskip| \\
+    \verb*|\ | &&  空格 && $\longrightarrow$\negthinspace|\ | \\
+    \end{tabular}
+\end{table}
+
+使用水平间距的命令要注意适用，例如\verb|\,|是不可断行的，因而就不适用于分隔很长的内容，但用来代替逗号给长数字分段就很合适：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+1\,234\,567\,890
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    1\,234\,567\,890
+\end{minipage}
+
+负距离\verb|\!|则可以用来细调符号距离，或拼接两个符号，如把两个“剑号”拼起来：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+    \newcommand\dbldag{\dag\!\dag}
+    \dbldag\ versus \dag\dag
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \newcommand\dbldag{\dag\!\dag}
+    \dbldag\ versus \dag\dag
+\end{minipage}
+
+而正如前面已经多次见到的，分隔词组经常使用可断行的而距离也比较大的\verb|\quad|和\verb|\qquad|。
+
+当上面的命令中没有合适的距离时，可以用\verb|\hspace{距离}|命令来产生指定的水平间距（这里\verb|\,|则用来分隔数字和单位）：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+    Space\hspace{1cm}1\,cm
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    Space\hspace{1cm}1\,cm
+\end{minipage}
+
+\verb|\hspace| 命令产生的距离是可断行的。\verb|\hspace| 的作用是分隔左右的内容，在某些只有一边有内容的地方（如强制断行的行首），\LaTeX 会忽略\verb|\hspace|产生的距离，此时可
+以用带星号的命令\verb|\hspace*{距离}|阻止距离被忽略：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+    text\\
+    \hspace{1cm}text\\
+    \hspace*{1cm}text
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    text\\
+    \hspace{1cm}text\\
+    \hspace*{1cm}text
+\end{minipage}
+
+\verb|\hspace|可以产生随内容可伸缩的距离，即所谓胶（glue）或者橡皮长度（rubber length，又称弹性长度）。橡皮长度的语法是：
+\begin{lstlisting}
+    <普通长度> plus <可伸长长度> minus <可缩短长度>
+\end{lstlisting}
+
+单词间的空格、标点后的距离都是橡皮长度，这样才能保证在分行时行末的对齐，因此在定义经常出现的距离时应该使用橡皮长度。如：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\newcommand\test{longgggggggggggggggg
+\hspace{2em plus 1em minus 0.25em}}
+\test\test\test\test\test\test\test\test
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\newcommand\test{longgggggggggggggggg \hspace{2em plus 1em minus 0.25em}}
+\test\test\test\test\test\test\test\test
+\end{minipage}
+
+有一种特殊的橡皮长度\verb|\fill|，它可以从零开始无限延伸，此时橡皮长度就真的像是一个弹簧，可以用它来把几个内容均匀排列在一行之中：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+left\hspace{\fill}middle \hfill right
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    left\hspace{\fill}middle \hfill right
+\end{minipage}
+
+\verb|\hfill| 命令是 \verb|\hspace{fill}| 的简写，还可以使用\verb|\stretch{倍数}|产生具有
+指定“弹力”的橡皮长度，如\verb|\stretch{2}|就相当于两倍的\verb|\fill|:
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+left\hspace{\stretch{2}}$2/3$\hspace{\fill}right
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    left\hspace{\stretch{2}}$2/3$\hspace{\fill}right
+\end{minipage}
+
+\verb|\hrulefill| 和 \verb|\dotfill| 与 \verb|\hfill| 功能类似，只是中间的内容使用横线或圆点填充：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+left\hrulefill middle\dotfill right
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    left\hrulefill middle\dotfill right
+\end{minipage}
+
+\LaTeX 预定义了一些长度变量控制排版的参数，可以通过 \verb|\setlength| 命令来设置。例如段前的缩进：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\setlength{\parindent}{8em}
+Paragraph indent can be very wide in \LaTeX.
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \setlength{\parindent}{8em}
+    Paragraph indent can be very wide in \LaTeX.
+\end{minipage}
+
+我们在后面的章节会陆续见到这类长度变量。还可以用\verb|\addtolength| 命令在长度变量上做累加，如：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+Para\par
+\addtolength{\parindent}{2em}Para\par
+\addtolength{\parindent}{2em}Para\par
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    Para\par
+    \addtolength{\parindent}{2em}Para\par
+    \addtolength{\parindent}{2em}Para\par
+\end{minipage}
+
+长度变量的改变在当前分组或环境内起效，因此不必担心在一个环境内的设置会影响到外面的内容，也可以使用分组使变量的改变局部化。
+
+可以用\verb|\newlength|命令定义自已的长度变量，这样就可以在不同的地方反复使用:
+
+\begin{lstlisting}
+    \newlength\mylen\setlength{\mylen}{2em}
+\end{lstlisting}
+
+这在自定义的一些环境中是十分有用的。
