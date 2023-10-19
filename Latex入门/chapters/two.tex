@@ -1640,3 +1640,178 @@ Para\par
 \end{lstlisting}
 
 这在自定义的一些环境中是十分有用的。
+
+\subsubsection{盒子}
+
+盒子（box）是 \TeX 中的基本处理单位，一个字符、一行文字、一个页面、一张表格在 \TeX 中都是一个盒子。回到活字印刷时代或许有助于理解盒子的概念：一个活字就表示一个字符，一行活字排好就用钢条分隔固定成为一行，一整页排完也固定在金属框内。\TeX 也是这样，组字成行，组行为页，小盒子用胶粘连成为大盒子，逐步构成完整的篇章。
+
+\TeX 可以处在不同的工作模式下，在不同的工作模式下产生不同的盒子。最基本的模式是水平模式（如在组字成行的时候）和垂直模式（如在组行成页的时候），水平模式把小盒子水平排列组成大盒子，垂直模式下把小盒子垂直排列组成大盒子：此外还有更为复杂的数学模式，此时小盒子会构成复杂的数学结构。通常 \TeX 根据内容自动切换不同的模式，完成这些复杂的工作；不过也可以使用命令进入指定的模式生成
+盒子，我们现在只看最简单的水平模式下的盒子。
+
+最简单的命令是\verb|\mbox{内容}|，它产生一个盒子，内容以左右模式排列。可以用它表示不允许断行的内容，如果不在行未看不出它与其他内容的区别：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\mbox{cannot be broken}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \mbox{cannot be broken}
+\end{minipage}
+
+\verb|\makebox| 与 \verb|\mbox| 类似，但可以带两个可选参数，指定盒子的宽度和对齐方式:
+\begin{lstlisting}
+    \makebox[宽度][对齐方式]{内容}
+\end{lstlisting}
+
+对齐方式参数可取c（中）、l（左）、r（右）、s（分散），默认居中。
+
+例如：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\makebox[1em]{\textbullet}text \\
+\makebox[5cm][s]{some stretched text}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\makebox[1em]{\textbullet}text \\
+\makebox[5cm][s]{some stretched text}
+\end{minipage}
+
+甚至可以使用makebox产生宽度为 0 的盒子，产生重叠（overlap）的效果：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+% word 左侧与盒子基点对齐
+\makebox[0pt][l]{word}文字
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\makebox[0pt][l]{word}文字
+\end{minipage}
+
+不过，\LaTeX 已经提供了两个命令来专门生成重叠的效果，即\verb|\llap| 和 \verb|\rlap| 。这两个命令分别把参数中的内容向当前位置的左侧和右侧重叠：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+语言文字\llap{word}\\
+\rlap{word}语言文字
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+语言文字\llap{word}\\
+\rlap{word}语言文字
+\end{minipage}
+
+命令 \verb|\fbox| 和 \verb|\framebox| 产生带边框的盒子，语法与 \verb|\mbox| 和 \verb|\makebox| 类似：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\fbox{framed} \\
+\framebox[3cm][s]{framed box}    
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\fbox{framed} \\
+\framebox[3cm][s]{framed box}    
+\end{minipage}
+
+边框与内容的距离由长度变量\verb|\fboxsep|控制（默认为3pt）：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\setlength{\fboxsep}{0pt} \fbox{tight}
+\setlength{\fboxsep}{1em} \fbox{loose}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \setlength{\fboxsep}{0pt} \fbox{tight}
+    \setlength{\fboxsep}{1em} \fbox{loose}
+\end{minipage}
+
+边框线的粗细则由长度变量 \verb|\fboxrule| 控制（默认为0.4pt）
+
+可以用 \verb|\newsavebox{命令}| 声明盒子变量，用
+
+\begin{lstlisting}
+    \sbox{命令}{内容}
+    \savebox{命令}[宽度][对齐]{内容}
+    \begin{lrbox}{命令} 内容 \end{lrbox}
+\end{lstlisting}
+
+给盒子变量赋值，在文章中使用 \verb|\usebox{内容}| 反复使用：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\newsavebox{\mybox} % 通常在导言区定义
+\sbox{\mybox}{test text}
+\usebox{\mybox}\fbox{\usebox{\mybox}}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \newsavebox{\mybox} 
+    \sbox{\mybox}{test text}
+    \usebox{\mybox} \fbox{\usebox{\mybox}}
+\end{minipage}
+
+\verb|\savebox| 与 \verb|\sbox| 的区别类似 \verb|\makebox|与 \verb|\mbox| 的区别，基本功能相同，只是增加了宽度和对齐的选项。
+
+盒子变量中一般保存比较复杂的内容。特别是可以使用 \verb|lrbox| 环境保存抄录环境等难以放在其他命令参数中的内容作进一步的处理。
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\newsavebox{\verbbox} % 通常在导言区定义
+\begin{lrbox}{\verbbox}
+\verb|#$%^&{}|
+\end{lrbox}
+\usebox{\verbbox} \fbox{\usebox{verbbox}}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \newsavebox{\verbbox}
+    \begin{lrbox}{\verbbox}
+    \verb|#$%^&{}|
+    \end{lrbox}
+    \usebox{\verbbox} \fbox{\usebox{\verbbox}}
+\end{minipage}
+
+\TeX 中的每个盒子都有其宽度（width）、高度（height）和深度（depth），高度和深度以基点（base）为界：
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{box.png}
+\end{figure}
+
+可以用
+\begin{lstlisting}
+    \settowidth{长度变量}{内容}
+    \settoheight{长度变量}{内容}
+    \settodepth{长度变量}{内容}
+\end{lstlisting}
+
+把内容的宽度、高度或深度赋值给长度变量。也可以用
+\begin{lstlisting}
+    \wd{盒子变量}   \ht{盒子变量}   \dp{盒子变量}
+\end{lstlisting}
+分别得到盒子的宽度、高度和深度。
+
+除此之外，在\verb|\makebox| 、\verb|\framebox| 等盒子命令的参数中，也可以使用 \verb|\width| 、 \verb|\height| 、\verb|\depth| 、\verb|\totalheight| 来分别表示盒子内容的自然宽度、高度、深度，以及高度和深度之和。例如，下面的例子产生一个带边框的盒子，其总宽度恰好是文字自然宽度的2倍：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\framebox[2\width]{带边框}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \framebox[2\width]{带边框}
+\end{minipage}
