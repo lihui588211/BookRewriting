@@ -1441,7 +1441,7 @@ setspace 宏包提供了一组命令和环境，用于在修改行距因子的�
 
 即要求两行间至少有 1/4 五号字字号高度的距离。
 
-\subsection{水平间距与盒子}
+\subsection{水平间距与盒子} \label{sec:box}
 
 \subsubsection{水平间距}
 
@@ -1814,4 +1814,179 @@ Para\par
 \hfill
 \begin{minipage}[t]{0.45\textwidth}
     \framebox[2\width]{带边框}
+\end{minipage}
+
+\section{段落与文本环境}
+
+\subsection{正文段落}
+
+我们已经知道，\LaTeX 使用空行表示分段，在自定义命令中，也常用 \verb|\par| 命令分段。自然段是 \LaTeX 最基本的正文分划方式。
+
+在 \ref{sec:box}节已经看到，每个自然段在第一行有一个适定的缩进，可以由长度变量 \verb|\parindent| 控制。在西文标准文档类（如 article ）中，每个章节的第一段是不缩进的，而中文文档类（如ctexart）则每段缩进，并自动设置段落缩进为两个汉字宽。如果要在某一段开头临时禁用缩进，可以在段前使用 \verb|\noindent| 命令；而如果要在本来没有缩进的地方使用缩进，可以用 \verb|\indent| 命令产生一人长为 \verb|\parindent| 的缩进。在西文文档中，可以使用 indentfirst 宏包启用章节首段的缩进.
+
+除了段落首行缩进，另一个关于分段的重要参数是段与段之间的垂直距离，这由变量 \verb|\parskip| 控制。
+\verb|\parskip| 的默认值是橡皮长度 \verb|0pt plus 1pt|，在中文排版中常
+常使用
+\begin{lstlisting}
+    \setlength{\parskip}[0pt]
+\end{lstlisting}
+把段间距定义为固定长度，禁止段落间距离伸长。当然有时为了文字清晰，也常设置一个较大的\verb|\parskip|。
+
+段落最明显的属性是对齐方式。\LaTeX 的段落默认是两端均匀对齐的，也可以改为左对齐、右对齐或居中格式。\verb|\raggedright|命令设置段落左对齐（ ragged right） 意谓右边界参差不齐），这在双栏文档一行非常窄的时候特别有用，此时强求均匀对齐会使单
+词间的距离过大，十分难看，如下所示：
+
+\begin{minipage}[t]{0.7\textwidth}
+\begin{lstlisting}
+    English words like `technology' stem from a Greek root beginning with the letters tεx \dots
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.15\textwidth}
+    English words like `technology' stem from a Greek root beginning with the letters tεx \dots
+\end{minipage}
+
+而如果使用左对齐就可以解决这个问题：
+
+\begin{minipage}[t]{0.7\textwidth}
+\begin{lstlisting}
+    \raggedright
+    English words like `technology' stem from a Greek root beginning with the letters tεx \dots
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.15\textwidth}
+    \raggedright
+    English words like `technology' stem from a Greek root beginning with the letters tεx \dots
+\end{minipage}
+
+类似地，右对齐使用\verb|\raggedleft| 命令，居中使用\verb|\centering| 命令。右对齐常常用于排版签名、日期、格言警句等；居中的段落则有强调的意味。
+
+\LaTeX 提供了三个环境来排版不同对齐方式的文字： \verb|flushleft| 环境左对齐 、 \verb|flushright| 环境右对齐和 \verb|center| 环境居中。这几个环境会在段落前后增加一小段垂
+直间距以示强调，对于少量的段落，它们不会影响前后的文字，因此比\verb|\raggedright|等命令更常用一些。不过如果不想要额外的垂直距离，则不应该使用它们，如：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\begin{center}
+    居中
+\end{center}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{center}
+        居中
+    \end{center}
+\end{minipage}
+
+在默认的段落设置下，\LaTeX 可能会在单词的两个音节中间断行，并在前一行未尾加上连字符，即所谓断词（用连字号连接 ， hyphenation ）。例如：
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.2\textwidth]{hyphenation.png}
+\end{figure}
+
+\TeX 的断词算法通常工作得很好，不需要人为干预，不过仍然可能会有一些特殊的单词是 \TeX 不能正确处理的，此时可以在单词中使用 \verb|\-| 命令告诉 \LaTeX 可能的断点，如 \verb|man\-u\-script|。还可以使用 \verb|\hyphenation| 命令在导言区全局地设置断点列表，如：
+
+\begin{lstlisting}
+    \hyphenation{man-u-script com-pu-ter gym-na-sium}
+\end{lstlisting}
+
+断词只在均匀对齐的段落中起作用，左对齐的段落就没有断词。使用 \verb|\sloppy| 命令可以允许段落中更大的空格，从而禁用断词功能；与之相对的命令是\verb|\fussy| ，让段落恢复默认的较严格的间距。更多地是使用等效的 \verb|sloppypar| 环境，把允许更
+宽松间距的文本段放在环境中。以 \verb|none| 选项使用 hyphenat 宏包可以更好地禁用断词，宏包也提供了有关打字机字体的断词功能。ragged2e 宏包则可以在左对齐（ \verb|\raggedRight| ）、右对齐（ \verb|\raggedLeft| ）或居中（ \verb|\centering| ）的段落中使用断词，这样可以得到更合理的段落：
+
+\begin{minipage}[t]{0.7\textwidth}
+\begin{lstlisting}
+% 导言区 \usepackage{ragged2e}
+\raggedright
+English words like technology' stem from a
+Greek root beginning with the letters τεχ \dots
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.15\textwidth}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\textwidth]{raggedright.png}
+    \end{figure}
+\end{minipage}
+
+ragged2e 宏包还提供了 \verb|\justifying| 命令回到均匀对齐的段落，以及对应的 \verb|Center| ， \verb|FlushLeft| ，\verb|FlushRight| ， \verb|justify| 环境，作为标准 \LaTeX 命令和环境的补充。
+
+对付西文文本参差不齐的小短行，一个有力的工具是 microtype 宏包。这个宏包可以通过调整单词内的字母间距改善 \TeX 的分行效果。当排版西文文档时可以总打开此宏包的功能。
+
+可以使用长度变量 \verb|\leftskip| 和 \verb|\rightskip| 来控制段落的宽度，如果是局部修改，注意把整个段落放在一个分组里面，或定义为单独的环境。例如：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\setlength{\leftskip}{4em}
+\setlength{\rightskip}{1em}
+These parameters tell \TeX{} how much glue
+to place at the left and at the right end
+of each line of the current paragraph.
+\end{lstlisting}
+\end{minipage}
+\hfill
+|
+\begin{minipage}[t]{0.45\textwidth}
+    \setlength{\leftskip}{4em}
+    \setlength{\rightskip}{1em}
+    These parameters tell \TeX{} how much glue
+    to place at the left and at the right end
+    of each line of the current paragraph.
+\end{minipage}
+|
+
+上面介绍的只是基本的段落形状。使用原始 \TeX 命令 \verb|\parshape|，\LaTeX 还可以排版出更为特殊形状的段落，但
+\verb|\parshape| 命令使用起来比较复杂，这里不作介绍。较为常用的一种特殊段落是“悬挂缩进”，它可以由命令\verb|\hangafter| 和 \verb|\hangindent| 控制，例如：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\hangindent=5pc  \hangafter=-2
+These two parameters jointly specify ``hanging indentation'' for a paragraph. The hanging indentation indicates to \TeX that certain lines of the paragraph should be indented and the remaining lines should have their normal width.
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \hangindent=5pc  \hangafter=-2
+    These two parameters jointly specify ``hanging indentation'' for a paragraph. The hanging indentation indicates to \TeX that certain lines of the paragraph should be indented and the remaining lines should have their normal width.
+\end{minipage}
+
+正的 \verb|\hangindent| 作用于段落左侧，负的 \verb|\hangindent| 作用于段落右侧；正的 \verb|\hangafter|
+作用于段落的 n 行之后，负的 \verb|\hangafter| 作用于段落的前n 行。\verb|\hangindent| 和 \verb|\hangindent| 的设置只对当前段起作用。
+
+letrine 宏包利用特殊的段落形状产生首字下沉的效果，例如：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+% 导言区 \usepackage{lettrine}
+\lettrine{T}{he} \TeX{} in \LaTeX refers to Donald Knuth's \TeX{} typesetting system. The \LaTeX program is a special version of \TeX{} that understands \LaTeX{} commands.
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \lettrine{T}{he} \TeX{} in \LaTeX refers to Donald Knuth's \TeX{} typesetting system. The \LaTeX program is a special version of \TeX{} that understands \LaTeX{} commands.
+\end{minipage}
+
+shapepar 宏包提供了 \verb|\parshape| 命令的一个较为方便的语法接口，特别是定义了一些预定义的形状，可以方便地排出一些有趣的效果：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+% 导言区 \usepackage{shapepar}
+\heartpar{ %
+绿草苍苍，白雾茫茫，有位佳人，在水一方。
+绿草姜姜，白雾迷离，有位佳人，靠水而居。
+我愿逆流而上，依在她身旁。无奈前有险滩，道路又远又长。
+我愿顺流而下，找寻她的方向。却见依稀仿佛，她在水的中央。
+我愿逆流而上，与她轻言细语。无奈前有险滩，道路曲折无已。
+我愿顺流而下，找寻她的足迹。却见仿佛依稀，她在水中伫立。}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \heartpar{ %
+    绿草苍苍，白雾茫茫，有位佳人，在水一方。
+    绿草姜姜，白雾迷离，有位佳人，靠水而居。
+    我愿逆流而上，依在她身旁。无奈前有险滩，道路又远又长。
+    我愿顺流而下，找寻她的方向。却见依稀仿佛，她在水的中央。
+    我愿逆流而上，与她轻言细语。无奈前有险滩，道路曲折无已。
+    我愿顺流而下，找寻她的足迹。却见仿佛依稀，她在水中伫立。}
 \end{minipage}
