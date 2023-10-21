@@ -2084,10 +2084,160 @@ shapepar 宏包提供了 \verb|\parshape| 命令的一个较为方便的语法�
 \end{figure}
 \end{minipage}
 
-摘要的标题由 \verb|\abstractname| 定义，英文默认是“ Abstract ”，中文是“摘要”。可以通过重定义 
+摘要的标题由 \verb|\abstractname| 定义，英文默认是“ Abstract ”，中文是“摘要”。可以通过重定义 \\
 \verb|\abstractname| 来设置，在ctex文档类中也可以使用 \verb| \CTEXoptions| 设置，如：
 
 \begin{lstlisting}
     \CTEXoptions[abstractname={摘 \quad 要}]
 \end{lstlisting}
 
+\subsection{列表环境}
+
+\subsubsection{基本列表环境}
+
+列表是常用的本文格式。\LaTeX 标准文档类提供了三种列表环境：编号的 \verb|enumerate| 环境、不编号的\\ 
+ \verb|itemize| 环境和使用关键字的 \verb|description| 环境。在列表环境内部使用 \verb|item| 命令开始一个列表项，它可以带一个可选参数表示手动编号或关键字。
+
+ \verb|enumerate| 环境使用数字自动编号：
+
+ \begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\begin{enumerate}
+    \item 中文
+    \item English
+    \item FranÇais
+\end{enumerate}
+\end{lstlisting}
+
+ \end{minipage}
+ \hfill
+ \begin{minipage}[t]{0.45\textwidth}
+\begin{enumerate}
+    \item 中文
+    \item English
+    \item FranÇais
+\end{enumerate}
+ \end{minipage}
+
+
+\verb|itemize| 环境不编号，但会在每个条自前面加一个符号以示标记：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\begin{itemize}
+\item 中文
+\item English
+\item FranÇais
+\end{itemize}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{itemize}
+        \item 中文
+        \item English
+        \item FranÇais
+    \end{itemize}
+\end{minipage}
+
+\verb|description| 环境总是使用 \verb|\item| 命令的可选参数，把它作为条目的关键字加粗显示：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\begin{description}
+\item[中文] 中国的语言文字
+\item[English] The language of England
+\item[FranÇais] La langue de France
+\end{description}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{description}
+        \item[中文] 中国的语言文字
+        \item[English] The language of England
+        \item[FranÇais] La langue de France
+    \end{description}
+\end{minipage}
+
+上面三种列表环境可以嵌套使用（至多四层），\LaTeX 会自动处理不同层次的缩次和编号，如  \verb|enumerate| 环境：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\begin{enumerate}
+\item 中文
+    \begin{enumerate}
+        \item 古代汉语
+        \item 现代汉语
+        \begin{enumerate}
+            \item 口语
+            \begin{enumerate}
+                \item 普通话
+                \item 方言
+            \end{enumerate}
+            \item 书面语
+        \end{enumerate}
+    \end{enumerate}
+    \item English
+    \item Francais
+\end{enumerate}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{enumerate}
+        \item 中文
+        \begin{enumerate}
+            \item 古代汉语
+            \item 现代汉语
+            \begin{enumerate}
+                \item 口语
+                \begin{enumerate}
+                    \item 普通话
+                    \item 方言
+                \end{enumerate}
+                \item 书面语
+            \end{enumerate}
+        \end{enumerate}
+        \item English
+        \item FranÇais
+    \end{enumerate}
+\end{minipage}
+
+所有条目都以 \verb|\item| 命令开头。使用 \verb|\item| 命令的可选参数可以为 \verb|enumerate| 环境或 \verb|itemize| 环境临时手工设置编号或标志符号，如：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\begin{enumerate}
+    \item 中文
+    \item[1a.] 汉语
+    \item English
+\end{enumerate}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{enumerate}
+        \item 中文
+        \item[1a.] 汉语
+        \item English
+    \end{enumerate}
+\end{minipage}
+
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{lstlisting}
+    \begin{itemize}
+        \item 中文
+        \item[1a.] 汉语
+        \item English
+    \end{itemize}
+    \end{lstlisting}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.45\textwidth}
+        \begin{itemize}
+            \item[\dag] 中文
+            \item English
+            \item FranÇais
+        \end{itemize}
+    \end{minipage}
