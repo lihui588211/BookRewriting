@@ -1990,3 +1990,104 @@ shapepar 宏包提供了 \verb|\parshape| 命令的一个较为方便的语法�
     我愿逆流而上，与她轻言细语。无奈前有险滩，道路曲折无已。
     我愿顺流而下，找寻她的足迹。却见仿佛依稀，她在水中伫立。}
 \end{minipage}
+
+\subsection{文本环境}
+
+有几种常用的特殊文本段落类型，在 \LaTeX 中以文本环境的形式给出，它们是引用环境、诗歌环境和摘要环境。
+
+引用环境有两种，分别是 \verb|quote| 环境和 \verb|quotation| 环境。\verb|quote| 环境在段前没有首行的缩进，每段话的左右边距比正文大一些，通常用于小段内容的引用：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+前文……
+\begin{quote}
+学而时习之，不亦说乎？
+有朋自远方来，不亦乐乎？
+\end{quote}
+后文……
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    前文……
+    \begin{quote}
+    学而时习之，不亦说乎？
+    有朋自远方来，不亦乐乎？
+    \end{quote}
+    后文……
+\end{minipage}
+
+而 \verb|quotation| 环境则在每段前有首行缩进，因而适用于多段的文字引用：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+前文……
+\begin{quotation}
+学而时习之，不亦说乎？
+有朋自远方来，不亦乐乎？
+
+默而识之，学而不厌，海人不倦，何有于我哉？
+\end{quotation}
+后文……
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    前文……
+    \begin{quotation}
+    学而时习之，不亦说乎？
+    有朋自远方来，不亦乐乎？
+    
+    默而识之，学而不厌，海人不倦，何有于我哉？
+    \end{quotation}
+    后文……
+\end{minipage}
+
+\verb|verse| 环境用来排版诗歌韵文：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\begin{verse}
+在一段内使用 \verb=\\= 换行，\\
+分段仍用空行。
+
+过长的长句会在折行时悬挂缩进
+就像现在这一句。
+\end{verse}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{verse}
+        在一段内使用 \verb=\\= 换行，\\
+        分段仍用空行。
+        
+        过长的长句会在折行时悬挂缩进，
+        就像现在这一句。
+    \end{verse}
+\end{minipage}
+
+摘要环境 \verb|abstract| 是 article 和 report 文档类（包括中文的 ctexart 和 ctexrep ）定义的，它产生一个类似 \verb|quotation| 的小号字环境，并增加标题：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\begin{abstract}
+本书讲解 \LaTeX 的使用。
+\end{abstract}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{abstract.png}
+\end{figure}
+\end{minipage}
+
+摘要的标题由 \verb|\abstractname| 定义，英文默认是“ Abstract ”，中文是“摘要”。可以通过重定义 
+\verb|\abstractname| 来设置，在ctex文档类中也可以使用 \verb| \CTEXoptions| 设置，如：
+
+\begin{lstlisting}
+    \CTEXoptions[abstractname={摘 \quad 要}]
+\end{lstlisting}
+
