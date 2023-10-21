@@ -2232,12 +2232,136 @@ shapepar 宏包提供了 \verb|\parshape| 命令的一个较为方便的语法�
         \item English
     \end{itemize}
     \end{lstlisting}
-    \end{minipage}
-    \hfill
-    \begin{minipage}[t]{0.45\textwidth}
-        \begin{itemize}
-            \item[\dag] 中文
-            \item English
-            \item FranÇais
-        \end{itemize}
-    \end{minipage}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{itemize}
+        \item[\dag] 中文
+        \item English
+        \item FranÇais
+    \end{itemize}
+\end{minipage}
+
+\subsubsection{计数器与编号}
+
+\verb|enumerate| 环境的编号是由一组计数器（counter）控制的。当 \LaTeX 进人一个
+\verb|enumerate| 环境时，就把计数器清零；每遇到一个没有可选参数的 \verb|\item| 命令，就让计
+数器的值加 1 ，然后把计数器的值作为编号输出，达到自动编号的自的。4 个不同嵌套层次的 \verb|enumerate| 环境使用不同的计数器，分别是 \verb|enumi| ，\verb|enumii| ，\verb|enumiii| 和\verb|enumiv| 。\LaTeX 的计数器都有一个对应的命令 \verb|\the计数器名|，用来输出计数器的值，如第一级 \verb|enumerate| 环境使用\verb|\theenumi|:
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\begin{enumerate}
+    \item 这是编号 \theenumi
+    \item 这是编号 \theenumi
+\end{enumerate}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{enumerate}
+        \item 这是编号 \arabic{enumi}
+        \item 这是编号 \arabic{enumi}
+    \end{enumerate}
+\end{minipage}
+
+而 \verb|enumerate| 环境又定义了命令\verb|\labelenumi|、\verb|\labelenumii|、\verb|\labelenumiii| 、\verb|\labelenumiv|
+输出条目实际的标签，一般就是在编号后面增加一个标点。有关 \verb|enumerate| 编号命令
+的汇总见表 \ref{tab:enum}。
+
+\LaTeX 计数器的值可以使用命令 \verb|\arabic|，\verb|\roman|，\verb|\Roman|，\verb|\alph|，\verb|\Alph| 或 \verb|\fnsymbol| 带上计数器参数输出，它们分别表示阿拉伯数字、小大写罗马数字、小大写字母、特殊符号：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\begin{enumerate}
+    \item 编号 \arabic{enumi},\roman{enumi},\Roman{enumi},\alph{enumi},\Alph{enumi},\fnsymbol{enumi}
+    \item 编号 \arabic{enumi},\roman{enumi},\Roman{enumi},\alph{enumi},\Alph{enumi},\fnsymbol{enumi}
+    \item 编号 \arabic{enumi},\roman{enumi},\Roman{enumi},\alph{enumi},\Alph{enumi},\fnsymbol{enumi}
+\end{enumerate}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{enumerate}
+        \item 编号 \arabic{enumi},\roman{enumi},\Roman{enumi},\alph{enumi},\Alph{enumi},\fnsymbol{enumi}
+        \item 编号 \arabic{enumi},\roman{enumi},\Roman{enumi},\alph{enumi},\Alph{enumi},\fnsymbol{enumi}
+        \item 编号 \arabic{enumi},\roman{enumi},\Roman{enumi},\alph{enumi},\Alph{enumi},\fnsymbol{enumi}
+    \end{enumerate}
+\end{minipage}
+
+\begin{table}[H]
+    \centering
+    \caption{{\ttfamily enumerate} 环境的编号和标签}
+    \label{tab:enum}
+    \begin{tabular}{cccccccc}
+        \toprule
+        嵌套层次 & 计数器 && \multicolumn{2}{c}{\underline{\qquad\qquad 计数器输出\qquad\qquad}} &  \multicolumn{2}{c}{\underline{\qquad \qquad 条目标签 \qquad \qquad}}\\ 
+        & && 命令 & 默认值 & 命令 & 默认值 \\
+        1 & \verb|enumi| && \verb|\theenumi| & \verb|\arabic{enumi}| &  \verb|\labelenumi| & \verb|\theenumi.| \\
+        2 & \verb|enumii| && \verb|\theenumii| & \verb|\alph{enumii}| &  \verb|\labelenumii| & \verb|(\theenumii)| \\
+        3 & \verb|enumiii| && \verb|\theenumiii| & \verb|\roman{enumiii}| &  \verb|\labelenumiii| & \verb|\theenumiii.| \\
+        4 & \verb|enumiv| && \verb|\theenumiv| & \verb|\Alph{enumiv}| &  \verb|\labelenumiv| & \verb|\theenumiv.| \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+因此，可以通过重定义 \verb|\theenumi|（默认定义是 \verb|\arabic{enumi}|）和 \verb|\labelenumi| （默认定义是 \verb|\theenumi.|）等命令，控制 \verb|enumerate| 环境的编号：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\renewcommand\theenumi{\roman{enumi}}
+\renewcommand\labelenumi{(\theenumi)}
+\begin{enumerate}
+    \item 使用中文
+    \item Using English
+\end{enumerate}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{enumerate.png}
+\end{figure}
+\end{minipage}
+
+计数器在 \TeX 中非常常用，除了列表环境的编号以外，页码、章节和图表的编号等也是由计数器控制的。如页码的计数器是 \verb|page| ，因此现在这句话在第 \verb|\thepage| 页，即在第 \thepage 页。
+
+可以自定义计数器完成一些工作。新定义计数器用\verb|\newcounter| 命令，给计数器赋值用\verb|\setcounter| 命令，计数器自增用 \verb|\stepcounter| 命令，给计数器的值加
+上一个数用 \verb|\addtocounter| 命令。例如我们仿照 \verb|enumerate| 环境的编号过程：
+
+\begin{lstlisting}
+    % 计数器设置，通常在导言区
+    \newcounter{mycnt}
+    \setcounter{mycnt}{0}
+    % 默认值就是0
+    \renewcommand\themycnt{\arabic{mycnt}}
+    % 默认值就是阿拉伯数字
+    % 计数器使用，通常做成自定义命令的一部分
+    \stepcounter{mycnt}\themycnt 输出计数器值为 1 ;
+    \stepcounter{mycnt}\themycnt 输出计数器值为 2 ;
+    \addtocounter{mycnt}{1}\themycnt 输出计数器值为 3;
+    \addtocounter{mycnt}{-1}\themycnt 输出计数器值为 2 ;
+    \addtocounter{mycnt}{-1}\themycnt 输出计数器值为 1。
+\end{lstlisting}
+
+\verb|\refstepcounter| 命令与 \verb|\stepcounter| 功能类似，并且会将当前 \verb|\label| 命令设置为对应的计数器，因而在自动编号的命令或环境的定义中更为常用。在 \verb|\addtocounter| 的参数等需要用到数字的地方，可以使用 \verb|\value{计数器}| 使用计数器的数值。
+
+\verb|\newcounter| 命令还可以在后面增加一个可选参数，内容是一个已有的计数器，表示新计数器会随着旧计数器的自增而自动清零。这特别适合定义每个章节独立的编号，例如：
+
+\begin{lstlisting}
+    \newcounter{quiz}[section]
+    \renewcommand\thequi{\thesection-\arabic{quiz}}
+\end{lstlisting}
+
+amsmath 提供了 \verb|\numberwithin{计数器1}{计数器2}| 命令，扩展了 \verb|\newcounter|
+自动清零的功能，用来让已有的计数器 1 随计数器 2的增加而清零重编号，同时定义其编号格式，如让数学方程按节编号：
+
+\begin{lstlisting}
+    \usepackage{amsmath}
+    \numberwithin{eguation}{section}
+\end{lstlisting}
+
+chngcntr 宏包提供了类似功能的命令\verb|\counterwithin| ，以及相反功能的命令
+\verb|\counterwithout| ，用来取消计数器间的关联。
+
+计数器不仪可以用编号，也能用于复杂的条性控制和循环，ifthen 宏包就提供了有关条件判断和循环的功能，而 calc 宏包则提供了有关长度和计数器的一些简单运算功能。
