@@ -2364,4 +2364,179 @@ amsmath 提供了 \verb|\numberwithin{计数器1}{计数器2}| 命令，扩展�
 chngcntr 宏包提供了类似功能的命令\verb|\counterwithin| ，以及相反功能的命令
 \verb|\counterwithout| ，用来取消计数器间的关联。
 
-计数器不仪可以用编号，也能用于复杂的条性控制和循环，ifthen 宏包就提供了有关条件判断和循环的功能，而 calc 宏包则提供了有关长度和计数器的一些简单运算功能。
+计数器不仅可以用编号，也能用于复杂的条性控制和循环，ifthen 宏包就提供了有关条件判断和循环的功能，而 calc 宏包则提供了有关长度和计数器的一些简单运算功能。
+
+\subsubsection{定制列表环境}
+
+与 \verb|enumerate| 环境类似， \verb|itemize| 环境也使用一组命令来控制前面的标签 ， 见表 \ref{tab:item} 。不过 \verb|itemize| 环境比较简单，没有编号。
+
+\begin{table}[H]
+    \centering
+    \caption{{\ttfamily itemize} 环境的标签}
+    \label{tab:item}
+    \begin{tabular}{ccccccc}
+        \toprule
+        嵌套层次 && 命令 && 默认值 && 效果 \\ 
+        \midrule 
+        1 && \verb|\labelitemi| && \verb|\textbullet| && \textbullet \\ 
+        2 && \verb|\labelitemii| && \verb|\normalfont\bfseries \textendash| && \normalfont\bfseries \textendash \\ 
+        3 && \verb|\labelitemiii| && \verb|\textasteriskcentered| && \textasteriskcentered \\ 
+        4 && \verb|\labelitemiv| && \verb|\textperiodcentered| && \textperiodcentered \\ 
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\verb|description| 环境相对比较简单，它使用 \verb|\descriptionlabel|命令来标签的
+输出格式。\\ \verb|\descriptionlabel| 在标准文件类中的原始定义如下：
+\begin{lstlisting}
+    \newcommand*\descriptionlabel[i]{\hspace\labelsep\normalfont\bfseries #1}
+\end{lstlisting}
+
+这是一个带有一个参数的命令，参数是标签的文本。标签前面的间距 \verb|\labelsep| 默认为 0.5em 。可以修改 \verb|\descriptionlabel| 命令得到不同效果的 \verb|description|环境：
+
+\begin{lstlisting}
+    { % 使用分组让\descriptionlabel 的修改局部化
+    \renewcommand\descriptionlabel[1]{\normalfont\Large\itshape\textbullet #1}
+    \begin{description}
+    \item[标签]可以修改\verb=\descriptionlabel= 改变标签的格式。
+    \item[其他]其他格式的也可以参考后面的列表环境修改。
+    \end{description}
+    }
+\end{lstlisting}
+
+{ 
+\renewcommand\descriptionlabel[1]{\normalfont\Large\itshape\textbullet #1}
+\begin{description}
+\item[标签] 可以修改\verb=\descriptionlabel= 改变标签的格式。
+\item[其他] 其他格式的也可以参考后面的列表环境修改。
+\end{description}
+}
+
+基本列表环境 \verb|enumerate|,\verb|itemize|，\verb|description| 都是由广义列表环境 \verb|list| 生成的，\verb|list| 环境语法为:
+
+\begin{lstlisting}
+    \begin{list}{标签}{设置命令}
+        条目
+    \end{list}
+\end{lstlisting}
+
+其中\verb|标签| 中给出标签的内容，如果是编号列表可以使用计数器；\verb|设置命令| 则可以设置列表使用的计数器和一些长度参数。\verb|\usecounter{计数器}| 表示使用指定的计数
+器编号。下面是一个简单的编号列表的例子：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\newcounter{mylist}
+\begin{list}{\#\themylist}{\usecounter{mylist}}
+    \item 中文
+    \item English
+\end{list}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \newcounter{mylist}
+    \begin{list}{\#\themylist}{\usecounter{mylist}}
+        \item 中文
+        \item English
+    \end{list}
+\end{minipage}
+
+与 \verb|list| 环境相关的参数有很多，见图 \ref{fig:list}。可以在\verb|设置命令| 项中使用\verb|\setlength| 等命令设置，可以这样产生一个紧凑的类 \verb|itemize| 环境：
+
+\begin{lstlisting}
+    \begin{list}{\textbullet}{
+    \setlength{\topsep}{0pt} \setlength{\partopsep}{0pt}
+    \setlength{\parsep}{0pt} \setlength{\itemsep}{0pt}}
+        \item 中文
+        又一段中文
+        \item English
+        \item Francais
+    \end{list}
+\end{lstlisting}
+
+\begin{list}{\textbullet}{
+    \setlength{\topsep}{0pt} \setlength{\partopsep}{0pt}
+    \setlength{\parsep}{0pt} \setlength{\itemsep}{0pt}}
+        \item 中文
+        
+        又一段中文
+        \item English
+        \item Francais
+\end{list}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{list.png}
+    \caption{{\ttfamily list} 列表环境的长度参数。其中{\ttfamily \textbackslash partopsep}在列表环境开始新的一段（即前面有空行）时生效}
+    \label{fig:list}
+\end{figure}
+
+\verb|list| 环境语法比较烦琐，一般并不直接使用，而是用它来定义新的环境，例如前面的紧凑列表可以定义为 \verb|myitemize| 环境：
+
+\begin{lstlisting}
+    \newenvironment{myitemize}
+    { \begin{list}{\textbullet}{%
+    \setlength{\topsep}{0pt} \setlength{\partopsep}{0pt}
+    \setlength{\parsep}{0pt} \setlength{\itemsep}{0pt}} }
+    {\end{list}}
+\end{lstlisting}
+
+还有一种平凡列表环境 \verb|trivlist| ，可以生成空标签的列表。\verb|trivlist| 一般不单用，而是用来生成一些与列表看起来没什么关系的环境，例如\verb|center| 环境就是由 \verb|trivlist| 加上\verb|\centering|命令生成的，等价定义为：
+
+\begin{lstlisting}
+    \newenvironment{mycenter}
+    {\begin{trivlist} \centering \item[]}
+    {\end{trivlist}}
+\end{lstlisting}
+
+使用 \verb|list| 环境定制列表比较复杂，特别是对\verb|enumerate| 等环境更是难以修改其格
+式。使用 enumitem 宏包可以方便地对各种列表环境的标签、尺寸进行定制，也可以用它来定义新的列表。使用 enumitem 宏包，可以直接在 \verb|enumerate| 等环境后加可选参数来定制参数，如：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+% \usepackage{enumitem}
+\begin{enumerate}[itemsep=0pt,parsep=0pt,
+label=(\arabic*)]
+    \item 中文
+    \item English
+    \item Francais
+\end{enumerate}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{enumerate}[itemsep=0pt,parsep=0pt,
+        label=(\arabic*)]
+            \item 中文
+            \item English
+            \item Francais
+    \end{enumerate}
+\end{minipage}
+
+也可以使用 \verb|\setlist| 命令整体设置参数，用 \verb|newlist| 命令定义新列表，如：
+
+\begin{lstlisting}
+    \usepackage{enumitem}
+    % 仿照 enumerate 环境定义可二级嵌套的 mylist
+    \newlist{mylist}{enumerate}{2}
+    % 分别定义每级的格式
+    \setlist[mylist,1]{itemsep=0pt,parsep=Opt,label=(\arabic*)}
+    \setlist[mylist,2]{itemsep=0pt,parsep=Opt,label=(/alph*)}
+\end{lstlisting}
+
+enumitem 宏包接受的参数大多与图 \ref{fig:list} 中对应，其中标签的参数 \verb|label| 用星号 \verb|*|表示计数器，对非标准计数器输出（如 \verb|\chinese| ）还要单独进行设置，如：
+
+\begin{lstlisting}
+    % \usepackage{enumitem}
+    \AddEnumerateCounter{\chinese}{\chinese}{}
+    \begin{enumerate}[label={\chinese*、},labelsep=0pt]
+        \item 内容清晰
+        \item 格式美观
+    \end{enumerate}
+\end{lstlisting}
+
+\AddEnumerateCounter{\chinese}{\chinese}{}
+\begin{enumerate}[label={\chinese*、},labelsep=0pt]
+    \item 内容清晰
+    \item 格式美观
+\end{enumerate}
