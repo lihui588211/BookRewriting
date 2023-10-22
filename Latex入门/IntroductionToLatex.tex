@@ -33,6 +33,20 @@
 \usepackage{lettrine}
 \usepackage{shapepar}
 \usepackage{multirow}
+\usepackage[thmmarks]{ntheorem}
+{ 
+\theoremstyle{nonumberplain}
+\theoremheaderfont{\bfseries}
+\theorembodyfont{\normalfont}
+\theoremsymbol{\mbox{$\Box$}} 
+\newtheorem{Proof}{证明}
+}
+{
+    \theoremstyle{changebreak}
+    \theoremheaderfont{\sffamily\bfseries}
+    \theorembodyfont{\normalfont}
+    \newtheorem{Def}{定义}[chapter]
+}
 % \usepackage{CJKfntef}
 
 \addbibresource[location=local]{reference.bib}

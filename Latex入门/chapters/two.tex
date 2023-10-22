@@ -2540,3 +2540,187 @@ enumitem 宏包接受的参数大多与图 \ref{fig:list} 中对应，其中标�
     \item 内容清晰
     \item 格式美观
 \end{enumerate}
+
+\subsection{定理类环境}
+
+定理类环境是 \LaTeX 中的一类重要的文本环境，它可以产生一个标题、编号和特定格式的文本，我们在 \ref{sec:environment}节中已经看到了定理类环境的定义如何使用：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+    \newtheorem{thm}{定理} % 一般在导言区
+    \begin{thm}
+    直角三角形斜边的平方等于两腰的平方和。
+    \end{thm}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \newtheorem{thm}{定理}
+    \begin{thm}
+        直角三角形斜边的平方等于两腰的平方和。
+    \end{thm}
+\end{minipage}
+
+在上面的例子中，命令 \verb|\newtheorem| 用来声明一个新的定理类环境，两个参数分别是定理类环境名和定理输出的标题名。因而，\verb|\newtheorem{thm}[定理]| 就定义了一个 \verb|thm| 环境，效果是输出标题为“定理”的一段文字。新定义的 \verb|thm| 环境允许带有可选参数表示定理的小标题：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+    \begin{thm}[勾股定理]
+        直角三角形斜边的平方等于两腰的平方和。
+    \end{thm}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{thm}[勾股定理]
+        直角三角形斜边的平方等于两腰的平方和。
+    \end{thm}
+\end{minipage}
+
+\verb|\newtheorem| 命令可以在最后使用一个可选的计数器参数 \verb|Ctr|，用来表示定理编
+号是 \verb|Ctr| 的下一级编号，并会随 \verb|Ctr| 的变化而清零。这通常用于让定理按章节编号，
+如：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+    \newtheorem{mylemma}{引理}[chapter]% 按章
+    \begin{mylemma}偏序集可良序化。\end{mylemma}
+    \begin{mylemma}实数集不可数。 \end{mylemma}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \newtheorem{mylemma}{引理}[chapter]% 按章
+    \begin{mylemma}偏序集可良序化。\end{mylemma}
+    \begin{mylemma}实数集不可数。 \end{mylemma}
+\end{minipage}
+
+也可以在两个参数之间使用一个可选的计数器参数 \verb|Ctr| ，表示定理使用 \verb|Ctr| 进行
+编号。这通常用于让几个不同的定理类环境使用租同的编号（定理类环境的计数器就是环境名），如：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+    \newtheorem{prop}[mylemma]{命题}
+    \begin{prop}
+    直角三角形的斜边大于直角边。
+    \end{prop}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \newtheorem{prop}[mylemma]{命题}
+    \begin{prop}
+    直角三角形的斜边大于直角边。
+    \end{prop}
+\end{minipage}
+
+默认的定理类环境的格式是固定的，但这往往并不符合我们的期望。theorem 宏包扩展了定理类环境的格式，可以方便地修改定理类环境的格式，它提供了 
+\verb|\theoremstyle{格式}| 命令来选择定理类环境的格式，可用的预定义格式有：
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lll}
+        \ttfamily\bfseries plain && 默认格式 \\ 
+        \ttfamily\bfseries  break && 定理头换行 \\
+        \ttfamily\bfseries marginbreak && 编号在页边，定理头换行 \\ 
+        \ttfamily\bfseries changebreak && 定理头编号在前文字在后，换行 \\ 
+        \ttfamily\bfseries change && 定理头编号在前文字在后，不换行 \\ 
+        \ttfamily\bfseries margin && 编号在页边，定理头不换行。
+    \end{tabular}
+\end{table}
+
+定理类环境的默认字体是 \verb|\slshape| ，定理头默认是 \verb|\bfseries|，可以通过
+\verb|\theorembodyfont{字体}| 和\verb|\theoremheaderfont{字体}| 分别设置定理内容和
+定理头的字体，并可以设置定理前后的垂直间距变量\verb|\theorempreskipamount| 和
+\verb|\theorempostskipamount| , 例如:
+
+\begin{lstlisting}
+    % 导言区
+    \usepackage{theorem}
+    \theoremstyle{changebreak}
+    \theoremheaderfont{\sffamily\bfseries}
+    \theorembodyfont{\normalfont}
+    \newtheorem{def}{定义}[chapter]
+\end{lstlisting}
+
+
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+    \begin{def}
+        有一个角是直角的三角形是\emph{直角三角形}
+    \end{def}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{Def}
+        有一个角是直角的三角形是{直角三角形}
+    \end{Def}
+\end{minipage}
+
+ntheorem 宏包进一步扩充了 theorem 宏包的功能，它增加了下面几种 \verb|\theoremstyle| ：
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lll}
+        \ttfamily\bfseries nonumberplain && 类似 {\ttfamily plain} 格式，但没有编号 \\ 
+        \ttfamily\bfseries  nonumberbreak && 类似 {\ttfamily break} 格式，但没有编号 \\
+        \ttfamily\bfseries empty && 没有编号和定理名，只输出可选参数
+    \end{tabular}
+\end{table}
+可以输出无编号的定理。也可以用 \verb|\newtheorem*| 来定义无编号的定理。
+
+ntheorem 增加了更多的设置命令和大量辅助的功能，如给宏包增加 \verb|[thmmarks]| 选项后可以使用\\ \verb|\theoremsymbol| 命令设置定理类环境末尾自动添加的符号，这对定义证明环境表示证毕符号特别有用：
+
+\begin{lstlisting}
+    % 导言区
+    \usepackage[thmmarks]{ntheorem}
+    { % 利用分组，格式设置只作用于证明环境
+    \theoremstyle{nonumberplain}
+    \theoremheaderfont{\bfseries}
+    \theorembodyfont{\normalfont}
+    \theoremsymbol{\mbox{$\Box$}} % 放进盒子，或用 \ensuremath
+    \newtheorem{Proof}{证明}
+    }
+\end{lstlisting}
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+    \begin{proof}
+        证明是显然的。
+    \end{proof}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{Proof}
+        证明是显然的。
+    \end{Proof}
+\end{minipage}
+
+ntheorem 宏包的功能很多，除了详细定制定理格式，还可以重定义已有的定理类环境、分类管理定理格式、生成定理自录等；具体的使用中也看很多注意事项（如与 amsmath 宏包同时使用时要加 \verb|[amsmath]| 选项），读者可查阅宏包的文档获得进一步的信息。
+
+除了 theorem 和 ntheorem 宏包，美国数学会发布的 amsthm 宏包也常用于定理类环境的定制。在使用 XeTeX 时，amsthm 必须在fontspec 宏包之前载入，而由于 ctex 文档类中的 xeCJK 宏包会自动调用fontspec ，因此不能在 ctexart 等文档类中首接使用 amsthm ，而只能在 article 等标准文档类中使用 amsthm 宏包用再使用 ctexcap 宏包，比
+较不便。
+
+amsthm 提供了预定义的 \verb|proof| 环境用来表示证明并自动添加证毕符号，但这个环境的可定制性较差，只能通过重定义 \verb|proofname| 宏修改证明的“ Proof ”字样，或重定义\verb|\qedsymbol| 宏修改证毕符号，例如：
+\begin{lstlisting}
+    \usepackage{amsthm}
+    \renewcommand\proofname{证明}
+    \renewcommand\gedsymbol{\ensuremath{Box}}
+\end{lstlisting}
+
+
+amsthm 的证毕符号没有 ntheorem 的智能，在显示公式中无法正确判断位置，此时需要手工使用 \verb|gedhere| 命令添加证毕符号，如：
+\begin{lstlisting}
+    % \usepackage{amsthm}
+    \begin{proof}
+    最后我们有
+    \[
+    f(x) = 0. \qedhere
+    \]
+    \end{proof}
+\end{lstlisting}
+
+amsthm 预定义了一些格式，可以使用 \verb|\theoremstyle| 命令选择，但如果用
+\verb|\newtheoremstyle| 命令定义新的格式则语法比较复杂。amsthm 与 ntheorem 宏包的功能大致相当，但 ntheorem 宏包的语法容易理解一些，也没有 XeTeX 下与 fontspec 的冲突问题，因此最好使用 ntheorem 包。
