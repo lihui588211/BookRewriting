@@ -521,7 +521,7 @@ Roman number XII\@. Yes.
 \end{align*}    
 \end{minipage}
 
-\subsection{特殊符号}
+\subsection{特殊符号} \label{sec:symbol}
 
 除了一般的文字，有时还需要一些特殊的符号，其中在正文中最为常用的如表\ref{tab:teshu}所示。
 \begin{table}[H]
@@ -2724,3 +2724,123 @@ amsthm 的证毕符号没有 ntheorem 的智能，在显示公式中无法正确
 
 amsthm 预定义了一些格式，可以使用 \verb|\theoremstyle| 命令选择，但如果用
 \verb|\newtheoremstyle| 命令定义新的格式则语法比较复杂。amsthm 与 ntheorem 宏包的功能大致相当，但 ntheorem 宏包的语法容易理解一些，也没有 XeTeX 下与 fontspec 的冲突问题，因此最好使用 ntheorem 包。
+
+\subsection{抄录和代码环境}
+
+\subsubsection{抄录命令与环境}
+
+在 \ref{sec:symbol} 节中我们已经看到， \LaTeX 输入特殊符号相当复杂。然而我们有时候必须
+经常性地使用特殊符号，例如在排版计算机程序源代码时（特别是排版有关 \TeX 的文章时）就不可避免地使用大量在 \LaTeX 中有特殊意义的符号，此时就需要使用抄录 （ verbatim ，即逐字）功能。
+
+\verb|\verb| 命令可以用来表示行文中的抄录，其语法格式如下：
+\begin{lstlisting}
+    \verb 符号 抄录内容 符号
+\end{lstlisting}
+
+在 \verb |\verb| 后，起始的符号和未尾的符号相同，两个符号之间的部分将使用打字机字体逐字原样输出：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\verb"\LaTeX \& \TeX" \qquad \verb ! \/}{#$%&~!
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\verb"\LaTeX \& \TeX" \qquad \verb ! \/}{#$%&~!
+\end{minipage}
+
+使用带星号的命令 \verb|\verb*| 则可以使输出的空格为可见的 \verb*| |。
+
+大段的抄录则可以使用 \verb|verbatim| 环境：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\begin{verbatim}
+    #!usr/bin/env perl
+    $name = "guy";
+    print "Hello, $name!\n";
+\end{verbatim}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{verbatim}
+        #!usr/bin/env perl
+        $name = "guy";
+        print "Hello, $name!\n";
+    \end{verbatim}
+\end{minipage}
+
+同样，可以使用带星号的 \verb|verbatim*| 环境输出可见空格：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\begin{verbatim*}
+#include <stdio.h>
+main() {
+printf("Hello， world.\n");
+}
+\end{verbatim*}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\begin{verbatim*}
+#include <stdio.h>
+main() {
+printf("Hello， world.\n");
+}
+\end{verbatim*}
+\end{minipage}
+
+抄录命令和环境都属于特殊命令，一般不能作为其他命令的参数出现，例如使用 \verb|\fboxverb!abc!| 将会产生错误。可以使用 \verb|lrbox| 环境把它们保存在自定义盒子中再进行使用，参见 \ref{sec:box} 节，这也可以由 fancyvrb 宏包提供的命令实现，例如： 
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+    % \usepackage{fancyvrb}
+    \SaveVerb{myverb}|#$%^&|
+    \fbox{套中\UseVerb{myverb}}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \SaveVerb{myverb}|#$%^&|
+    \fbox{套中\UseVerb{myverb}}
+\end{minipage}
+
+值得一提的是cprotect 宏包，它定义了 \verb|\cprotect| 等命令，可以方便地在其他
+命令参数中使用 \verb|\verb| 命令或 \verb|verbatim| 环境。\verb|\cprotect| 的用法与\verb|\protect| 有
+些类似，把它用在带参数的命令前面，来“保护”参数中有抄录的命令：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+    % \usepackage{cprotect}
+    \cprotect\fbox{套中 \verb|#$%^&|}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \cprotect\fbox{套中 \verb|#$%^&|}
+\end{minipage}
+
+尽管使用方便，cprotect 宏包的使用限制会多一些，在一些命令中（如 \verb|\parbox| ）仍然需要用先保存再使用的方式。
+
+verbatim 宏包提供了 verbatim 环境的一些扩展。特别是定义了 \verb|\verbatiminput{文件名}| 命令用于逐字抄录整个文件的内容。 shortvrb 宏包提供了 \verb|\verb| 命令的简写形式，可以使用\verb|\MakeShortVerb{符号}| 来定义这种简写，或用 \verb|\DeleteShortVerb|符号|| 取消定义，如在导言区定义：
+\begin{lstlisting}
+    \usepackage{shortvrb}
+    \MakeShortVerb{|}
+\end{lstlisting}
+那么就可以使用竖线 \lstinline{|} 作为简写方式了：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+verbatim |\LaTeX|
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    verbatim \verb|\LaTeX|
+\end{minipage}
+
+fancyvrb 宏包提供了一系列 \verb|verbatim| 环境的扩展，它提供的 \verb|Verbatim| 环境可以修改字体、边框、填充颜色、行号等多种格式，甚至在抄录环境中插入任意 \LaTeX 代码，功能强大。读者可参考宏包的文档，这里不作详细介绍了。
+
