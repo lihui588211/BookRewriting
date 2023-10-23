@@ -2844,3 +2844,193 @@ verbatim |\LaTeX|
 
 fancyvrb 宏包提供了一系列 \verb|verbatim| 环境的扩展，它提供的 \verb|Verbatim| 环境可以修改字体、边框、填充颜色、行号等多种格式，甚至在抄录环境中插入任意 \LaTeX 代码，功能强大。读者可参考宏包的文档，这里不作详细介绍了。
 
+\subsubsection{程序代码与 listings}
+
+可以使用 \verb|verbatim| 排版程序代码。不过，如果还想在程序代码中增加语法高亮功能，那么 \verb|verbatim| 环境就捉襟见肘了，比如要排版下面的效果：
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.45\textwidth]{lst6.png}
+\end{figure}
+
+这种带语法高亮的程序代码可以使用 listings 宏包排版。
+
+listings 宏包提供的基本功能是 \verb|lstlisting| 环境，可以把它看做是加强的 \verb|verbatim| 环境。不过在未做任何设置时， \verb|lstlisting| 环境并没有语法高亮的效果，而且看起来比直接使用 \verb|verbatim| 还难看些，如下所示：
+
+\begin{minipage}[t]{0.45\textwidth}
+\vspace{0.1cm}
+\begin{verbatim}
+% 导言区使用 \usepackage{listings}
+\begin{lstlisting}
+    /* hello.c */
+    #include <stdio.h>
+    main() {
+        printf("Hello.\n");
+    }
+\end{lstlisting}
+\end{verbatim}
+
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{lst1.png}
+\end{figure}
+\end{minipage}
+
+要想得到漂亮的排版效果，必须仔细设置 \verb|lstlisting| 环境的格式。可以使用 \verb|lstlisting| 环境的可选参数设置格式，也可以使用\verb|\lstset{设置}| 进行全局设置。
+最基本的参数是 \verb|language| ，设置代码使用的语言，如:
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{verbatim}
+\begin{lstlisting}[language=C]
+    /* hello.c */
+    #include <stdio.h>
+    main() {
+        printf("Hello.\n");
+    }
+\end{lstlisting}
+\end{verbatim}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\textwidth]{lst2.png}
+    \end{figure}
+\end{minipage}
+
+\vspace{0.1cm}
+此时可以看到 C 语言的注释用斜体排出，关键字用粗体排出，字符串中的空格也排版为可见的。listings 宏包支持的语言非常多，几乎包括了各种常见的语言。
+
+前面的例子中字体并不是很好看，可以用 \verb|basicstyle| 选项设置 \verb|lstlisting| 环境
+的整体格式，或用 \verb|keywordstyle| 设置关键字的格式，用 \verb|identifierstyle| 设置标识
+符格式，用 \verb|stringstyle| 设置字符串的格式，用 \verb|commentstyle| 设置注释的格式，等
+等。以上这些者都是影响 \verb|lstlisting| 环境输出效果最明显的一些参数，例如：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{verbatim}
+\lstset{ % 整体设置
+basicstyle=\sffamily,
+keywordstyle=\bfseries,
+commentstyle=\rmfamily\itshape,
+stringstyle=\ttfamily}
+
+\begin{lstlisting}[language=C]
+/* hello.c */
+#include <stdio.h>
+main() {
+    printf("Hello.\n");
+}
+\end{lstlisting}
+\end{verbatim}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\textwidth]{lst3.png}
+    \end{figure}
+\end{minipage}
+
+\vspace{0.1cm}
+listings 宏包默认将字符等宽显示，这样可以使文字的不同列容易对齐，但也会使得一些字体看上去非常怪异。可以通过设置 \verb|column| 选项为 \verb|flexible| （默认为 \verb|fixd| ）或使用\verb|flexiblecolumns| 选项来把字符列设置为非等宽的。采用非等宽的列可以让默认的 Roman 字体看上去也比较顺眼：
+
+\begin{minipage}[t]{0.45\textwidth}
+\vspace{0.1cm}
+\begin{verbatim}
+\begin{lstlisting}[language=C,
+    flexiblecolumns]
+/* hello.c */
+#include <stdio.h>
+main() {
+    printf("Hello.\n");
+}
+\end{verbatim}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\textwidth]{lst4.png}
+    \end{figure}
+\end{minipage}
+
+可以设置 \verb|numbers| 选项为 \verb|left| 或\verb|right| 在左右增加行号（默认为 \verb|none| ），使用 \verb|numberstyle| 选项设置行号格式：
+
+\begin{minipage}[t]{0.45\textwidth}
+\vspace{0.1cm}
+\begin{verbatim}
+\lstset{columns=flexible,
+numbers=left,numberstyle=\footnotesize}
+\begin{lstlisting}[language=C]
+/* hello.c */
+#include <stdio.h>
+main() {
+    printf("Hello.\n");
+}
+\end{lstlisting}
+\end{verbatim}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\textwidth]{lst5.png}
+    \end{figure}
+\end{minipage}
+
+\vspace{0.1cm}
+listings 宏包还提供了 \verb|\verb| 命令的对应物 \verb|\lstinline| ，这样可以直接在行文段落
+中使用带语法高亮的代码：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\lstset{language=C,flexiblecolumns}
+语句 \lstinline{typedef char byte}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    语句 \lstinline[language=C,flexiblecolumns,keywordstyle = \bfseries]{typedef char byte}
+\end{minipage}
+
+listings 宏包对汉字等非 ASCII 字符的支持不是很好。使用 XeLaTeX 时，一般需要对汉字用逃逸字符处理，这样才能得到正确的结果\footnote{现在好像不需要了}：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{verbatim}
+\lstset{language=C,flexiblecolumns,
+escapechar=‘} % 设置 ‘ 为逃逸字符
+\begin{lstlisting}
+    int n; // ‘一个整数‘
+\end{lstlisting}
+\end{verbatim}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \lstinline[language=C,flexiblecolumns,escapechar=“,keywordstyle = \bfseries,commentstyle=\normalfont]
+        {int n; // 一个整数}
+\end{minipage}
+
+\vspace{0.2cm}
+listings 将逃逸字符之间的内容当做普通的 \TeX 代码处理，因而汉字可以得到正确处理。事实上这种方法也可以用来输出一些特殊效果的代码，比如在代码中使用数学公式：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{verbatim}
+\lstset{language=C,flexiblecolumns,
+escapechar=\#}
+\begin{lstlisting}
+    double x = 1/sin(x) 
+    //  #$\frac{1}{\sin x}$#
+\end{lstlisting}
+\end{verbatim}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{lstlisting}[language=C,flexiblecolumns,escapechar=\#,keywordstyle = \bfseries,commentstyle=\normalfont]
+double x = 1/sin(x) //  #$\frac{1}{\sin x}$#
+    \end{lstlisting}
+\end{minipage}
+
+\vspace{0.2cm}
+上面介绍的选项只是 listings 宏包各种功能中的很少一部分，事实上，使用 listings 宏包还可以设置背景颜色、强调内容、标题、目录等。请读者自行查阅宏包文档。

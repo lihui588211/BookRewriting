@@ -1,0 +1,57 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{ctex}
+
+\begin{document}
+\begin{lstlisting}
+/* hello.c */
+#include <stdio.h>
+main() {
+    printf("Hello.\n");
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=C]
+/* hello.c */
+#include <stdio.h>
+main() {
+    printf("Hello.\n");
+}
+\end{lstlisting}
+
+\begin{lstlisting}[basicstyle=\sffamily,
+    keywordstyle=\bfseries,
+    commentstyle=\rmfamily\itshape,
+    stringstyle=\ttfamily,language=C]
+/* hello.c */
+#include <stdio.h>
+main() {
+    printf("Hello.\n");
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=C,flexiblecolumns]
+/* hello.c */
+#include <stdio.h>
+main() {
+    printf("Hello.\n");
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=C,columns=flexible,numbers=left,numberstyle=\footnotesize]
+/* hello.c */
+#include <stdio.h>
+main() {
+    printf("Hello.\n");
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=C,columns=flexible,numbers=left,numberstyle=\zihao{7},basicstyle=\ttfamily]
+/* hello.c */
+#include <stdio.h>
+main() {
+    printf("Hello.\n");
+}
+\end{lstlisting}
+
+\end{document}
