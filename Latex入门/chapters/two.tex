@@ -3147,3 +3147,109 @@ $A = \{2，3，5， 7， 11\}$， $x=3$ \\
 \end{tabbing}
 
 尽管使用 \verb|tabbing| 环境可以很自由地排版复杂的算法，但时刻考虑制表位来调整算法结构有时实在太考验人的耐心了。排版算法这类结构化的伪代码可以使用专门的算法宏包。clrscode 是许多算法宏包中最为简单的一种，它可以按照著名教材《算法导论》中的格式进行算法排版，事实上它就是用 \verb|tabbing| 环境实现的；另一个使用广泛的算法宏包是 \verb|algorithm2e| ，它提供丰富的命令和复杂的定制功能；algorithmicx 也提供了类以的易定制的算法排版功能，有需要的读者可以参见这些算法宏包的说明文档来做进一步的选择。
+
+\subsection{脚注与边注}
+
+\LaTeX 使用 \verb|\footnote{脚注内容}| 产生脚注，例如{
+    \setcounter{footnote}{0}
+    \renewcommand*{\thefootnote}{\arabic{footnote}} \footnote{这是一个脚注。}。这是脚注的默认格式，使用一个阿拉伯数字的上标作为编号，脚注内容出现在页面底部，以\verb|\footnotesize|的字号输出。脚注的内容可以是大段的文字，但注意前后应该都和正文紧接着，避免出现多余的空格，特别要注意标点前后的位置，像前面的例子：
+\begin{lstlisting}
+    例如\footnote{这是一个脚注}。
+\end{lstlisting}
+
+\verb|\footnote| 是自动编号的，例如\footnote{又一个脚注}。 \verb|\footnote| 可以带一个可选的参数，表示手工的数字编号，例如用 \verb|\footnote[1]{手动编号 1}| 的效果\footnote[1]{手动编号 1}，它不改变原来的脚注编号\footnote{继续原来的编号}。
+
+脚注的使用有一些限制，它通常只能用在一般的正文段落中，不能用于表格、左右盒子（如一个 \verb|\mbox| 的参数中）等受限的场合。此外，脚注也不能直接用在 \verb|\section|等章节命令的参数中，也不能用在 \verb|\parbox| 中。不过可以把脚注用在\verb|minipage| 环境里面，此时脚注出现在\verb|minipage| 环境产生的盒子的底部，并使用局部
+的编号（默认按字母编号）：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\begin{minipage}[8em]
+    这是小页环境\footnote{脚注。}中的脚注。
+\end{minipage}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    这是小页环境\footnote{脚注。}中的脚注。
+\end{minipage}
+
+脚注使用的计数器是 \verb|footnote| ，在\verb|minipage| 环境中则使用 \verb|mpfootnote| 计数器,可以修改\\ \verb|\thefootnote| 和\verb|\thempfootnote| 改变编号的格式。一种常见的修改是使用符号编号，即定义：
+\begin{lstlisting}
+    \renewcommand\thefootnote{\fnsymbol{footnote}}
+\end{lstlisting}
+
+\renewcommand\thefootnote{\fnsymbol{footnote}} 
+
+得到的效果是\footnote{符号编号的脚注}。另一种常见修改是带圈的数字，这可以利用 \verb|\textcircled|命令生成的带圈文字来完成：
+
+\begin{lstlisting}
+    \renewcommand\thefootnote{\textcircled{\arabic{\footnote}}}
+\end{lstlisting}
+\renewcommand\thefootnote{\textcircled{\arabic{footnote}}}
+
+得到的效果是\footnote{带圈数字编号脚注}。使用  pifont 宏包提供的带圈数字符号效果更好些，使用 pifont 宏包的 \verb|ding| 命令可以输出符号表中的符号，查表找到阳文带圈数字从 172 号符号开始，
+此时需要 $\epsilon$-\TeX 的 \verb|\numexpr| 命令支持数字的计算：
+\begin{lstlisting}
+    \usepackage{pifont}
+    \renewcommand\thefootnote{\ding{\numexpr171+\value{footnote}}}
+\end{lstlisting}
+\renewcommand\thefootnote{\ding{\numexpr171+\value{footnote}}}
+
+得到的效果是\footnote{更好的带圈脚注}。
+
+在不能使用脚注的位置，例如盒子、表格中，可以使用命令 \verb|\footnotemark| 和 \verb|\footnotetext| 分开输入脚注的编号和内容。 \verb|\footnotemark[数字]| 命令产生正文中
+的脚注编号，如果没有可选参数，脚注计数器自动自增； \verb|footnotetext|[数字]{内容}|
+命令产生脚注的内容，脚注计数器不自增，如果有可选参数就使用手工编号。这里在表格中使用脚注的方法是典型的（也可以把表格放在 \verb|minipage| 环境中，直接使用 \verb|\footnote| 命令即可）：
+\begin{lstlisting}
+\begin{tabular}{rlr}
+    自变量  & 因变量 \footnotemark \\ 
+    \hline
+    $x$ & $y$
+\end{tabular}
+\footnotetext{$y=x^2$。}
+\end{lstlisting}
+
+\begin{tabular}{rlr}
+    自变量  & 因变量 \footnotemark \\ 
+    \hline
+    $x$ & $y$
+\end{tabular}
+\footnotetext{$y=x^2$。}
+
+如果要在章节或图表标题中使用脚注，则要用 \verb|\protect\footnote| 代替\\ \verb|\footnote| ，
+因为这里 \verb|\footnote| 是脆弱命令（ fragile command ），当脆弱命令用在所谓活动的
+命令参数（ moving arguments ）中时，就必须使用\verb|\protect| 命令保护起来。此外还要注意使用\verb|\section|等命令的可选参数避免把脚注符号装进页眉和目录中：
+\begin{lstlisting}
+    \section[节标题]{节标题\protect\footnote{标题中的脚注}}
+\end{lstlisting}
+实际中主要遇到的活动参数就是会生成目录项的命令，即章节命令和\verb|\caption|等。
+
+几条脚注之间的距离用长度变量 \verb|\footnotesep| 设置。脚注线由命令 \verb|\footnoterule| 定义，默认的定义是长为 2 in 的一条线，可以重定义 \verb|\footnoterule| 改变脚注线，如可以使用命令 \verb\renewcommand\footnoterule{}| 定义脚注线为空。
+
+更多脚注的格式的定制可以使用 footmisc 宏包完成。例如，\LaTeX 的脚注默认每章重新清零编号（如果没有 \verb|\chapter| 一级，则全文统一编号），可以使用 \verb|\usepackage[perpage] {footmisc}| 让脚注每页清零编号，这也是中文排版更常见的样式。footmisc 还提供了控制脚注段落形状的许多选项，以及一些杂项命令，可参考宏包文档获得更多信息。
+
+\LaTeX 还提供了边注的命令 \verb|\marginpar{内容}| ，用来给文档添加在页边的旁注。\marginpar{这是旁注}
+
+边注的使用方法和脚注差不多，只是边注不编号，内容出现的位置与正文更接近。页边距通常很窄，所以不要在边注中长篇大论，最好把它留给个别需要强调指出的地方。
+
+在单面模式 \verb|onecolumn| 下，边注在页面的右侧；在双面模式 \verb|twocolumn| 下，边注在页面的外侧（即奇数页在右，偶数页在左）。 \verb|\marginpar| 命令可以带一个可选参数，设置出现在偶数页左侧的边注，而原来的参数表示在右侧的边注，
+例如：
+\begin{lstlisting}
+    有边注的文字\marginpar[\hfill 左$\rightarrow$]{$\leftarrow$右}
+\end{lstlisting}
+
+有边注的文字\marginpar[\hfill 左$\rightarrow$]{$\leftarrow$右}
+
+可以使用命令 \verb|\reversemarginpar| 改变边注的左右（或内外）位置，或者用命令
+\verb|\normalmarginpar| 复原边注的左右位置。
+
+边注主要由三个长度变量控制：\verb|\marginparwidth| 是边注的长宽，\verb|\marginparsep|是边注与正文的距离，\verb|\marginparpush| 是边注之间的最小距离。这些长度都可以用 \verb|\setlength| 设置，不过前面两个变量也可以使用 geometry 宏包设置，这样更为方
+便。
+
+\verb|\marginpar| 产生的边注是浮动的，这样当边注内容较多不能直接放下时，实际内容会与插入命令的位置略有变化，如果不想要浮动的边注，可以改用 marginnote 宏包提供的 \verb|\marginnote| 命令，禁止不需要的浮动。有时候，浮动的边注在双面模
+式下会被放在错误的一侧，可以使用 mparhack 宏包进行修正。
+
+除了边注和脚注，endnotes 宏包还提供了尾注功能，一般用在注释特别多或长，不适于用脚注的情形，详细说明可参见宏包的文档。
+}
+\setcounter{footnote}{10}
