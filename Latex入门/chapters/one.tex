@@ -132,7 +132,7 @@ TeXworks 首选项窗口的“排版”选项卡可以用来设置 TeXworks 的�
 
     \qquad \TeX 系统原本只支持 ASCII 编码。但只要设置好超过127的数字对应的符号，所有拓展 ASCII 编码都能正确排版， 如 ISO 8859 的各种标准。汉字编码 GB 2312 、 GBK 和 UTF-8 都是兼容 ASCII 的多字节编码，因而在 \LaTeX 中通过 CJK 宏包 也可以通过特殊的方式，把多个字符对应到一个汉字上，支持中文的排版。
 
-    \qquad CJK 宏包这种支持多字节编码的方法其实是一种黑客手段，后来 \TeX 的新实现 XeTeX 和 LuaTeX 都直接支持 UTF-8 编码，新的中文排版方式也自2007年起随着这两种新排版引擎应运而生。LuaLaTeX 的本地化支持目前还暂处于起步阶段，本书将着重介绍基于 XeTeX 的方式。
+    \qquad CJK 宏包这种支持多字节编码的方法其实是一种黑客手段，后来 \TeX 的新实现 \XeTeX 和 LuaTeX 都直接支持 UTF-8 编码，新的中文排版方式也自2007年起随着这两种新排版引擎应运而生。LuaLaTeX 的本地化支持目前还暂处于起步阶段，本书将着重介绍基于 \XeTeX 的方式。
     }
 
 \footnotetext{目前最新版本的 Unicode 13.0 中，包含的字符总数已达143859个。}
@@ -333,9 +333,9 @@ ImageMagick 是个很复杂的软件，包括 10多个不同的命令行工具�
 
     \qquad 程序 Dvips 将 DVI 文件转换为 PostScript 文件，可以直接拿到支持 PostScript 的 ps2pdf 或 Adobe Acrobat 提供的 Distiller 等程序再从 PostScript 转换到 PDF 文件。 PDF 流行之后，又有了能直接把 DVI 文件直接转换成 PDF 的 dvipdf 程序，后来又出现了更为先进的 dvipdfm 和 dvipdfmx ，可以支持更丰富的 PDF 功能和东亚字体等，现在新的发行版中主要还在使用的是 dvipdfmx （常常写作 DVIPDFMx ）。这类把 DVI 文件转换为其他实用格式的程序常被称为 \TeX 输出的驱动 （ driver ）。
 
-    \qquad 除了最初的 \TeX 程序，后来有很多人对\TeX 进行了拓展。先是有了 $\varepsilon-$ \TeX ，后来在 $\varepsilon-$ \TeX 的基础上，$\text{H}\grave{a}\text{n Th}\hat{e} \text{ Th}\grave{a}\text{nh} $ 设计了能够直接输出 PDF 格式的 PDF\TeX 。不过  PDF\TeX 程序也保留了输出 DVI 格式的能力，因而现在很多输出 DVI 格式的命令内部也是使用的 PDF\TeX 程序 。PDF\TeX 的后续是 Lua\TeX，这是一种把脚本语言 Lua 和 \TeX 结合起来的程序。$\varepsilon-$ \TeX 的另一发展则是 XeTeX ，它将中间层 DVI 格式扩充为更强大的 xdv 格式，一般会直接调用 dvipdfmx 的后继 xdvipdfmx ， 直接输出 PDF 格式。Lua\TeX 和 XeTeX 都将原来 \TeX 支持的 ASCII 编码改为 UTF-8 编码，并且可以更方便地使用各种字体。 \TeX 程序连同这些扩展被称为不同的 \TeX 引擎 （ engine ）。
+    \qquad 除了最初的 \TeX 程序，后来有很多人对\TeX 进行了拓展。先是有了 $\varepsilon-$ \TeX ，后来在 $\varepsilon-$ \TeX 的基础上，$\text{H}\grave{a}\text{n Th}\hat{e} \text{ Th}\grave{a}\text{nh} $ 设计了能够直接输出 PDF 格式的 PDF\TeX 。不过  PDF\TeX 程序也保留了输出 DVI 格式的能力，因而现在很多输出 DVI 格式的命令内部也是使用的 PDF\TeX 程序 。PDF\TeX 的后续是 Lua\TeX，这是一种把脚本语言 Lua 和 \TeX 结合起来的程序。$\varepsilon-$ \TeX 的另一发展则是 \XeTeX ，它将中间层 DVI 格式扩充为更强大的 xdv 格式，一般会直接调用 dvipdfmx 的后继 xdvipdfmx ， 直接输出 PDF 格式。Lua\TeX 和 \XeTeX 都将原来 \TeX 支持的 ASCII 编码改为 UTF-8 编码，并且可以更方便地使用各种字体。 \TeX 程序连同这些扩展被称为不同的 \TeX 引擎 （ engine ）。
 
-    \qquad 不同的引擎都可以编译 Plain \TeX 、 \LaTeX 或是 Con\TeX 等不同格式的文档，不同的组合就使用不同的命令，如下表所示，我们主要关注 PDFTeX 和 XeTeX 引擎使用 \LaTeX 格式的命令。
+    \qquad 不同的引擎都可以编译 Plain \TeX 、 \LaTeX 或是 Con\TeX 等不同格式的文档，不同的组合就使用不同的命令，如下表所示，我们主要关注 PDFTeX 和 \XeTeX 引擎使用 \LaTeX 格式的命令。
 
     \begin{figure}[H]
         \centering

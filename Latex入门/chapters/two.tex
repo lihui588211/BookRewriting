@@ -24,7 +24,7 @@
 
 解决输入超过 ASCII 码范围的字母的问题有传统和现代两类方案，先来看一下现代的方案。
 
-现代的方案就是使用 UTF-8 编码直接输入。在 XeTeX 这样的排版引擎下， UTF-8 编码是原生的，不需要任何多余的设置：
+现代的方案就是使用 UTF-8 编码直接输入。在 \XeTeX 这样的排版引擎下， UTF-8 编码是原生的，不需要任何多余的设置：
 
 \begin{minipage}[t]{0.45\textwidth}
     \begin{lstlisting}
@@ -50,7 +50,7 @@
 
 显示 ASCII 以外的字母表需要编辑器使用的字体的支持。大部分西文字体都支持扩展拉丁字母，如 è 、ç ，但不是所有字体都有希腊字母和西里尔字母，即使是一些罕用的拉丁字母（如 ř 也有可能缺失。编辑器常用的等宽字体中， Windows 和 Mac 系统都预装的 Courier New ， Windows 下的 Consolas 、 Lucida Sans Typewriter 等都能显示上面所列的所有字母， Linux 下常用的 Bitstream Vera Sans Mono 、 Inconsolata 则只支持到扩展拉丁字母，因此配置编辑器时也需要仔细选择。
 
-最后但却最重要的是， \TeX 系统输出时所使用的字体，也必须要能直接显示这些字母。 \LaTeX 默认的 Computer Modern 在一个字体中只覆盖很小的字符集， XeLaTeX 下默认的 Latin Modern 字体要好得多，一般都支持到拉丁字母（这通常就足够了），但希腊、西里尔这些字体需要更换其他字体。要完整显示其他语言的字母，就必须频繁地更换不同的字体，或在 \TeX 中使用覆盖更大字符集的字体。比如为了能正确显示前面例子中的三种字母，我们在前面已经设置了 Windows 系统预装的 Times New Roman 字体。
+最后但却最重要的是， \TeX 系统输出时所使用的字体，也必须要能直接显示这些字母。 \LaTeX 默认的 Computer Modern 在一个字体中只覆盖很小的字符集， \XeLaTeX 下默认的 Latin Modern 字体要好得多，一般都支持到拉丁字母（这通常就足够了），但希腊、西里尔这些字体需要更换其他字体。要完整显示其他语言的字母，就必须频繁地更换不同的字体，或在 \TeX 中使用覆盖更大字符集的字体。比如为了能正确显示前面例子中的三种字母，我们在前面已经设置了 Windows 系统预装的 Times New Roman 字体。
 
 而传统的解决方案是使用特殊的命令，给字母加上重音的标记，使用特殊字母或者整体更换字母表。
 
@@ -204,7 +204,7 @@
     fleet f\/leet
 \end{minipage}
 
-使用 XeLaTeX 引擎， OpenType 字体时，可以方便地使用 fontspec 宏包的 \verb|Ligature| 字体选项选择连字的有无和程度。
+使用 \XeLaTeX 引擎， OpenType 字体时，可以方便地使用 fontspec 宏包的 \verb|Ligature| 字体选项选择连字的有无和程度。
 
 \subsubsection{正确使用标点}
 
@@ -353,7 +353,7 @@
 
 也有一种科技文章的写作风格，是中文与西文统一使用西文的标点，只有顿号、破折号和省略号仍用中文标点。但这样可能造成标点大小、位置与汉字对不准，以及字体风格的不统一，应该小心使用。
 
-\LaTeX 并不会自动处理好汉字标点的宽度和间距，甚至不能保证标点的禁则（如句号不允许出现在一行的开始）。使用 XeTeX 作为排版引擎时，中文标点一般是由 xeCJK 宏包控制的。 xeCJK 提供了多种标点格式，默认是全角式，即所有标点占一个汉字宽度，只有在行末或个别标点之间进行标点挤压。还支持其他一些标点格式，可以使用\verb|\punctstyle| 命令修改：
+\LaTeX 并不会自动处理好汉字标点的宽度和间距，甚至不能保证标点的禁则（如句号不允许出现在一行的开始）。使用 \XeTeX 作为排版引擎时，中文标点一般是由 xeCJK 宏包控制的。 xeCJK 提供了多种标点格式，默认是全角式，即所有标点占一个汉字宽度，只有在行末或个别标点之间进行标点挤压。还支持其他一些标点格式，可以使用\verb|\punctstyle| 命令修改：
 
 \begin{center}
     \includegraphics[width=0.6\textwidth]{标点形式.png} \centering
@@ -546,9 +546,9 @@ Roman number XII\@. Yes.
 
 使用宏包来调用特殊符号时，需要注意的是，有些宏包只提供符号命令（如 bbding ），可以随意调用；有些宏包提供一套符号字体的选择方式（如 tipa），可以通过与此符号对应的 ASCII 符号或符号的数字编码来使用符号；有些宏包则实际上是完整的正文字体包（如 fourier ），使用它会整体改变全文的默认字体，同时提供一些额外的符号。“符号大全”对这些情况并没有仔细区分，可能需要查看相应宏包的文档才能进一步了解它们的用法和注意事项。
 
-xunicode 宏包重定义了 XeTeX 的 UTF-8 编码下（EU1字体编码）的大量符号的命令，使得在新编码下，\verb|\textbullet| 之类的命令也能正常工作，而像\verb|\'e|  这样的符合重音标记也会自动转为字体中带有重音的字母。 xunicode 宏包会自动被 fontspec 或 ctex 宏包载入，但在旧的系统下可能需要手工完成。不过，当字体本身缺少需要的符号时，需要的符号就无法显示，即使使用的是\verb|\'| 这样的复合形式，你也可能需要更换其他字体或切换编码来显示这些符号。
+xunicode 宏包重定义了 \XeTeX 的 UTF-8 编码下（EU1字体编码）的大量符号的命令，使得在新编码下，\verb|\textbullet| 之类的命令也能正常工作，而像\verb|\'e|  这样的符合重音标记也会自动转为字体中带有重音的字母。 xunicode 宏包会自动被 fontspec 或 ctex 宏包载入，但在旧的系统下可能需要手工完成。不过，当字体本身缺少需要的符号时，需要的符号就无法显示，即使使用的是\verb|\'| 这样的复合形式，你也可能需要更换其他字体或切换编码来显示这些符号。
 
-其实，使用 XeTeX 引擎时，输入特殊符号最简捷的办法就是在 UTF-8 编码下直接输入：
+其实，使用 \XeTeX 引擎时，输入特殊符号最简捷的办法就是在 UTF-8 编码下直接输入：
 
 \begin{minipage}[t]{0.45\textwidth}
 \begin{lstlisting}
@@ -562,9 +562,9 @@ xunicode 宏包重定义了 XeTeX 的 UTF-8 编码下（EU1字体编码）的大
 
 当然，与输入特殊字母一样，这种方式也要求输入法、编辑器字体和输出字体的共同支持。通过更换字体，可以输入任何可以找得到的符号。
 
-即使并非使用 XeTeX 引擎，依然可能直接输入标准 ASCII 编码以外的特殊符号。这依然需要使用比 ASCII 更大的输入编码。 inputenc 宏包允许使用诸如 \verb|ascii| （默认值， ASCII）、\verb|latin1| （ ISO 8859-1 ）、\verb|utf8| （UTF-8）等参数表示使用的输入编码。用这种方式也可以直接输入特殊字母与特殊符号，不过这里的 UTF-8 编码也只支持西文的拼音文字，无法支持汉字。
+即使并非使用 \XeTeX 引擎，依然可能直接输入标准 ASCII 编码以外的特殊符号。这依然需要使用比 ASCII 更大的输入编码。 inputenc 宏包允许使用诸如 \verb|ascii| （默认值， ASCII）、\verb|latin1| （ ISO 8859-1 ）、\verb|utf8| （UTF-8）等参数表示使用的输入编码。用这种方式也可以直接输入特殊字母与特殊符号，不过这里的 UTF-8 编码也只支持西文的拼音文字，无法支持汉字。
 
-使用 XeTeX 或其他引擎直接指定字体输入特殊符号时，一个很大的问题是，并非所有符号都可以使用键盘输入，即使借助特殊输入法、字符映射表等工具输入了这些符号，在源代码编辑器中仍然可能无法显示。为此，\LaTeX 提供了命令\verb|\symbol| 来直接用符号在字体中的编码来输入符号。\verb|\symbol| 命令带有一个参数，就是一个表示字符编码的数字。在\TeX 中数字除了普通的十进制，也可以用八进制、十六进制或编码对应的字符本身表示，其语法形式如表所示。其中字符形式中的字符如果是特殊字符，需要在前面加\verb|\| 转义，如用\verb|\symbol{`\%}| 就得到 \% 本身，与 \% 类似。\symbol{`\%}
+使用 \XeTeX 或其他引擎直接指定字体输入特殊符号时，一个很大的问题是，并非所有符号都可以使用键盘输入，即使借助特殊输入法、字符映射表等工具输入了这些符号，在源代码编辑器中仍然可能无法显示。为此，\LaTeX 提供了命令\verb|\symbol| 来直接用符号在字体中的编码来输入符号。\verb|\symbol| 命令带有一个参数，就是一个表示字符编码的数字。在\TeX 中数字除了普通的十进制，也可以用八进制、十六进制或编码对应的字符本身表示，其语法形式如表所示。其中字符形式中的字符如果是特殊字符，需要在前面加\verb|\| 转义，如用\verb|\symbol{`\%}| 就得到 \% 本身，与 \% 类似。\symbol{`\%}
 
 \begin{table}[H]
     \centering
@@ -596,7 +596,7 @@ xunicode 宏包重定义了 XeTeX 的 UTF-8 编码下（EU1字体编码）的大
     \symbol{"DE}\symbol{"FE}
 \end{minipage}
 
-而对于 XeTeX 调用的 OpenType ， TrueType 字体，一般编码均为 Unicode ，可以查通用的 Unicode 码表或利用字符映射表等外部工具，查看符号的编码，输入对应的符号，例如：
+而对于 \XeTeX 调用的 OpenType ， TrueType 字体，一般编码均为 Unicode ，可以查通用的 Unicode 码表或利用字符映射表等外部工具，查看符号的编码，输入对应的符号，例如：
 
 \begin{minipage}[t]{0.45\textwidth}
 \begin{lstlisting}
@@ -848,7 +848,7 @@ PostScript Bookman Demibold Normal
 
 使用 \verb|\rmfamily,\bfseries,\itshape,\kaishu| 这类命令时，只能选择预定义的少数几种字体。对于西文，就是 Computer Modern 或 Latin Modern 系列的几款成套的字体；对于中文，就是 6 种预定义的 Windows 字体。这些对于简单的文章并没有问题，但如果想改变文章的整体风格，或者缺少预装的字体文件（如中文 Linux 用户就不会有 Windows 预装的中文字体），那么就需要用到预设之外的更多字体。
 
-选择非默认的字体的方法有两类：当不使用 XeTeX 引擎时，可以通过字体宏包或 \LaTeX 底层字体命令调用在 \TeX 系统中安装的中西文字体；当使用 XeTeX 引擎时，可以调用操作系统安装的中西文字体。由于质量可靠的中文字体几乎都是商用的，因此 \TeX 系统中只安装了很少几种质量较差的中文字体，一般总要调用操作系统中的字体来使用 XeTeX 引擎的功能。
+选择非默认的字体的方法有两类：当不使用 \XeTeX 引擎时，可以通过字体宏包或 \LaTeX 底层字体命令调用在 \TeX 系统中安装的中西文字体；当使用 \XeTeX 引擎时，可以调用操作系统安装的中西文字体。由于质量可靠的中文字体几乎都是商用的，因此 \TeX 系统中只安装了很少几种质量较差的中文字体，一般总要调用操作系统中的字体来使用 \XeTeX 引擎的功能。
 
 一个\TeX 发行版通常都同时安装了大量的西文字体，直接使用 \LaTeX 底层命令指定字体通常很难用，特别是一些字体同时还包括对应的数学字体和符号命令的设置，非常繁琐，因此很多西文字体都做成了方便调用的字体宏包，可以直接更换整套的西文字体（或数学字体）。其中，最为常见的要求是把整套字体换为 Times Roman 的衬线字体（罗马体）或  Helvetica 的无衬线字体，Times 字体也能与中文宋体很好地配合。有几个宏包可以达到这个目的，最简单的是 times 宏包，只更换正文字体，没有更换配套的数学字体，很少使用； mathptmx 在 times 宏包的基础上增加了数学字体的支持；效果最好的免费字体则是 txfonts 宏包，对整套西文字体和数学符号给出了完整的解决方案。使用字体宏包非常简单，通常只需要导入该宏包即可：
 
@@ -889,11 +889,11 @@ Test text
     \label{fig:ruler}
 \end{figure}
 
-在使用 Concrete 与 Euler 字体时，我们使用了一个新的宏包 fontenc 来选择字体的编码。 fontenc 宏包可以包含多个选项，表示文档所使用的正文字体编码，最后一个选项的编码是文档默认使用的编码。字体的编码决定字体包含的符号，同一组的字体可能有不同编码的版本。除了 XeLaTeX 使用的 Unicode 编码（在 NFSS 中一般是 EU1 ），传统的 \LaTeX 字体编码有一般正文字体 OT1 、 拓展正文字体 T1 、 数学字母 OML 、 数学符号 OMS 、数学符号拓展 OMX 等。需要手工设置的通常只有正文字体的编码，默认的正文字体编码是 OT1 ， 而拓展编码 T1 则包含更多的符号，特别是带重音的拉丁字母等。许多字体包都要求使用 T1 编码，才能获得更好的效果，在字体包的说明文档中一般都会提及。注意字体编码是指符号在字体中位置的编码，与输入文档使用的文档编码不是一回事。
+在使用 Concrete 与 Euler 字体时，我们使用了一个新的宏包 fontenc 来选择字体的编码。 fontenc 宏包可以包含多个选项，表示文档所使用的正文字体编码，最后一个选项的编码是文档默认使用的编码。字体的编码决定字体包含的符号，同一组的字体可能有不同编码的版本。除了 \XeLaTeX 使用的 Unicode 编码（在 NFSS 中一般是 EU1 ），传统的 \LaTeX 字体编码有一般正文字体 OT1 、 拓展正文字体 T1 、 数学字母 OML 、 数学符号 OMS 、数学符号拓展 OMX 等。需要手工设置的通常只有正文字体的编码，默认的正文字体编码是 OT1 ， 而拓展编码 T1 则包含更多的符号，特别是带重音的拉丁字母等。许多字体包都要求使用 T1 编码，才能获得更好的效果，在字体包的说明文档中一般都会提及。注意字体编码是指符号在字体中位置的编码，与输入文档使用的文档编码不是一回事。
 
 初拥 \LaTeX 的最大的问题往往是并不知道 \LaTeX 中哪些字体可用，因为作为一门排版语言，\LaTeX 并没有把可用的字体放在一个下拉菜单中等待选择，因此必须自己查看 \TeX 发行版的字体安装目录或综述性的字体文档。一个带有说明、例子、使用方法和详细功能比较的综述性文档是 Stephen 的 HartkeFree\_Math\_Font\_Survey\footnote{\href{https://www.ctan.org/tex-archive/info/Free\_Math\_Font\_Survey/en}{https://www.ctan.org/tex-archive/info/Free\_Math\_Font\_Survey/en}}，里面介绍了 20 多种带有数学支持的免费 \TeX 字体。该文档在 \texlive 和 CTeX 套装中都有收录 ， 是使用成套字体的很好的参考。一个收录更为全面的 \LaTeX 字体目录是 FontCatalogue \footnote{\href{https://tug.org/FontCatalogue/}{https://tug.org/FontCatalogue/}}，它展示了 Linux 源中的 \texlive 所能使用的近 200 种西文字体族。
 
-下面来看现代的方法，使用 XeTeX 来选择字体。在 XeLaTeX 中，主要使用 fontspec 宏包的机制来调用字体。最基本的是设置正文罗马字体族、无衬线字体族和打字机字体族的命令：
+下面来看现代的方法，使用 \XeTeX 来选择字体。在 \XeLaTeX 中，主要使用 fontspec 宏包的机制来调用字体。最基本的是设置正文罗马字体族、无衬线字体族和打字机字体族的命令：
 
 \begin{lstlisting}
     \setmainfont[可选选项]{字体名}
@@ -938,7 +938,7 @@ Test text
 \end{figure}
 \end{minipage}
 
-XeLaTeX 下中文字体的设置使用 xeCJK 宏包（ctex宏包或文档类会自动调用它）。xeCJK 提供了与 fontspec 对应的中文字体设置命令：
+\XeLaTeX 下中文字体的设置使用 xeCJK 宏包（ctex宏包或文档类会自动调用它）。xeCJK 提供了与 fontspec 对应的中文字体设置命令：
 \begin{lstlisting}
     \setCJKmainfont[可选选项]{字体名}
     \setCJKsansfont[可选选项]{字体名}
@@ -1001,7 +1001,7 @@ fontspec 宏包为字体，尤其是 OpenType 字体提供了多种字体性质�
 \end{figure}
 \end{minipage}
 
-字体选项的选择可参见 The XeTeX Companion-TeX meets OpenType and Unicode \footnote{ \href{https://xml.web.cern.ch/XML/lgc2/}{https://xml.web.cern.ch/XML/lgc2/}} 、fontspec 宏包文档 \footnote{\href{https://ctan.org/pkg/fontspec}{https://ctan.org/pkg/fontspec}}。OpenType
+字体选项的选择可参见 The \XeTeX Companion-TeX meets OpenType and Unicode \footnote{ \href{https://xml.web.cern.ch/XML/lgc2/}{https://xml.web.cern.ch/XML/lgc2/}} 、fontspec 宏包文档 \footnote{\href{https://ctan.org/pkg/fontspec}{https://ctan.org/pkg/fontspec}}。OpenType
 字体提供的性质可通过命令行工具 \verb|otfinfo|或 opentype-info 宏包查看。
 
 对中文字体来说，尤其有用的一组 fontspec 命令选项是设置斜体、粗体、粗斜体的选项\verb|ItalicFont|，\\
@@ -1029,9 +1029,9 @@ fontspec 主要用于设置正文字体，通常不用来设置数学字体，�
 \setmainfont{Utopia Std} % 正文字体使用 OpenType 格式的 Adobe Utopia
 \end{lstlisting}
 
-在使用数学字体包时同时加载对应的 OpenType 或 TrueType 格式的正文字体，是在 XeLaTeX 下使用复杂字体的一般方法。
+在使用数学字体包时同时加载对应的 OpenType 或 TrueType 格式的正文字体，是在 \XeLaTeX 下使用复杂字体的一般方法。
 
-一种更方便的方式是使用传统的字体包设置全文的字体（数学或正文字体），只把其他字体（如汉字）留给 fontspec 和 xecJK 。也就是说，我们要将旧的字体选择机制和新的学体选择机制混合使用，这同样可以做到，与前面的区别仅仅是使用 fontenc 宏包将传统的 Unicode字体编码设置为默认的编码，即最后一个选项。这种方法不影响使用 fontspec 中\verb|\newfontfamily|声明的字体和 XeTeX 声明的汉字字体。但 \verb|\setmainfont|，\verb|setsansfont| 和 \verb|setmonofont| 这三人命令会因字体编码而失效，需要时在文档中使用\verb|\fontencoding|命令临时切换编码，或者直接重定义\verb|\rmfamily|、\verb|\sffamily|和\verb|\ttfamily|，让它们增加切换编码的功能。下面给出一个在设置字体方面比较复杂的例子，以西文的 T1 编码为默认编码调 fourier 字体包，西文用 fontspec 的两种方式定义其他字体，汉字也使用 OpenType 的字体：
+一种更方便的方式是使用传统的字体包设置全文的字体（数学或正文字体），只把其他字体（如汉字）留给 fontspec 和 xecJK 。也就是说，我们要将旧的字体选择机制和新的学体选择机制混合使用，这同样可以做到，与前面的区别仅仅是使用 fontenc 宏包将传统的 Unicode字体编码设置为默认的编码，即最后一个选项。这种方法不影响使用 fontspec 中\verb|\newfontfamily|声明的字体和 \XeTeX 声明的汉字字体。但 \verb|\setmainfont|，\verb|setsansfont| 和 \verb|setmonofont| 这三人命令会因字体编码而失效，需要时在文档中使用\verb|\fontencoding|命令临时切换编码，或者直接重定义\verb|\rmfamily|、\verb|\sffamily|和\verb|\ttfamily|，让它们增加切换编码的功能。下面给出一个在设置字体方面比较复杂的例子，以西文的 T1 编码为默认编码调 fourier 字体包，西文用 fontspec 的两种方式定义其他字体，汉字也使用 OpenType 的字体：
 \begin{lstlisting}
     \documentclass[UTF8]{ctexart}
     % 西文正文和数学字体
@@ -1054,7 +1054,7 @@ fontspec 主要用于设置正文字体，通常不用来设置数学字体，�
     \end{document}
 \end{lstlisting}
 
-XeTeX 通常不影响符号字体包的使用，但偶尔会因为字体编码不同而造成问题：注意 XeTeX 在同一时刻只能使用一种字体编码，多种字体编码要手工切换。例如
+\XeTeX 通常不影响符号字体包的使用，但偶尔会因为字体编码不同而造成问题：注意 \XeTeX 在同一时刻只能使用一种字体编码，多种字体编码要手工切换。例如
 通常由 fontspec 自动加载的 xunicode 宏包\footnote{现在好像不会自动加载了}会把国际音标字体包 tipa 的功能对应到 Unicode 编码字体上，但这会使原来的\verb|\textipa|命令改用 fontspec 管理的 Unicode 编码字体。因此默认的正文体 Latin Modern 因为符号不全就不能用于国际音标输出，应该改用包含音标符号的字体，如Linux Libertine O、Times New Roman等。例如：
 
 \begin{lstlisting}
@@ -1068,7 +1068,7 @@ XeTeX 通常不影响符号字体包的使用，但偶尔会因为字体编码�
     \end{document}
 \end{lstlisting}
 
-如果不愿意使用 OpenType 或 TrueType 格式的 Unicode 编码国际音标字体，仍然可以在 XeTeX 下使用 T3 编码的 tipa 的功能：
+如果不愿意使用 OpenType 或 TrueType 格式的 Unicode 编码国际音标字体，仍然可以在 \XeTeX 下使用 T3 编码的 tipa 的功能：
 
 \begin{lstlisting}
     % XeLaTeX 编译
@@ -1112,7 +1112,7 @@ XeTeX 通常不影响符号字体包的使用，但偶尔会因为字体编码�
 
 这正是 helvet 宏包的主要工作。当然，在有对应宏包的情况下，还是应该尽量使用宏包提供的功能，这样可能有针对特定字体的更详细的设置。
 
-类似地，较新版本的 XeTeX 也提供 \verb|\CJKrmdefault|，\verb|\cJKsfdefault|，\verb|\CJKttdefault| 和\\ \verb|\CJKfamilydefault| 命令，其用法与 NFSS 中的几个命令类似。在排版中文文档时，如果重定义了\\\verb|\familydefault|设置全文为无衬线字体族，那么也应该同时设置中文：
+类似地，较新版本的 \XeTeX 也提供 \verb|\CJKrmdefault|，\verb|\cJKsfdefault|，\verb|\CJKttdefault| 和\\ \verb|\CJKfamilydefault| 命令，其用法与 NFSS 中的几个命令类似。在排版中文文档时，如果重定义了\\\verb|\familydefault|设置全文为无衬线字体族，那么也应该同时设置中文：
 \begin{lstlisting}
     \renewcommand\CJKfamilydefault{\CJKsfdefault}
 \end{lstlisting}
@@ -1272,11 +1272,11 @@ CJKfntef 宏包对汉字也提供了类似的功能，同时也进行了一些�
 使用 CJKfntef 宏包后\verb|\emph| 命令也被改为下画线的格式，同样可以用\verb|\normalem| 改回原来的意大利体定义。在 ctex 宏包及文档类中，可以使用 \verb|fntef| 选项调用 CJKfntef ，
 此时\verb|\emph| 的定义不会被改变为下画线格式。
 
-\storybox{从 METAFONT 到 OpenType}
+\storybox{从 \MF 到 OpenType}
 {
-    \qquad 使用各种字体是任何排版软件都应具备的重要功能。今天\TeX 引擎可以使用很多格式的字体，如 METAFONT ，PostScript ，TrueType ，OpenType 等，这些又都是些什么呢？
+    \qquad 使用各种字体是任何排版软件都应具备的重要功能。今天\TeX 引擎可以使用很多格式的字体，如 \MF ，PostScript ，TrueType ，OpenType 等，这些又都是些什么呢？
 
-    \qquad 高德纳教授最初设计 \TeX 系统时，也同时为 \TeX 设计了配套的字体格式和字体描述语言，这就是 METAFONT 。\TeX 默认 Computer Modern 系列字体就是使用 METAFONT 描述的。METAFONT ，顾名思义，就是“元字体”。它是一门通过曲线路径描述字体信息的宏语言，把字符用坐标绘图的方式“画出来”。例如 cryst 字体中的一个箭头符号 $\to$ 就是用下面的代码画出来的：
+    \qquad 高德纳教授最初设计 \TeX 系统时，也同时为 \TeX 设计了配套的字体格式和字体描述语言，这就是 \MF 。\TeX 默认 Computer Modern 系列字体就是使用 \MF 描述的。\MF ，顾名思义，就是“元字体”。它是一门通过曲线路径描述字体信息的宏语言，把字符用坐标绘图的方式“画出来”。例如 cryst 字体中的一个箭头符号 $\to$ 就是用下面的代码画出来的：
 
     {\ttfamily
 \qquad beginchar(9,120u\#,68u\#,0);
@@ -1298,13 +1298,13 @@ CJKfntef 宏包对汉字也提供了类似的功能，同时也进行了一些�
 
 \qquad endchar ;}
 
-\qquad METAFONT 使用坐标作图的命令猫描述字符的曲线，然后把曲线计算为三次 Bézier 样条，再转换为光栅格式的通用字体文件（ generic font ） \lstinline{.gf}，同时生成\TeX 字体度量文件（TeXfontmetric） \lstinline{.tfm} 。\TeX 引擎从 \lstinline{.tfm}文件中读入字符尺寸信息，生成 DVI 文件；驱动程序在打印输出或屏幕显示时从 \lstinline{.gf}文件（一般转换为压缩的 \lstinline{.gk}文件）中读入字符图形信息，生成最终打印或显示的结果。尽管 METAFONT 在描述字符时使用的是曲线方式，但生成的结果却是光栅点阵形式的，在字体放大和使用电子文档时质量不够好；而且这种用数学坐标的方式描述符号很不直观，因此，现在 METAFONT 格式的字体使用得越来越少了。倒是 METAFONT 这种绘图方式，催生了绘图语言 METAPOST 的产生。
+\qquad \MF 使用坐标作图的命令猫描述字符的曲线，然后把曲线计算为三次 Bézier 样条，再转换为光栅格式的通用字体文件（ generic font ） \lstinline{.gf}，同时生成\TeX 字体度量文件（TeXfontmetric） \lstinline{.tfm} 。\TeX 引擎从 \lstinline{.tfm}文件中读入字符尺寸信息，生成 DVI 文件；驱动程序在打印输出或屏幕显示时从 \lstinline{.gf}文件（一般转换为压缩的 \lstinline{.gk}文件）中读入字符图形信息，生成最终打印或显示的结果。尽管 \MF 在描述字符时使用的是曲线方式，但生成的结果却是光栅点阵形式的，在字体放大和使用电子文档时质量不够好；而且这种用数学坐标的方式描述符号很不直观，因此，现在 \MF 格式的字体使用得越来越少了。倒是 \MF 这种绘图方式，催生了绘图语言 \MP 的产生。
 
-\qquad Adobe公司推出 PostScript 时，也定义了 PostScript 字体的格式，Type 1 和 Type 3 是其中的两个类型。很多高质量的商业字体都是 PostScript Type 1 格式的，它支持字体信息的微调（hinting），后来当 Adobe 开放 Type1 格式的使用后，\TeX 中原来用 METAFONT 描述的字体也都纷纷转换为 TyPe1 字体了。Type 3格式不支持微调，不过也可以表示点阵字体，当输出 PostScript 或
-PDF 文件时，METAFONT 生成的 PK 字体就被转换为 Type3 格式。TyPe1 字体一般使用 \lstinline{.pfb} 后缀作为字体扩展名，用 \lstinline{.afm} 作为字体度量文件的扩展名，不过 \TeX 使用时仍然要使用转换得到的 \lstinline{.tfm}度量文件。目前输出 PostScript 或 PDF 文件的 \TeX 驱动和引擎都支持 PostScript 字体。
+\qquad Adobe公司推出 PostScript 时，也定义了 PostScript 字体的格式，Type 1 和 Type 3 是其中的两个类型。很多高质量的商业字体都是 PostScript Type 1 格式的，它支持字体信息的微调（hinting），后来当 Adobe 开放 Type1 格式的使用后，\TeX 中原来用 \MF 描述的字体也都纷纷转换为 TyPe1 字体了。Type 3格式不支持微调，不过也可以表示点阵字体，当输出 PostScript 或
+PDF 文件时，\MF 生成的 PK 字体就被转换为 Type3 格式。TyPe1 字体一般使用 \lstinline{.pfb} 后缀作为字体扩展名，用 \lstinline{.afm} 作为字体度量文件的扩展名，不过 \TeX 使用时仍然要使用转换得到的 \lstinline{.tfm}度量文件。目前输出 PostScript 或 PDF 文件的 \TeX 驱动和引擎都支持 PostScript 字体。
 
-\qquad TrueType 是苹果公司与 Adobe 竞争而于1991年发布的字体格式，微软得到授权后，它已成为 Windows 操作系统中最为常见的字体格式；OpenType 是微软公司和 Adobe 公司于1996年发布的字体格式，它继承了 PostScript 字体的许多特性。TrueType 字体以 \lstinline{.ttf} 和 \lstinline{.ttc} 为后缀，OpenType 字体以 \lstinline{.otf} 和 \lstinline{.ttf} 为后缀。新的驱动和引擎 dvipdfmx，pdfTeX，XeTeX 和 LuaTeX 都支持 TrueType 和 OpenType 字体格式，不过 dvipdfmx 和 pdfTeX 使用 TrueType
-和 OpenType 时仍然需要事先生成 .tfm 文件并进行配置，功能上也有一些限制，而 XeTeX 和 LuaTeX 则支持直接读取系统字体及全部 OpenType 字体特性。
+\qquad TrueType 是苹果公司与 Adobe 竞争而于1991年发布的字体格式，微软得到授权后，它已成为 Windows 操作系统中最为常见的字体格式；OpenType 是微软公司和 Adobe 公司于1996年发布的字体格式，它继承了 PostScript 字体的许多特性。TrueType 字体以 \lstinline{.ttf} 和 \lstinline{.ttc} 为后缀，OpenType 字体以 \lstinline{.otf} 和 \lstinline{.ttf} 为后缀。新的驱动和引擎 dvipdfmx，pdfTeX，\XeTeX 和 LuaTeX 都支持 TrueType 和 OpenType 字体格式，不过 dvipdfmx 和 pdfTeX 使用 TrueType
+和 OpenType 时仍然需要事先生成 .tfm 文件并进行配置，功能上也有一些限制，而 \XeTeX 和 LuaTeX 则支持直接读取系统字体及全部 OpenType 字体特性。
 }
 
 \subsection{字号与行距}
@@ -2700,7 +2700,7 @@ ntheorem 增加了更多的设置命令和大量辅助的功能，如给宏包�
 
 ntheorem 宏包的功能很多，除了详细定制定理格式，还可以重定义已有的定理类环境、分类管理定理格式、生成定理自录等；具体的使用中也看很多注意事项（如与 amsmath 宏包同时使用时要加 \verb|[amsmath]| 选项），读者可查阅宏包的文档获得进一步的信息。
 
-除了 theorem 和 ntheorem 宏包，美国数学会发布的 amsthm 宏包也常用于定理类环境的定制。在使用 XeTeX 时，amsthm 必须在fontspec 宏包之前载入，而由于 ctex 文档类中的 xeCJK 宏包会自动调用fontspec ，因此不能在 ctexart 等文档类中首接使用 amsthm ，而只能在 article 等标准文档类中使用 amsthm 宏包用再使用 ctexcap 宏包，比
+除了 theorem 和 ntheorem 宏包，美国数学会发布的 amsthm 宏包也常用于定理类环境的定制。在使用 \XeTeX 时，amsthm 必须在fontspec 宏包之前载入，而由于 ctex 文档类中的 xeCJK 宏包会自动调用fontspec ，因此不能在 ctexart 等文档类中首接使用 amsthm ，而只能在 article 等标准文档类中使用 amsthm 宏包用再使用 ctexcap 宏包，比
 较不便。
 
 amsthm 提供了预定义的 \verb|proof| 环境用来表示证明并自动添加证毕符号，但这个环境的可定制性较差，只能通过重定义 \verb|proofname| 宏修改证明的“ Proof ”字样，或重定义\verb|\qedsymbol| 宏修改证毕符号，例如：
@@ -2723,7 +2723,7 @@ amsthm 的证毕符号没有 ntheorem 的智能，在显示公式中无法正确
 \end{lstlisting}
 
 amsthm 预定义了一些格式，可以使用 \verb|\theoremstyle| 命令选择，但如果用
-\verb|\newtheoremstyle| 命令定义新的格式则语法比较复杂。amsthm 与 ntheorem 宏包的功能大致相当，但 ntheorem 宏包的语法容易理解一些，也没有 XeTeX 下与 fontspec 的冲突问题，因此最好使用 ntheorem 包。
+\verb|\newtheoremstyle| 命令定义新的格式则语法比较复杂。amsthm 与 ntheorem 宏包的功能大致相当，但 ntheorem 宏包的语法容易理解一些，也没有 \XeTeX 下与 fontspec 的冲突问题，因此最好使用 ntheorem 包。
 
 \subsection{抄录和代码环境}
 
@@ -2995,7 +2995,7 @@ listings 宏包还提供了 \verb|\verb| 命令的对应物 \verb|\lstinline| �
     语句 \lstinline[language=C,flexiblecolumns,keywordstyle = \bfseries]{typedef char byte}
 \end{minipage}
 
-listings 宏包对汉字等非 ASCII 字符的支持不是很好。使用 XeLaTeX 时，一般需要对汉字用逃逸字符处理，这样才能得到正确的结果\footnote{现在好像不需要了}：
+listings 宏包对汉字等非 ASCII 字符的支持不是很好。使用 \XeLaTeX 时，一般需要对汉字用逃逸字符处理，这样才能得到正确的结果\footnote{现在好像不需要了}：
 
 \begin{minipage}[t]{0.45\textwidth}
 \begin{verbatim}
@@ -3253,3 +3253,239 @@ $A = \{2，3，5， 7， 11\}$， $x=3$ \\
 除了边注和脚注，endnotes 宏包还提供了尾注功能，一般用在注释特别多或长，不适于用脚注的情形，详细说明可参见宏包的文档。
 }
 \setcounter{footnote}{10}
+
+\subsection{垂直距离与垂直盒子}
+
+垂直间距的命令与水平间距的命令是对应的，类似用\verb|\hspace| 和 \verb|\hspace*| 生成水平间距，可以用 \verb|\vspace{}| 和 \verb|\vspace*{长度}| 生成垂直间距。垂直间距也是弹性距离，可以用 \verb|\vfill| 表示 \verb|\vspace{\fill}|。
+
+\verb|\vspace| 的参数可以是长度的值，也可以是像 \verb|\parskip| 、 \verb|\itemsep| 这样的长度变量。\LaTeX 也有一些预定义的垂直间距命令，\verb|\smallskip| 、 \verb|\medskip| 、\verb|\bigskip| 分别表示较小的、中间的和较大的垂直间距：
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{skip.png}
+\end{figure}
+
+这三个间距的大小由长度变量 \verb|\smallskipamount| 、 \verb|\medskipamount| 、 \verb|\bigskipamount| 
+定义；其具体的值在文档类中定义，默认\verb|\smallskipamount| 的值是 \verb|3pt plus 1pt minus 1pt| ，\verb|\medskipamount| 和 \verb|\bigskipamount| 分别是它的 2 倍和 4 倍。
+\verb|\addvspace{长度}| 与 \verb|\vspace{长度}| 的功能类似，只是它在重复使用时只起一
+个的作用，即 \verb|\addvspace{s1} \addvspace{s2}| 相当于 \verb|\addvspace{max(s1,s2)}|
+的功能。
+
+为了保证正确的间距效果，这些间距命令一般放在后面一段的开头，而不是前面一段的末尾。
+
+\LaTeX 使用两种机制处理断页问题，可以使用命令 \verb|\raggedbottom| 告诉 \LaTeX 让页面中的内容保持它的自然高度，把每一页的页面底部用空白填满。相反，\verb|\flushbottom| 则让 \LaTeX 将页面高度均匀地填满，使每一页的底部直接对齐。在标准文档类中，\LaTeX 会为单面输出的文档（ \verb|oneside| 选项）设置 \verb|\raggedbottom|，而为双面输出的文档（ \verb|twoside| 选项）设置 \verb|\flushbottom| 。当排满一页后，页面剩余空间比较大的时候，如果还要排版一个很高的内容（如多行的公式或表格），就会造成难看的断页，通常这是由浮动环境解决的，但在无可避免的时候就需要在两
+种断页机制下选择一种：双面印刷的书籍使用 \verb|\flushbottom| 可以保证难开时左右两页对称，但如果有太多过于松散的页面就不如使用 \verb|\raggedbottom| 了。
+
+\verb|\pagebreak| 可以指定页面断页的位置，它可以带一个 0 到 4 的可选参数，表示建议断页的程度，0 不允许分页，默认值 4 表示必须断页。 \verb|\nopagebreak| 与 \verb|\\pagebreak| 功能和参数的意义相反。例如可以使用 \verb|\pagebreak[3]| 标示一个特别适合断页的地方，\LaTeX 会优先考虑在此处断页。
+
+在遇到一页最后只剩孤立的一行没有排完时，还可以临时用 \verb|\enlargethispage{长度}| 增加当前页版心的高度，把剩下的一点内容装到当前页，避免难看的断页（尤其是在书籍一章的末尾）。还可以用带星的命令 \verb|\enlargethispage*| ，此时不仅增加页面版心高度，还会适当缩小行距。
+
+可以使用 \verb|\newpage| 直接对文字手工分页。分页不同于简单的断页，这也是通常我们习惯上所说的换一页的意义。\verb|\newpage| 实际相当于首先强制分段，然后使用 \verb|\vfill| 把页面填满，最后用 \verb|\pagebreak| 换页。连续使用多个 \verb|\newpage| 并不会多次分页产生空白页，如果需要多次手工分页，可以在空白页使用一个空的盒子\verb|\mbox| 占位。
+
+\verb|\clearpage| 与 \verb|\newpage| 功能类似，也完成填充空白并分页的工作，不同的是它
+还会清理浮动体；\verb|\cleardoublepage| 与\verb|\clearpage| 类似，只是在双面文档（ \verb|twoside|）的奇数页会多分一页，使新的一页也在奇数页。
+
+在 \ref{sec:box} 节我们已经知道了盒子的基本概念。不过，\ref{sec:box} 节介绍的盒子都是水平盒
+子，文字不能在其中分行分段（除非嵌套其他内容）。使用 \verb|\parbox| 命令或 \verb|minipage|
+环境生成的子段盒子就没有这种限制，垂直盒子在 \LaTeX 中也称为子段盒子（ parbox ），
+其语法格式如下：
+
+\begin{lstlisting}
+    \parbox[位置][高度][内容位置]{宽度}{盒子内容}
+    \begin{minipage}[位置][高度][内容位置]{宽度}
+        盒子内容
+    \end{minipage}
+\end{lstlisting}
+
+\verb|\parbox| 和 \verb|minipage| 环境必须带有一个宽度参数，表示内容的宽度，超出宽度的
+内容会自动换行：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+    前言\parbox{2em}{不搭后语}。
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    前言\parbox{2em}{不搭后语}。
+\end{minipage}
+
+在垂直盒子中会自动设置一些间距，如段落缩进 \verb|\parindent| 会被设置为 \verb|0pt| ，段
+间距会被设置为 \verb|0pt|（正文默认为 \verb|0pt plus 1pt| ）。
+
+\verb|\parbox| 和 \verb|minipage| 环境还可以带三个可选参数，分别表示盒子的基线位置、盒
+子的高度以及（指定高度后）盒子内容在盒子内的位置。位置参数可以使用 \verb|c|（居中），
+\verb|t| （顶部）, \verb|b| （底部），默认为居中；内容置参数可以使用 \verb|c、t、b、s|（垂直分散对齐）。其中 \verb|s| 参数只在弹性间距时生效。而 \verb|t| 选项指接第一行的基线对齐，而不是盒子顶端。例如：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+    前言\parbox[t]{2em}{不搭后语}。
+    后语\parbox[b]{2em}{不搭前言}。
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    前言\parbox[t]{2em}{不搭后语}。
+    后语\parbox[b]{2em}{不搭前言}。
+\end{minipage}
+
+\begin{lstlisting}
+\begin{minipage}[c][2.5cm][t]{2em}两个\end{minipage}\quad
+\begin{minipage}[c][2.5cm][c]{3em}黄鹂鸣翠柳，\end{minipage}\quad
+\begin{minipage}[c][2.5cm][b]{3em}一行白鹭上青天。\end{minipage}\quad
+\begin{minipage}[c][2.5cm][s]{4em}
+\setlength{\parskip}{0pt plus 1pt}%恢复正文默认段间距
+窗含西岭千秋雪，\par
+门泊东吴万里船。
+\end{minipage}
+\end{lstlisting}
+
+\begin{minipage}[c][2.5cm][t]{2em}两个\end{minipage}\quad
+\begin{minipage}[c][2.5cm][c]{3em}黄鹂鸣翠柳，\end{minipage}\quad
+\begin{minipage}[c][2.5cm][b]{3em}一行白鹭上青天。\end{minipage}\quad
+\begin{minipage}[c] [2.5cm] [s]{4em}
+\setlength{\parskip}{0pt plus 1pt}%恢复正文默认段间距
+窗含西岭千秋雪，\par
+门泊东吴万里船。
+\end{minipage}
+
+之前我们看到了如何利用 \verb|lrbox| 环境把 \verb|\verb| 命令产生的抄录内容放在盒子里面使用，但如果把里面的 \verb|\verb| 换成 \verb|verbatim| 就会失败，因为 \verb|lrbox| 里面只能放置水平模式的内容，\verb|verbatim| 环境则是在垂直模式的数行内容。此时，可以在 \verb|verbatim| 环境外再套一层 \verb|minipage| ，将整个抄录环境的内容看做一个整体：
+\begin{lstlisting}
+    \newsavebox{\verbatimbox} % 通常在导言区定义
+    \begin{lrbox}{\verbatimbox}
+        \begin{minipage}{10em}
+            \begin{verbatim}
+#!/bin/sh
+cat ~/${file}
+            \end{verbatim}
+        \end{minipage}
+    \end{lrbox}
+    \fbox{\usebox{\verbatimbox}} \quad
+    \fbox{\usebox{\verbatimbox}}
+\end{lstlisting}
+
+\newsavebox{\verbatimbox} % 通常在导言区定义
+\begin{lrbox}{\verbatimbox}
+    \begin{minipage}{10em}
+        \begin{verbatim}
+#!/bin/sh
+cat ~/${file}
+        \end{verbatim}
+    \end{minipage}
+\end{lrbox}
+\fbox{\usebox{\verbatimbox}} \quad
+\fbox{\usebox{\verbatimbox}}
+
+\vspace{0.1cm}
+除了水平盒子和垂直盒子，还有一种重要的盒子，称为标尺（ rule ）盒子。标尺盒子用 \verb|\rule| 命令产生：
+\begin{lstlisting}
+    \rule[升高距离]{宽度}{高度}
+\end{lstlisting}
+
+一个标尺盒子就是一个实心的矩形盒子，不过通常只是使用一个细长的标尺盒子画线，这正是“标尺”一词的由来，例如：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\rule{1pt}{1em}Middle\rule{1pt}{1em} \\
+Left \rule[0.5ex]{2cm}{0.6pt}Right \\
+\rule[-0.1em]{1em}{1em} 也可以用作证毕符号
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \rule{1pt}{1em}Middle\rule{1pt}{1em} \\
+    Left \rule[0.5ex]{2cm}{0.6pt}Right \\
+    \rule[-0.1em]{1em}{1em} 也可以用作证毕符号
+\end{minipage}
+
+这里参数 \verb|升高距离| 默认为 \verb|0pt| ，它实际上是设置盒子深度的相反数，效果就像把盒
+子做了移位一样。类似幻影 \verb|\phantom|，\LaTeX 有一种宽或高为零的盒子，专门用来占位，称为“支架”（ strut ）。\LaTeX 有预定义的垂直支架\verb|\strut|，占有当前字号大小的高度和深度;
+有时也可以使用长或宽为零的标尺盒子来表示任意大小的支架，例如：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\fbox{---}\qquad
+\fbox{\strut---}\qquad
+\fbox{\rule{0pt}{2em}---}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\fbox{---}\qquad
+\fbox{\strut---}\qquad
+\fbox{\rule{0pt}{2em}---}
+\end{minipage}
+
+可以用 \verb|\raisebox| 造成升降的（水平）盒子：
+\begin{lstlisting}
+    \raisebox{距离}[高度][深度]{内容}
+\end{lstlisting}
+
+其中距离为正时盒子里面的内容上升，距离为负时下降。例如我们可以使用 \verb|\raisebox|
+和 \verb|\hspace| 自己定义 \TeX 的标志：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+%这与实际 \TeX 的定义基本等价
+\mbox{T\hspace{-0.1667em}%
+\raisebox{-0.5ex}{E}%
+\hspace{-0.125em}x}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+%这与实际 \TeX 的定义基本等价
+\mbox{T\hspace{-0.1667em}%
+\raisebox{-0.5ex}{E}%
+\hspace{-0.125em}x}
+\end{minipage}
+
+\verb|\parbox| 命令和 \verb|minipage| 环境产生的垂直盒子必须事先确定宽度，这对于自动折行是十分必要的。然而在个别的场合，我们只是需要盒子的内容能手工分成几行，却又希望它保持按手工分行的“自然”宽度，这时可以改用 varwidth 宏包提供
+的 \verb|varwidth| 环境代替 \verb|minipage| 环境。\verb|varwidth| 对应 \verb|minipage| 的宽度参数，表示盒子的最大宽度，例如：
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{lstlisting}
+\fbox{\begin{varwidth}{10cm}
+    自然\\宽度
+\end{varwidth}}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \fbox{\begin{varwidth}{10cm}
+        自然\\宽度
+    \end{varwidth}}
+\end{minipage}
+
+不过在一些简单的情况下，这可以使用一个单列的表格完成。
+
+\storybox{\TeX 标志}{
+\qquad 高德纳教授为他的 \TeX 软件设计了一个高低起伏的标志： “字母 'E' 是不平的，错位的 'E' 提醒我们 \TeX 是关于排版的，并且也把 \TeX 与其他系统的名字区分开来。” 与此同时，与\TeX 同时设计的字体描述语言 \MF 也被赋予了独特的写法——使用以 \MF 语言描述并绘制的专用字体排印。
+
+\qquad 这一独特的命名趣味随即被 \TeX 的各种相关工具所效仿。\LaTeX 的标志是在 \LaTeX 的标志前面加上错排的L,A两个字母，而其当前版本 \LaTeXe 在后面加上 2 \raisebox{-0.5ex}{$\epsilon$} 来表示一个超过 2 而又接近 3 的数字。受 \MF 影响而产生的绘图语言 \MP 则使用了与前者如出一辙的标志；美国数学会（ AMS ） 编写的各种宏包、字体被冠以 AMS 的称号，这实际是用与 \TeX 同样方法错位排布的三个数学花体字；\XeTeX 与 XeLaTeX 的标志中有一个反写的字母E;
+BiBTEX中 BIB 三个字母（ bibliography 的缩写）则用了小型大写字母，等等。甚至连绘图包XY-pic、基于 \LaTeX 的文档处理系统 LYX、TEXMACs 等，也有自己独特的名字和标志。\TeX 相关软件的作者们喜欢以此彰显自己的不同。
+
+\qquad 当然，所有这些标志都不难用 \TeX 本身排版出来，本小节就给出了 \TeX 标志的排版方式，使用类似的方法不难实现各种相关软件的标志。尽管本书
+充斥着这类软件标志，但它们在实际的书籍文章中其实很少会用到。表 \ref{tab:symbol} 给出了一些常见标志在 \LaTeX 中的命令。
+
+}
+
+\begin{table}[H]
+    \centering
+    \caption{\TeX 及部分相关软件所使用的标志}
+    \label{tab:symbol}
+    \begin{tabular}{ccc}
+        \toprule 
+        标志 & 命令 & 额外的宏包 \\ 
+        \midrule 
+        \TeX & \verb|\TeX| & \\
+        \LaTeX & \verb|\LaTeX| & \\ 
+        \LaTeXe & \verb|\LaTeXe| & \\ 
+        \MF & \verb|MF| & mflogo \\
+        \MP & \verb|MP| & mflogo \\
+        \AmS & \verb|\AmS| & amsmath \\ 
+        \XeTeX & \verb|\XeTeX| & metalogo 或 mflogo \\ 
+        \XeLaTeX & \verb|\XeLaTeX| & metalogo 或 mflogo \\ 
+        \hologo{BibTeX} & \verb|\hologo{BibTeX}| & hologo  \\
+        \bottomrule
+    \end{tabular}
+\end{table}
