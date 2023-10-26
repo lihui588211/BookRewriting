@@ -3489,3 +3489,79 @@ BiBTEX中 BIB 三个字母（ bibliography 的缩写）则用了小型大写字�
         \bottomrule
     \end{tabular}
 \end{table}
+
+\section{文档的结构层次}
+
+纲举而品张，科技文档首重结构条理。 \LaTeX 鼓励结构化的文档编写，并提供了许多设置文档结构的手段。这一节我们将看到如何正确使用 \LaTeX 提供的命令将文的内容与格式分离，使文档不仅有良好的输出效果，也有清晰整齐易于维护的源文件。
+
+\subsection{标题和标题页}
+
+\LaTeX 的标准文档类提供专门的命令输人文章或书籍的标题。在 \LaTeX 中，使用标题通常分为两个部分：声明标题内容和实际输出标题。每个标题则由标题、作者、日期等部分组成。
+
+声明标题、作者和日期分别使用 \verb|title| 、 \verb|\author| 和 \verb|\date| 命令。它们都带有一个参数，里面可以使用 \verb|\\| 进行换行。标题的声明通常放在导言区，也可以放在标题输出之前的任何位置，例如：
+\begin{lstlisting}
+    \title{杂谈勾股定理\\——勾股定理的历史与现状}
+    \author{张三\\\九章学堂}
+    \date{庚寅盛夏}
+\end{lstlisting}   
+
+\verb|\author| 定义的参数可以分行，一般第一行是作者姓名，后面是作者的单位、联系方式等。如果文档有多个作者，则多个作者之间用 \verb|\and| 分隔，例如：
+\begin{lstlisting}
+    \author{张三\\九章学堂 \and 李四\\天元研究所}
+\end{lstlisting}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ccc}
+        张三 && 李四 \\ 
+        九章学堂 && 天元研究所 \\
+    \end{tabular}
+\end{table}
+
+\verb|\date| 命令可以省略，如果省略，就相当于定义了 \verb|\date{today}| ，即设置为当天的日期。 \verb|\today| 输出编译文档当天的日期，在英文文档类中默认使用英文（ 如 April 28,2013），在中文 ctexart 等文档类中默认使用中文（如2013年4月28日）。使用 ctex
+宏包可以用 \verb|\CTEXoptions| 来设置 \verb|\today| 的输出格式：
+
+\begin{lstlisting}
+    \CTEXoptions[today=small]   2013年4月28日
+    \CTEXoptions[today=big]     二〇一三年四月二十八日
+    \CTEXoptions[today=old]     April 28, 2013
+\end{lstlisting}
+
+在声明标题和作者时，可以使用 \verb|\thanks| 命令产生一种特殊的注，它默认使用特殊符号编号，通常用来表示文章的致谢、文挡的版本、作者的详细信息等，例如：
+
+\begin{lstlisting}
+    \title{杂谈勾股定理 \thanks{本文用草基金会资助。}}
+    \author{张三 \thanks{九章学堂讲师。}\\九章学堂}
+\end{lstlisting}
+
+使用 \verb|\maketitle| 命令可以输出前面声明的标题，在 \ref{sec:tigang} 节中我们已经看到它
+的使用，通常 \verb|\maketitle|是文档中 \verb|document| 环境后面的第一个命令。整个标题的
+格式是预设好的，在 article 或 ctexart 文档类中，标题不单独成页；在 report , book 或
+ctexrep , ctexbook 文档类中，标题单独占用一页。也可以使用文档类的选项 \verb|titlepage|
+和 \verb|notitlepage| 来设置标题是否单独成页。
+
+对于标准文档类，标题的格式是固定好的，\LaTeX 并没有提供更多的修改标题格式的命令和选项，如果只是修改字体，可以直接把字体命令放进 \verb|\title| 、 \verb|\author| 等命令中。对于更复杂的标题格式，由于标题在文档中只出现一次，而且不
+影响文档其他部分的内容，所以文档标题可以通过直接手工设置文字和段落格式排版得到，可以不使用\verb|\title|，\verb|\maketitle| 等命令提供的功能。
+
+单独成页的标题格式通常形式多变，可以在 \verb|titlepage| 环境中排版。\verb|titlepage|
+环境提供没有页码的单独一页，并使后面的内容页码从 1 开始计数，例如：
+
+\begin{lstlisting}
+    % 手工排版的标题页
+    \begin{titlepage}
+    \vspace*{\fill}
+    \begin{center}
+    \normalfont
+    {\Huge\bfseries 杂谈勾股定理}
+
+    \bigskip
+    {\Large\itshape 张三}
+
+    \medskip
+    \today
+    \end{center}
+    \vspace{\stretch{3}}
+\end{titlepage}
+\end{lstlisting}
+
+除了直接手工排版标题，或在声明标题时就加上了字体、字号等命令，也可以使用 titling 宏包详细设置标题、作者、日期在使用 \verb|\maketitle| 时的输出方式。这个宏包适合模板作者使用，可参见宏包文档。
