@@ -3565,3 +3565,107 @@ ctexrep , ctexbook 文档类中，标题单独占用一页。也可以使用文�
 \end{lstlisting}
 
 除了直接手工排版标题，或在声明标题时就加上了字体、字号等命令，也可以使用 titling 宏包详细设置标题、作者、日期在使用 \verb|\maketitle| 时的输出方式。这个宏包适合模板作者使用，可参见宏包文档。
+
+\subsection{划分章节}
+
+\LaTeX 的标准文档类可以划分多层章节。在 \ref{sec:tigang} 节中，我们只看到了 \verb|\section|（节）的层次，事实上，在 \LaTeX 中可以使用 6 到 7 个层次的章节，如表 \ref{tab:section} 所示。
+
+\begin{table}[H]
+    \centering
+    \caption{章节层次}
+    \label{tab:section}
+    \begin{tabular}{cccc}
+        \toprule
+        层次 & 名称 & 命令 & 说明 \\ 
+        \midrule
+        -1 & part (部分) & \verb|\part| & 可选的最高层 \\ 
+        0 & chapter（章） & \verb|\chapter| 
+        & \makecell[t]{report, book 或 ctexrep,ctexbook\\ 文档类的最高层} \\ 
+        1 & section（节） & \verb|\section| & article或ctexart类最高层 \\
+        2 & subsection（小节） & \verb|\subsection| & \\ 
+        3 & subsubsection （小小节）&  \verb|\subsubsection| & \makecell[t]{report,book或ctexrep,ctexbook类\\默认不编号、不编目录} \\ 
+        4 & paragraph（段） & \verb|\paragraph| & 默认不编号、不编目录 \\
+        5 & subparagraph（小段） & \verb|\subparagraph|&默认不编号、不编目录 \\ 
+\bottomrule
+    \end{tabular}
+\end{table}
+
+一个文档的最高层章节可以是 \verb|\part| ，也可以不用 \verb|\part| 直接使用 \verb|\chapter|（对 \verb|book| 和 \verb|report|等）或 \verb|\section| （对 \verb|article| 等）；除 \verb|\part| 外，只有在上一层章节存在时才能使用下一层章节，否则编号会出现错误。在 \verb|\part|下面， \verb|\chapter| 或 \verb|\section|
+是连续编号的：在其他情况下，下一级的章节随上一节的编号增加会清零重新编号。
+
+例如，在\verb|book|类中，可以使用如下的提纲：
+
+\begin{lstlisting}
+    \documentclass{book}
+    \title{Languages}\author{someone}
+    \begin{document}
+    \maketitle
+    \tableofcontents
+    % 这里用缩进显示层次
+    \part{Introduction}            % Part I
+        \chapter{Background}    %   Chapter 1
+    \part{Classification}      % Part II
+        \chapter{Natural Language}        %   Chapter 2
+        \chapter{Computer Languages}        %      Chapter 3
+            \section{Machine Languages}   %    3.1
+            \section{High Level Languages}              %             3.2
+                \subsectionCompiled Language}          %           3.2.1
+                \subsection{Interpretative Language}          %             3.2.2
+                    \subsubsection{Lisp}
+                        \paragraph{Common Lisp}
+                        \paragraph{Scheme}
+                    \subsubsection{Perl}
+end{document}
+\end{lstlisting}
+
+可以使用带星号的章节命令（如 \verb|\chapter*| ）表示不编号、不编目的章节。例如教
+材每章后面的习题往往不编号，也不必放在目录中，就可以用 \verb|\section*{习题}| 开始习题这一节。
+    
+有时，我们希望在正文中的章节题目与在目录、页眉中的不同——正文中使用完整的长标题，目录、页眉使用短标题。可以给命令添加可选参数来做到这一点，如：
+\begin{lstlisting}
+    \chapter[展望与未来]{展望与未来：畅想新时代的计算机排版软件}
+\end{lstlisting}
+
+章节的计数器与其命令同名，如 \verb|\chapter| 的计数器就是 \verb|chapter|、 \verb|\section|的计数器就是 \verb|section|。直接重定义这些计数器的输出格式可以一定程度上修改章节格式。
+
+\verb|\appendix| 命令用来表示附录部分的开始。命令 \verb|\appendix| 后面的所有章（对于
+book、report等）或节（对于article等）都将改用字母进行编号：如编号的“Chapter1”
+（中文文档类为“第一章”）改为“AppendixA”（中文文档类为“附录A”）。例如某教材的习题解答作为附录的一章，可以用
+
+\begin{lstlisting}
+    ……
+    \appendix
+    \chapter{习题解答}
+\end{lstlisting}
+
+标准文档类对附录部分章节格式是固定的，即适当修改了相应的章节格式。可以自己可以重定义 \verb|\appendix| 命令来设置自己的附录格式。也可以使用appendix 宏包设置附录格式，它提供了更多的命令和选项来控制 \verb|\appendix| 及相关命令的行为，这里不进行详述。
+
+对于 book 或 ctexbook 类，还可以把全书划分为正文前的资料（front matter）、正
+文的主要部分（main matter）、后面的附加材料（back matter）。这是由 \verb|\frontmatter|,
+\verb|\mainmatter| 和 \verb|\backmatter| 控制的，例如：
+
+\begin{lstlisting}
+    \documentclass{ctexbook}
+    \title{语言}
+    \author{张三\and李四}
+    \begin{document}
+    \frontmatter
+    \maketitle
+    \tableofcontents
+    \chapter{序}
+    % 不编号
+    % ……
+    \mainmatter
+    % 页码重新计数
+    \chapter{自然语言}
+    % ……
+    \chapter{计算机语言}
+    % ……
+    \backmatter
+    \chapter{进一步的参考资料} % 不编号
+    % ……
+    \end{document}
+\end{lstlisting}
+
+这三个命令都会使用 \verb|\clearpage| 或\verb|\cleardoublepage| 另起新页，输出以前未处理的浮动图表。\\ \verb|\frontmatter| 会令页码按小写罗马数字编号，并关闭 \verb|\chapter| 的编号； \verb|\mainmatter| 会令页码按阿拉伯数字编号； \verb|\backmatter| 会关闭 \verb|\chapter| 的编号。
+
