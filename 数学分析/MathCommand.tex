@@ -1,0 +1,75 @@
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage[thmmarks]{ntheorem}
+\usepackage{geometry}
+\usepackage{tcolorbox}
+\usepackage{nl-interval}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{chngcntr}
+\counterwithout{equation}{chapter}
+\tcbuselibrary{breakable}
+\geometry{left=3cm,right=3cm,top=2.5cm,bottom=2.5cm}
+
+\title{数学分析}
+\author{lihui588211}
+
+\newtheorem{definition}{\indent 定义}
+\newtheorem{annotation}{\indent 注}
+\newtheorem{proposition}{\indent 命题}
+\newtheorem{theorem}{\indent 定理}
+
+{
+\theorembodyfont{\kaishu}
+\theoremstyle{break}
+\newtheorem{example}{例}
+}
+
+\theorembodyfont{\kaishu}
+\theoremstyle{plain}
+\newtheorem{practice}{\textcolor{green!50!black}{\dag}}
+
+{
+\theorembodyfont{\kaishu}
+\theoremstyle{nonumberplain}
+\theoremsymbol{\mbox{\textcolor{blue!60!black}{\rule{0.3cm}{0.3cm}}}}
+\newtheorem{proof}{证明}
+}
+
+{
+\theorembodyfont{\kaishu}
+\theoremstyle{nonumberplain}
+\theoremsymbol{\mbox{\textcolor{red!60!white}{\rule{0.3cm}{0.3cm}}}}
+\newtheorem{solve}{解}
+}
+
+\tcolorboxenvironment{definition}{breakable}
+\tcolorboxenvironment{proposition}{breakable,colframe=blue!40!white,colback=blue!10!white}
+\tcolorboxenvironment{theorem}{breakable,colframe=green!60!black,colback=green!5!white}
+
+\newcommand{\proref}[1]{命题\ref{#1}}
+\newcommand{\defref}[1]{定义\ref{#1}}
+\newcommand{\exref}[1]{例\ref{#1}}
+\newcommand{\abs}[1]{\mid #1 \mid}
+\newcommand{\eqtref}[1]{式(\ref{#1})}
+\newcommand{\homework}{\vspace{0.5cm}
+\begin{center}
+\textcolor{green!40!black}{\zihao{3} \kaishu 习题 \thesection } \\
+\textcolor{green!40!black}{\rule{8cm}{0.01cm}}
+\end{center}
+\vspace{0.1cm}\setcounter{practice}{0}}
+
+\newcommand{\newsection}{{\centering\textcolor{green!40!black}{\rule{\textwidth}{0.02cm}}}}
+\renewcommand{\thepractice}{\textcolor{green!50!black}{\arabic{practice}}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\biyao}{\textcolor{blue!70!green}{{$\Longrightarrow$)\quad}}}
+\newcommand{\chongfen}{\textcolor{blue!70!green}{$\Longleftarrow$)\quad}}
+\abovedisplayskip=0cm
+\belowdisplayskip=0cm
+\abovedisplayshortskip=0cm
+
+\everymath{\displaystyle}
+
+\endinput
