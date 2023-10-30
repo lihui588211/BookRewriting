@@ -3669,3 +3669,99 @@ book、report等）或节（对于article等）都将改用字母进行编号：
 
 这三个命令都会使用 \verb|\clearpage| 或\verb|\cleardoublepage| 另起新页，输出以前未处理的浮动图表。\\ \verb|\frontmatter| 会令页码按小写罗马数字编号，并关闭 \verb|\chapter| 的编号； \verb|\mainmatter| 会令页码按阿拉伯数字编号； \verb|\backmatter| 会关闭 \verb|\chapter| 的编号。
 
+\subsection{多文件编译}
+
+对一篇只有几页纸的文章，把所有的内容都放进一个 \TeX 源文件就足够了。但如果要排版更长的内容，例如与本书篇幅相当的文档，单一文件的编方式就不那么方便了。更好的方式是按文档的逻辑层次，把整个文档分成多个 \TeX 源文件，这样文档的内容更便于检索和管理，也适合大型文档的多人协同编写。
+
+\LaTeX 提供的 \verb|\include{文件名}| 命令可用来导入另一个文件的内容作为一个章节，文件名不用带 \verb|.tex| 扩展名。\verb|\include| 命令会在之前和之后使用 \verb|\clearpage| 或
+\verb|\cleardoublepage| 另起新页，同时将这个文件的内容贴到 \verb|\include| 命令所在的位置。于是，可以按下面的方式组织一本书：
+
+\begin{lstlisting}
+    % languages.tex
+    % 整个文档的主文件
+    \documentclass{ctexbook}
+    \title{语言}
+    \author{张三 \and 李四}
+    \begin{document}
+        \maketitle
+        \tableofcontents
+        \include{lang-natural}
+        \include{lang-computer}
+    \end{document}
+\end{lstlisting}
+
+\begin{lstlisting}
+    % lang-natural.tex
+    %  “自然语言”一章，不能单独编译
+    \chapter{自然语言}
+    ……
+\end{lstlisting}
+
+\begin{lstlisting}
+    % lang-computer.tex
+    % “计算机语言”一章，不能单独编译
+    \chapter{计算机语言}
+    ……
+\end{lstlisting}
+
+这样，就把一本书籍划分成了三个文件：一个主文件 \verb|languages.tex| ，它是文档的中心，编译文档时只要对主文件编译即可；两章内容的文件 \verb|lang-natural.tex| 和 \verb|lang-computer.tex| ，每个文件只有一章的内容。如果这本书由张三和李四分工编写，在他们共同写好 \verb|languages.tex| 这个提纲以后，就可以分头编写两章的内容了，二人的工作可以互不影响。
+使用 \verb|\include| 划分文档以后有一个特别的便利，就是可以通过修改主文件的几行来选择编译整个文档的某一章或某几章。当然可以把不要的章节注释掉来达到这个目的，不过更好的办法是使用 \verb|\includeonly{文件列表}| 命令，其中 \verb|文件列表| 是用英文逗号隔开的若干文件名。在导言区使用 \verb|\includeonly| 命令以后，只有文件列表中的文件才会被实际引入主文件。更好的是，如果以前曾经完整地编译过整个文档，那么在使用 \verb|\includeonly|选择编译时，原来的章节编号、页码、交叉用等仍然会保留为前一次编译的效果，例如：
+
+\begin{lstlisting}
+    % languages.tex
+    % 整个文档的主文件
+    \documentclass{ctexbook}
+    \title{语言}
+    \author{张三 \and 李四}
+    \includeonly{lang-natual}
+    % 只编译“自然语言”一章
+    \begin{document}
+        \maketitle
+        \tableofcontents
+        \include{lang-natural}
+        \include{lang-computer}
+    \end{document}
+\end{lstlisting}
+
+使用 \verb|\include| 命令需要注意的是，最好不要在子文件中新定义计数器、声明新字体，否则在使用 \verb|\includeonly| 时，会因为找不到出现在辅助文件中而在源文件中缺失的计数器而出错。
+
+比 \verb|\include| 命令更一般的是 \verb|\input| 命令，它直接把文件的内容复制到 \verb|\input| 命令所在的位置，不做其他多余的操作。 \verb|\input| 命令接受一个文件名参数，文件名可以带扩展名，也可以不带扩展名（此时认为扩展名是 \verb|.tex| 。例如，如果一个文挡的导言区设置非常多，可以把导言区的设置都放在一个 \verb|preamble.tex| 文件中，然后在主文件中就可以这样写：
+
+\begin{lstlisting}
+    % main.tex
+    % 主文档
+    \documentclass{ctexart}
+    \input{preamble}
+    % 复杂的导言区设置
+    \begin{document}
+        ……(文档的内容)
+    \endfdocument?
+\end{lstlisting}
+
+除了导言区，经常也把复杂图表代码放在一个单独的文件中，然后在主文件中使用 \verb|\input| 命令插入，这样可以使文档的正文部分看起来比较清爽，图表的代码也可以被另外的专用主文档引入单独进行测试。另外，如果需要引入的文件只是 \verb|article| 中的一节，不需要多余的换页时，也可以用 \verb|\input| 命令代替 \verb|\include| 命令引入不换页的小的章节文件。
+
+在被引入的文件末尾，可以使用 \verb|\endinput| 命令显式地结束文件的读入。在 \verb|\endinput| 命令的后面，就可以直接写一些注释性的文字，而不必再加注释符号,例如：
+
+\begin{lstlisting}
+    % lang-natural.tex
+    \chapter[自然语言]
+    ……
+    \endinput
+    这是“自然语言”一章，不能单独编译。要编译文档，直接编译主文件：
+    xelatex languages.tex
+\end{lstlisting}
+主文件中的 \verb|\end{document}| 命令也有类似的功能。
+
+对于大型文档，在编写中有时只需要 \LaTeX 编译程序检查语法，并不需要实际输出。此时可以使用 syntonly 宏包的 \verb|\syntaxonly|命令：
+
+\begin{lstlisting}
+    % languages.tex
+    % 整个文档的主文件
+    \documentclass{ctexbook}
+    \usepackage{syntonly}
+    \syntaxonly % 只检查语法，不输出 DVI/PDF 文件
+    \begin{document}
+    \end{document}
+    
+\end{lstlisting}
+使用 syntonly 宏包编译文档时不输出 DVI/PDF 文件，速度比直接编译输出要快一些，可以节约文档编写的时间。
