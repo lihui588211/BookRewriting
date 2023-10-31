@@ -3765,3 +3765,108 @@ book、report等）或节（对于article等）都将改用字母进行编号：
     
 \end{lstlisting}
 使用 syntonly 宏包编译文档时不输出 DVI/PDF 文件，速度比直接编译输出要快一些，可以节约文档编写的时间。
+
+\subsection{定制章节格式}
+
+\LaTeX 标准文档类 book , report , article 的章节格式是固定的，章节标题用什么字体、字号，前后的间距如何，用怎样的编号方式等，都是预定好的，并没有提供直接进行控制的命令，一般都要通过其他的宏包完成相关的定制。
+
+ctex 宏包的三个文档类 ctexbook , ctexrep ,ctexart 使用的默认章节格式与英文标准
+文档类的格式略有区别。ctex 宏包还提供了 \verb|\CTEXsetup| 命令来设置章节标题的格式,其语法格式如下:
+
+\begin{lstlisting}
+    \CTEXsetup[选项1=值1,选项2值2,……]{对象类型}
+\end{lstlisting}
+
+其中 \verb|对象类型| 可以是 \verb|part, chapter,section, subsection,subsubsection,parag-|\\\verb|raph ,subparagraph|；\verb|选项1|，\verb|选项2| 等是设置的选项，包括 \verb|name,number,format,nameformat,numb-| \verb|erformat,titleformat, aftername,beforeskip, afterskip,indent|; 而 \verb|值1|
+, \verb|值2| 等是对应选项的设置内容。
+
+下面逐条解释 \verb|\CTEXsetup| 的选项：
+
+\begin{itemize}
+    \item \textbf{name={前名,后名}} \\
+    用来设置章节的名学，包括章节编号前面和后面的词语，前后两个名字之间用西文逗号分开，例如：\\ \verb|\CTEXsetup[name={第,节}]{section}|
+    将设置 \verb|\section| 的标题的名字类似“第1节”。
+
+    \item \textbf{number=编号格式} \\
+    相当于设置章节的计数器的 \verb|\thecounter| 命令，例如： \\
+    \verb|\CTEXsetup[number={\chinese{section}}]{section}|。
+    如果配合前面章节名的设置，将产生类似“第一节”的名字。
+
+    \item \textbf{format=格式} \\
+    用于控制章节标题的全局格式，作用域为章节名字和随后的标题内容。常用于控制章节标题的对齐方式，例如设置节标题左对齐，整体粗体：\\
+    \verb|\CTEXsetup[format={\raggedright\bfseries}]{section}|
+
+    \item \textbf{nameformat=格式} \\
+    类似 \verb|format| ，控制章节名和编号的格式，不包括后面的章节标题。
+
+    \item \textbf{numberformat=格式} \\ 
+    类似 \verb|format| ，仅控制编号的格式，不包括前后章节名和章节标题。
+
+    \item \textbf{titleformat=格式} \\
+    类似 \verb|format|，仅控制章节标题的格式，不包括前面的章节名和编号。
+
+    \item \textbf{aftername=代码} \\
+    控制章节名和编号（如“第一章”）与后面标题之间的内容。通常设置为一定间距的空格，或换行（换行仅对 \verb|chapter| 和 \verb|part| 有效），例如： \\ 
+    \verb|\CTEXsetup[aftername={\vspace{2ex}}]{part}|
+
+    \item \textbf{beforeskip=长度} \\
+    控制章节标题前的垂直距离。
+    \item \textbf{afterskip=长度} \\
+    控制章节标题后的垂直距离。 
+    \item \textbf{indent=长度} \\
+    控制章节标题的缩进长度。
+\end{itemize}
+
+ctex 的文档类中，\verb|\CTEXsetup| 的选项的默认值可进一步参见宏包文档。
+
+在 \verb|\CTEXsetup| 命令中，可以使用 \verb|+=| 代替 \verb|=| ，表示在默认选项的基础上增加格式设置。例如，如果要让每小节 \verb|\subsection| 的标题使用仿宋体，就可以用命令：
+
+\begin{lstlisting}
+    \CTEXsetup[titleformat+={\fansong}]{subsection}
+\end{lstlisting}
+
+ctex 宏包提供的 \verb|\CTEXsetup| 只能用于中文文档，而且支持的格式还不够多变自由，难以生成更复杂的章节标题格式。在西文文档中，或是要设置更复杂的章节标题，可以使用 titlesec 宏包。这里只对一些初级命令做简单介绍，详细的设置请参见宏包文档。
+
+titlesec 宏包使用时可以带几个可选参数，用来全局地修改标题的字体、对齐方式。
+选项
+
+\begin{center}
+    \ttfamily  rm sf tt bf up it sl sc 
+\end{center}
+用来设置标题使用的字体族、字体系列和字体形状，默认是 \verb|bf| ，即普通字体的粗体系列。选项
+
+\begin{center}
+    \ttfamily  big medium small tiny
+\end{center}
+用来设置标题的字号，默认是最大的 \verb|big| ，最小号的 \verb|tiny| 则使所有标题字体与正文大
+小相同，\verb|medium| 和 \verb|small| 介于最大和最小之间。选项
+
+\begin{center}
+    \ttfamily  raggedright center raggedleft
+\end{center}
+用来设置标题的对齐方式，例如：
+\begin{lstlisting}
+    \usepackage{sf,bf,it,centering}{titlesec}
+\end{lstlisting}
+将设置章节标题的字体为 \verb|\sffamily\bfseries\itshape|，居中。
+
+宏包选项 \verb|compact| 会使章节标题前后的垂直间距比较紧。
+
+\verb|\titlelabel{代码}| 命令用来设置编号标签的格式，\verb|代码| 中可以使用 \verb|\thetitle| 指代 \verb|\thesection| 、\verb|\thesubsection| 等命令。对标准文档类，默认设置是 \verb|\titlelabel{\thetitle\quad}|。
+可以修改为需要的格式，例如：
+\begin{lstlisting}
+    \titlelabel{\S~\thetitle\quad}
+\end{lstlisting}
+将在所有的章节编号前加符号 \S~。
+
+带星号的 \verb|\titleformat*| 命令则可以作为宏包选项的补充，用来设置某一级标题的格式，例如：
+
+\begin{lstlisting}
+    \titleformat*{\section}{\Large\itshape\centering}
+\end{lstlisting}
+
+将使节标题使用 \verb|\Large| 字号的意大利体并居中。这里的设置将会覆盖默认的和在宏包选项中出现的全局设置，因此一般对字体、字号、对齐方式等都要进设置。
+
+titlesec 的其他功能包括使用不带星号的 \verb|\titleformat| 命令对章节格式做更详细的设置，使用 \\ \verb|\titlespace| 命令设置章节标题的间距，增添横线，控制页面版式（可代替 fancyhdr ），控制章节分页，增加新的章节层次等功能，篇幅所限，
+这里就不再一一介绍了。
+

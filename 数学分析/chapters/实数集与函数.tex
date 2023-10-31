@@ -396,7 +396,7 @@ U^\circ(a,\delta) = \{x \mid 0< \abs{x-a}<\delta\} = (a-\delta,a) \cup (a,a+\del
 
 若数集 $S$ 有上界，则显然它有无穷多个上界，而其中最小的一个上界常常具有重要的作用，称它为数集 $S$ 的上确界. 同样，有下界数集的最大下界，称为该数集的下确界.下面给出数集的上确界和下确界的精确定义. 
 
-\begin{definition}[上确界]
+\begin{definition}[上确界]\label{def:sup}
     \renewcommand{\theenumi}{\roman{enumi}}
     \renewcommand{\labelenumi}{\normalfont (\theenumi)}
     设 $S$ 是 $\R$ 中的一个数集.若数 $\eta$ 满足：
@@ -407,7 +407,7 @@ U^\circ(a,\delta) = \{x \mid 0< \abs{x-a}<\delta\} = (a-\delta,a) \cup (a,a+\del
     则称数 $\eta$ 为数集 $S$ 的\textbf{上确界}，记作 $\eta=\sup S$
 \end{definition}
 
-\begin{definition}[下确界]
+\begin{definition}[下确界]\label{def:inf}
     \renewcommand{\theenumi}{\roman{enumi}}
     \renewcommand{\labelenumi}{\normalfont (\theenumi)}
     设 $S$ 是 $\R$ 中的一个数集.若数 $\xi$ 满足：
@@ -497,7 +497,7 @@ U^\circ(a,\delta) = \{x \mid 0< \abs{x-a}<\delta\} = (a-\delta,a) \cup (a,a+\del
     继续不断地10等分在前一步骤中所得到的半开区间，可知对任何 $k=1,2,\cdots$ ,
     存在 $0,1,2,\cdots,9$ 中的一个数 $n_k$ ，使得 
     \begin{enumerate}
-        \item[1)] 对于任何 $x\in S$ ,都有 $x<n.n_1n_2\cdots n_k+\frac{1}{10^k}=n.n_1n_2\cdots(n_k+1)$. \hfill (\stepcounter{equation}\theequation\stepcounter{equation})
+        \item[1)] 对于任何 $x\in S$ ,都有 $x<n.n_1n_2\cdots n_k+\frac{1}{10^k}=n.n_1n_2\cdots(n_k+1)$. \hfill (\stepcounter{equation}\theequation)
         \item[2)] 存在 $a_k\in S$ ,使 $a_k\ge n.n_1n_2\cdots n_k$.
     \end{enumerate}
     
@@ -516,3 +516,131 @@ U^\circ(a,\delta) = \{x \mid 0< \abs{x-a}<\delta\} = (a-\delta,a) \cup (a,a+\del
 \end{proof}
 
 在本书中，确界原理是极限理论的基础，读者应给予充分的重视.
+
+\begin{example}
+    设 $A,B$ 为非空数集,满足：对一切 $x\in A$ 和 $y\in B$ 有 $x\le y$.证明：数集 $A$ 有上确界，数集 $B$ 有下确界, 且 \begin{equation}
+        \sup A\le \inf B 
+    \end{equation} 
+\end{example}
+
+\begin{proof}
+    由题设可得，数集 $B$ 中任何一个数 $y$ 都是数集 $A$ 的上界， $A$ 中任何一个数 $x$.都是 $B$ 的下界，故由确界原理推知，数集 $A$ 有上确界，数集 $B$ 有下确界.
+
+    现证不等式(4).对任何 $y\in B$ ,$y$ 都是数集 $A$ 的一个上界，而由上确界的定义得，$\sup A$ 是数集 $A$ 的最小上界.因此 $\sup A\le y$. 而此式又表明数 $\sup A$ 是数集 $B$ 的一个下界，故由下确界的定义得 $\sup A\le \inf B$.
+\end{proof}
+
+\begin{example}
+    设 $A,B$ 为非空有界数集， $S=A\cup B$. 证明:
+    \begin{enumerate}
+        \item[(i)] $\sup S=\max \{\sup A,\sup B\}$
+        \item[(ii)] $\inf S=\min \{\inf A,\inf B\}$
+    \end{enumerate}
+\end{example}
+
+\begin{proof}
+    由于 $S=A\cup B$,易知 $S$ 也是非空有界数集，因此 $S$ 的上、下确界都存在.
+
+    (i) 对于任何的 $x\in S$,有 $x\in A$ 或 $x\in B \implies x\le \sup A$ 或 $x \le \sup B$ ,从而有 $x\le \max \{\sup A,\sup B\}$ ，故得 $\sup S \le \max \{\sup A,\sup B\}$.
+
+    另一方面，对任何的 $x\in A$ ,有 $x\in S \implies x \le \sup S \implies \sup A\le \sup S$; 同理有 $\sup B \le \sup S$.所以有 $\sup S\ge \max \{\sup A,\sup B\}$.
+
+    综上，即可证得 $\sup S\ge \max \{\sup A,\sup B\}$.
+
+    (ii) 可类似证明.
+\end{proof}
+
+若把 $+\infty$ 和 $-\infty$ 补充到实数集中，并规定任何一个实数 $a$ 与 $+\infty$ ， $-\infty$ 的大小关系为: $-\infty<a<+\infty$,则确界的概念可以扩充为:若数集 $S$ 无上界，则定义 $+\infty$ 为 $S$ 的\textbf{非正常上确界}，记作 $\sup S= +\infty$; 若 $S$ 无下界，定义 $-\infty$ 为 $S$ 的\textbf{非正常下确界}，记作 $\inf S = -\infty$. 相应地，前面\defref{def:sup},\defref{def:inf}中所定义的确界分别称为 \textbf{正常上、下确界}.
+
+在上述扩充意义下，我们有
+\begin{theorem}[推广的确界原理]
+    任何一个非空数集必有上、下确界(正常的或非正常的).
+\end{theorem}
+
+例如，对于正整数集 $\N_+$ ，有 $\inf \N_+ = 1,\sup \N_+=+\infty$; 对于数集 $S=\{y\mid y=2-x^2,x\in \R\}$,有 $\inf S= -\infty,\sup S=2$.
+
+\homework
+
+\begin{practice}
+    用区间表示下列不等式的解:
+
+    (1) $\abs{1-x}-x\ge 0$ \qquad (2)$\abs{x+\frac{1}{x}}\le 6$ 
+
+    (3) $(x-a)(x-b)(x-c)>0$ ($a,b,c$ 为常数，且 $a<b<c$) \qquad (4) $\sin x\ge \frac{\sqrt{2}}{2}$
+\end{practice}
+
+\begin{solve}
+    (1) $\abs{1-x}-x\ge 0 \iff \abs{1-x}\ge x\iff 1-x\ge x \mbox{或}x-1\ge x \iff x\le \frac{1}{2}$
+
+    用区间表示为 $(-\infty,\frac{1}{2}]$.
+
+    (2) $\abs{x+\frac{1}{x}}\le 6 \iff (x+\frac{1}{x})^2 \le 36 \iff (x^2+1)^2 \le 36x^2 \iff x^4 -34x^2 +1\le 0 $
+    
+    $\iff 17-12\sqrt{2} \le x^2 \le 17+12\sqrt{2} \iff -3-2\sqrt{2} \le x \le -3+2\sqrt{2} \mbox{或} 3-2\sqrt{2} \le x \le 3+2\sqrt{2}$
+
+    用区间表示为 $[-3-2\sqrt{2},-3+2\sqrt{2}] \cup [3-2\sqrt{2},3+2\sqrt{2}]$.
+
+    (3) 解集为 $\{ x\mid a<x<b \mbox{或} x>c\}$. 写成区间为  $(a,b)\cup (c,+\infty)$.
+\end{solve}
+
+\begin{practice}
+    设 $S$ 为非空数集.试对下列概念给出定义:
+
+    (1) $S$ 无上界 \qquad (2) $S$ 无界
+\end{practice}
+
+\begin{solve}
+    
+\end{solve}
+
+\begin{practice}
+    试证明 数集 $S=\{y\mid y=2-x^2,x\in \R\}$ 有上界而无下界.
+\end{practice}
+
+\begin{proof}
+    
+\end{proof}
+
+\begin{practice}
+    求下列数集的上、下确界，并依据定义加以验证:
+
+    (1) $S=\{x\mid x^2<2\}$ \qquad (2)$S=\{x \mid x=n!,n\in \N_+ \}$
+
+    (3) $S=\{ x\mid x\mbox{为} (0,1) \mbox{上的无理数} \}$ \qquad $S=\{ x \mid x=1-\frac{1}{2^n},n\in \N_+\}$
+\end{practice}
+
+\begin{solve}
+    
+\end{solve}
+
+\begin{practice}
+    设 $S$ 为非空有下界的数集，证明:$\inf S=\xi \in S \iff \xi =\min S$.
+\end{practice}
+
+\begin{proof}
+    
+\end{proof}
+
+\begin{practice}
+    设 $S$ 为非空数集，定义 $S^-=\{ x\mid -x \in S\}$.证明:
+
+    (1) $\inf S^-=-\sup S$ \qquad (2) $sup S^- = -\inf S$.
+\end{practice}
+
+\begin{proof}
+    
+\end{proof}
+
+\begin{practice}
+    设 $A,B$ 均为非空有界数集，定义数集 $A+B=\{z\mid z=x+y,x\in A,y\in B\}$.
+
+    证明:(1) $\sup (A+B) = \sup A+\sup B$ 
+    \qquad (2)$\inf (A+B) = \inf A+\inf B$ 
+\end{practice}
+
+\begin{proof}
+    
+\end{proof}
+
+\newsection
+
+\section{函数的概念}
