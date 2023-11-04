@@ -459,12 +459,12 @@ U^\circ(a,\delta) = \{x \mid 0< \abs{x-a}<\delta\} = (a-\delta,a) \cup (a,a+\del
 \begin{proof}
     \renewcommand{\theenumi}{\roman{enumi}}
     \renewcommand{\labelenumi}{\normalfont (\theenumi)}
-    \biyao 设 $\eta = \sup S \in S$， 也对一切 $x\in S$ ,都有 $x\le \eta$,而 $\eta\in S$,故 $\eta$ 是数集 $S$ 中最大的数，即 $\eta=\max S$.
+    \biyao 设 $\eta = \sup S \in S$， 则对一切 $x\in S$ ,都有 $x\le \eta$,而 $\eta\in S$,故 $\eta$ 是数集 $S$ 中最大的数，即 $\eta=\max S$.
 
     \chongfen 设 $\eta=\max S$，则 $\eta\in S$;下面验证 $\eta = \sup S$：
     \begin{enumerate}
-        \item 对一切 $x \in S$ ,均有 $x\le S$,即 $\eta$ 是 $S$ 的上界.
-        \item 对任何 $\alpha < \eta$ ,只需取 $x_0=\eta\in S$ ,便有 $x_0\ge \alpha$. 这说明 $\eta=\sup S$.
+        \item 对一切 $x \in S$ ,均有 $x\le \eta$,即 $\eta$ 是 $S$ 的上界.
+        \item 对任何 $\alpha < \eta$ ,只需取 $x_0=\eta\in S$ ,便有 $x_0>\alpha$. 这说明 $\eta=\sup S$.
     \end{enumerate}
 \end{proof}
 
@@ -566,6 +566,7 @@ U^\circ(a,\delta) = \{x \mid 0< \abs{x-a}<\delta\} = (a-\delta,a) \cup (a,a+\del
     (1) $\abs{1-x}-x\ge 0$ \qquad (2)$\abs{x+\frac{1}{x}}\le 6$ 
 
     (3) $(x-a)(x-b)(x-c)>0$ ($a,b,c$ 为常数，且 $a<b<c$) \qquad (4) $\sin x\ge \frac{\sqrt{2}}{2}$
+
 \end{practice}
 
 \begin{solve}
@@ -580,6 +581,8 @@ U^\circ(a,\delta) = \{x \mid 0< \abs{x-a}<\delta\} = (a-\delta,a) \cup (a,a+\del
     用区间表示为 $[-3-2\sqrt{2},-3+2\sqrt{2}] \cup [3-2\sqrt{2},3+2\sqrt{2}]$.
 
     (3) 解集为 $\{ x\mid a<x<b \mbox{或} x>c\}$. 写成区间为  $(a,b)\cup (c,+\infty)$.
+
+    (4) $\bigcup\limits_{k\in \mathbb{Z}}[\frac{\pi}{4}+2k\pi,\frac{3\pi}{4}+2k\pi]$
 \end{solve}
 
 \begin{practice}
@@ -589,7 +592,9 @@ U^\circ(a,\delta) = \{x \mid 0< \abs{x-a}<\delta\} = (a-\delta,a) \cup (a,a+\del
 \end{practice}
 
 \begin{solve}
-    
+    \hspace{0.5em}(1) $S$ 为非空数集，若对任意的正数 $M$,存在 $x_0\in S$, 使得 $x_0 > M$ ,则称 $S$ 无上界.
+
+    (2) $S$ 为非空数集，若对任意的正数 $M$,存在 $x_0\in S$, 使得 $\abs{x_0} > M$ ,则称 $S$ 无界.
 \end{solve}
 
 \begin{practice}
@@ -597,37 +602,55 @@ U^\circ(a,\delta) = \{x \mid 0< \abs{x-a}<\delta\} = (a-\delta,a) \cup (a,a+\del
 \end{practice}
 
 \begin{proof}
-    
+    $y=2-x^2\le 2$,故 $S$ 有上界 $2$.
+
+     对于任何一个正数 $M$,都存在 $x_0=\sqrt{3+M}$,使得 $y_0=2-x_0^2=-M-1<-M$.故 $S$无下界.
 \end{proof}
 
 \begin{practice}
     求下列数集的上、下确界，并依据定义加以验证:
 
-    (1) $S=\{x\mid x^2<2\}$ \qquad (2)$S=\{x \mid x=n!,n\in \N_+ \}$
+    (1) $S=\{x\mid x^2<2\}$ \qquad (2)$S=\{x \mid x=n! ,n\in \N_+ \}$
 
-    (3) $S=\{ x\mid x\mbox{为} (0,1) \mbox{上的无理数} \}$ \qquad $S=\{ x \mid x=1-\frac{1}{2^n},n\in \N_+\}$
+    (3) $S=\{ x\mid x\mbox{为} (0,1) \mbox{上的无理数} \}$ \qquad (4) $S=\{ x \mid x=1-\frac{1}{2^n},n\in \N_+\}$
 \end{practice}
 
 \begin{solve}
-    
+    (1) $\sup S = \sqrt{2},\inf S = -\sqrt{2}$ . 
+    易得，$\sqrt{2}$ 是 $S$ 的一个上界. 对任意的 $\eta<\sqrt{2}$, 若 $\eta<-\sqrt{2}$ ，则 $\forall x\in S$ ，都有 $x>\eta $; 若 $\eta \ge -\sqrt{2}$ , 则存在 $x_0 = \frac{\sqrt{2}+\eta}{2} \in S$ , 有 $x_0>\eta $.由定义得， $\sqrt{2}$ 是 $S$ 的上确界. 同理可验证 $-\sqrt{2}$ 是 $S$ 的下确界.
+
+    (2) $\sup S = +\infty,\inf S = 1$ . 对任意的正数 $M$ ，都存在 $x_0 = \lceil M \rceil ! \in S$, 有 $x_0>M$. 故 $\sup S = +\infty$. 易知， 1 为 $S$ 的一个下界. 对任意的 $ \xi> 1$, 存在 $x_0=1\in S$ , 有 $x_0<\xi$.故 1 为 $S$ 的下确界.
+
+    (3) $\sup S = 1,\inf S = 0$  . 易知 1 为$S$ 的一个上界. 对任意的 $\eta < 1$, 根据无理数的稠密性，在 $(\eta,1)$ 上必然存在无理数 $x_0\in S$,即有 $x_0>\eta$.故 1 为 $S$ 的上确界. 同理可证 $0$ 为 $S$ 的下确界.
+
+    (4) $\sup S = 1,\inf S = \frac{1}{2}$. 对任意的 $x\in S$,有 $x=1-\frac{1}{2^n}\le 1$. 故 1 是 $S$ 的上界. 对任何的 $\eta <1$, 若 $\eta<\frac{1}{2}$,则存在 $x_0=1-\frac{1}{2}=\frac{1}{2} \in S$,有 $x_0>\eta$ ;若 $\eta\ge \frac{1}{2}$, 取 $n=\lceil log_2(\frac{1}{1 - \eta}) \rceil$ , 则存在 $x_0 = 1-\frac{1}{2^n} \in S$ ,有 $x_0>\eta$ . 故 1 是 $S$ 的上确界. 容易验证，下确界即为 $S$ 中的数的最小值 $\frac{1}{2}$.
 \end{solve}
 
 \begin{practice}
     设 $S$ 为非空有下界的数集，证明:$\inf S=\xi \in S \iff \xi =\min S$.
 \end{practice}
-
 \begin{proof}
-    
+    \renewcommand{\theenumi}{\roman{enumi}}
+    \renewcommand{\labelenumi}{\normalfont (\theenumi)}
+    \biyao 设 $\xi = \inf S \in S$， 则对一切 $x\in S$ ,都有 $x\ge \xi$,而 $\xi \in S$,故 $\xi$ 是数集 $S$ 中最小的数，即 $\eta=\min S$.
+
+    \chongfen 设 $\xi=\min S$，则 $\xi\in S$;下面验证 $\xi = \inf S$：
+    \begin{enumerate}
+        \item 对一切 $x \in S$ ,均有 $x\ge x$,即 $\xi$ 是 $S$ 的下界.
+        \item 对任何 $\beta > \xi$ ,只需取 $x_0=\xi\in S$ ,便有 $x_0< \beta$. 这说明 $\xi=\inf S$.
+    \end{enumerate}
 \end{proof}
 
 \begin{practice}
     设 $S$ 为非空数集，定义 $S^-=\{ x\mid -x \in S\}$.证明:
 
-    (1) $\inf S^-=-\sup S$ \qquad (2) $sup S^- = -\inf S$.
+    (1) $\inf S^-=-\sup S$ \qquad (2) $\sup S^- = -\inf S$.
 \end{practice}
 
 \begin{proof}
-    
+    (1) 对任意的 $x\in S^-$ ,都有 $-x\in S$,则 $-x\le \sup S$,故 $x\ge -\sup S$,即 $-\sup S$ 是 $S^-$ 的下界. 对任意的 $\beta>-\sup S$ , 也即 $-\beta < \sup S$ ,都存在 $-x_0\in S$ ,有 $-x_0 > -\beta$ ,则 $x_0\in S^-$ ，且 $x_0 < \beta$. 故 $-\sup S$ 是 $S^-$ 的下确界.
+
+    (2) 对任意的 $x\in S^-$ ,都有 $-x\in S$,则 $-x\ge \inf S$,故 $x\le -\inf S$,即 $-\inf S$ 是 $S^-$ 的上界. 对任意的 $\alpha<-\inf S$ , 也即 $-\alpha > \inf S$ ,都存在 $-x_0\in S$ ,有 $-x_0 < -\alpha$ ,则 $x_0\in S^-$ ，且 $x_0 > \alpha$. 故 $-\inf S$ 是 $S^-$ 的上确界.
 \end{proof}
 
 \begin{practice}
@@ -638,7 +661,19 @@ U^\circ(a,\delta) = \{x \mid 0< \abs{x-a}<\delta\} = (a-\delta,a) \cup (a,a+\del
 \end{practice}
 
 \begin{proof}
+    (1) \biyao 对任意的 $z\in A+B$ ,有 $z=x+y \le \sup A + \sup B $, 其中 $x\in A,y\in B$. 故 $\sup A + \sup B$ 是 $A+B$ 的一个上界, 则 $\sup (A+B)\le \sup A + \sup B$.
     
+    \chongfen 
+    对于任意的 $\varepsilon>0$, 存在 $x_0\in A$ , 有 $x_0>\sup A - \frac{1}{2}\varepsilon$ , 存在 $y_0\in B$ , 有 $y_0>\sup B - \frac{1}{2}\varepsilon$. 故 $\sup(A+B) \ge z_0 = x_0+y_0>\sup A+\sup B -\varepsilon$ . 由 $\varepsilon$ 的任意性可知, $\sup(A+B) \ge \sup A+\sup B $.
+    
+    综上，$\sup(A+B) = \sup A+\sup B $.
+    
+    (2) \biyao 对任意的 $z\in A+B$ ,有 $z=x+y \ge \inf A + \inf B $, 其中 $x\in A,y\in B$. 故 $\inf A + \inf B$ 是 $A+B$ 的一个下界, 则 $\inf (A+B)\ge \inf A + \inf B$.
+    
+    \chongfen 
+    对于任意的 $\varepsilon>0$, 存在 $x_0\in A$ , 有 $x_0<\inf A + \frac{1}{2}\varepsilon$ , 存在 $y_0\in B$ , 有 $y_0<\inf B + \frac{1}{2}\varepsilon$. 故 $\inf(A+B) \le z_0 = x_0+y_0<\inf A+\inf B +\varepsilon$ . 由 $\varepsilon$ 的任意性可知, $\inf(A+B) \le \inf A+\inf B $.
+    
+    综上，$\inf(A+B) = \inf A+\inf B $.
 \end{proof}
 
 \newsection

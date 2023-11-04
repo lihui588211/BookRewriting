@@ -3723,7 +3723,7 @@ book、report等）或节（对于article等）都将改用字母进行编号：
     \end{document}
 \end{lstlisting}
 
-使用 \verb|\include| 命令需要注意的是，最好不要在子文件中新定义计数器、声明新字体，否则在使用 \verb|\includeonly| 时，会因为找不到出现在辅助文件中而在源文件中缺失的计数器而出错。
+使用 \verb|\include| 命令需要注意的是，最好不要在子文件中新定义计数器、声明新字体，否则在使用\\ \verb|\includeonly| 时，会因为找不到出现在辅助文件中而在源文件中缺失的计数器而出错。
 
 比 \verb|\include| 命令更一般的是 \verb|\input| 命令，它直接把文件的内容复制到 \verb|\input| 命令所在的位置，不做其他多余的操作。 \verb|\input| 命令接受一个文件名参数，文件名可以带扩展名，也可以不带扩展名（此时认为扩展名是 \verb|.tex| 。例如，如果一个文挡的导言区设置非常多，可以把导言区的设置都放在一个 \verb|preamble.tex| 文件中，然后在主文件中就可以这样写：
 
@@ -3870,3 +3870,138 @@ titlesec 宏包使用时可以带几个可选参数，用来全局地修改标�
 titlesec 的其他功能包括使用不带星号的 \verb|\titleformat| 命令对章节格式做更详细的设置，使用 \\ \verb|\titlespace| 命令设置章节标题的间距，增添横线，控制页面版式（可代替 fancyhdr ），控制章节分页，增加新的章节层次等功能，篇幅所限，
 这里就不再一一介绍了。
 
+\section{文档类与整体格式设置}
+
+这一节，我们主要将注意力集中在导言区的代码，讨论文挡的一些全局设置，特别是版面设计的租关内容。
+
+\subsection{基本文档类和 ctex 文档类}
+
+文档类（ documentclass ）是 \LaTeXe 中基本的格式组织方式。文件类通常都是针对某一类格式相近的文档设计的，从适用范围广泛的“文章”、“书籍”到非常专门的“某大学博士论文模板”，不一而足。选定了一个文档类，就相当于选定了很大的一集 \LaTeX 格式，可以在一个规范的框架下进行文档编写。
+
+本书的大部分内容都是基于 \LaTeXe 的基本文档类和ctex 文档类叙述的。ctex 文档类是由 CTeX 中文社区组织编写的 \LaTeXe 基本文档类的中文对应物，它是在 \LaTeXe 基本文档类的基础上编写的。\LaTeXe 基本文档类和 ctex 文档类主要提供了文档的整体框架（如 \verb|\maketitle| ，\verb|\section| 等命令）、基本设置（如默认字号、默认的中文字体）、基本工具（如 \verb|enumerate|等环境）等，它们提供了最基本的通用文档格式，但并不对文档的活用性做过多限制。下面就对这两组适用最广产的文档类做一简单介绍。
+
+\LaTeXe 基本文档类主要有三个： \verb|article| ，\verb|report| 和 \verb|book| 。这三个基本文档类分别设计用来编写小篇幅的文章、中篇幅的报告和长篇幅的书籍。三大文档类的格式都很简
+单，提供的命令也相差不多，只有少数区别，如\verb|article| 没有 \verb|chapter|， \verb|\mainmatter| 只有 \verb|book| 类才有等。基本文档类的许多格式是可以通过选项调整的，例如：
+\begin{lstlisting}
+    \documentclass[a4paper,titlepage]{article}
+\end{lstlisting}
+将设置文档为 A4 纸大小，标题单独占一页。
+
+基本文档类预定义的所有选项总结见表\ref{tab:latexe}。
+
+\begin{table}[ht]
+    \centering
+    \caption{\LaTeXe 标准文档类提供的选项}
+    \label{tab:latexe}
+    \linespread{1.2}
+    \begin{tabular}{cll}
+        \toprule
+        类型 & 选项 & 说明 \\ 
+        \midrule 
+        纸张大小 & \ttfamily a4paper & 21.0cm $\times$ 29.7cm \\
+         & \ttfamily a5paper & 14.8cm $\times$ 21.0cm \\ 
+         & \ttfamily b5paper & 17.6cm $\times$ 25.0cm \\ 
+         & \ttfamily letterpaper & 8.5in $\times$ 11in (默认值)\\ 
+         & \ttfamily leagalpaper & 8.5in $\times$ 14in \\ 
+         & \ttfamily executivepaper & 7.5in $\times$ 10.5in \\ 
+         纸张方向 & \ttfamily landscape & 横向，即长宽交换（默认无，即为纵向页面）\\
+         单双面 & \ttfamily oneside & 单面（ article ， report 默认值）\\ 
+         & \ttfamily twoside & 双面，奇偶页面版式不同，左右对称（ book 默认值）\\ 
+         字号大小 & \ttfamily 10pt & 正文字号为 10pt, \verb|\large| 等命令与之相衬（默认值）\\ 
+         & \ttfamily 11pt & 正文字号为 11pt \\ 
+         & \ttfamily 12pt & 正文字号为 12pt \\ 
+         分栏 & \ttfamily onecolumn & 单栏（默认值）\\ 
+         & \ttfamily twocolumn & 双栏 \\
+         标题格式 & \ttfamily titlepage & 标题独自成页（ report, book 默认值）\\ 
+         & \ttfamily notitlepage & 标题不独自成页（ article 默认值）\\ 
+         章格式  & \ttfamily openright & 每章只从奇数页开始（book 默认值）\\ 
+         & \ttfamily openany & 每章可从任意页开始（ article ， report 默认值）\\
+         公式编号 &\ttfamily leqno & 公式编号在左边（默认无，即公式编号在右边）\\
+         公式位置 & \ttfamily fleqn & 公式左对齐，固定缩进（默认无，即公式居中）\\ 
+         草稿设置 & \ttfamily draft & 草稿，会把行溢出的盒子着重显示为黑块\\
+         & \ttfamily fina1 & 终稿（默认值）\\
+         参考文献 & \ttfamily openbib & 每条文献分多段输出（默认无） \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+
+单面文档的奇偶数页面是相同的，双面文档则不相同。对双面印制的文档，通常在页面左侧装订，翻开后奇数页一般在右边，偶数页在左边，因而在页面边距、页眉页脚、边注位置等方面都与单面文档有所区别，大多取左右对称的设置。如果选定 \verb|twoside| 
+模式，可以使用 \verb|openright| 使每个 \verb|\part| 和 \verb|\chapter| 都只出现在右边的页面（奇数页），之前不足的页面用空白补足。
+
+基本文档类的默认选项总结如下：
+
+
+在文档类中的选项是全局设定的，不仅会影响文档类的代码，也会影响文档所使用的宏包。例如文档类中的纸张选项也会影响 geometry 宏包，草稿设置选项也会影响插图的 graphicx 宏包等。
+
+ctex 宏包提供了三个文档类： ctexart,ctexrep 和 ctexbook ，分别与三个标准文档类对应，用来编写中文短文、中文报告和中文书籍。除了三个文档类， ctex 宏包还包括ctex.sty 和 ctexcap.sty 两个格式文件，以及上述文档类和格式文件的 UTF8 编码变体。
+
+ctex.sty 提供基本的中文输出支持， ctexcap.sty 则提供 ctex.sty 的全部功能和英文标题的汉化，几个文档类则在 ctexcap 的基础上进一步设置默认的字号大小为中文字号。在大多数情况下，我们都直接使用 ctex 提供的文档类，但在一些非标准的文档类中，则可以按需要使用 ctexcap 或 ctex 格式。例如，在编写宏包文档的 ltxdoc 文档类（基于标准文档类）中，可以使用 ctexcap 支持中文：
+
+\begin{lstlisting}
+    \documentclass{ltxdoc}
+    \usepackage{ctexcap}
+    \zihao{5}
+    \begin{document}
+    …………
+    \end{document}
+\end{lstlisting}
+而在已经失去标准文档类原有结构的个人简历文档类 moderncv 中，就可以使用 ctex 支持中文：
+
+\begin{lstlisting}
+    \documentclass{moderncv}
+    \usepackage{ctex}
+    \zihao{-4}
+    \begin{document}
+    …………
+    \end{document}
+\end{lstlisting}
+
+表中列出的标准文档类的选项也可在 ctex 文档类中使用。 ctex 宏包及文档类的其他选项（这里去掉了专用于旧的中文处理方式 CJK 和 CCT 的选项）见表\ref{tab:ctex}。
+
+\begin{table}[ht]
+    \centering
+    \caption{ctex 宏包及文档类的选项}
+    \label{tab:ctex}
+    \linespread{1.2}
+    \begin{tabular}{cll}
+        \toprule
+        类型 & 选项 & 说明 \\ 
+        \midrule 
+        字体大小 & \ttfamily c5size & 正文五号字（仅用于文档类，默认值） \\
+        & \ttfamily cs4size & 正文四号字（仅用于文档类） \\ 
+        章节标题 & \ttfamily sub3section & 使 \verb|\paragraph| 标题单独占一行（仅用于 ctexcap 及文档类，默认无） \\ 
+        & \ttfamily sub4section & \makecell[t]{使 paragraph 和 subparagraph 标题都单独占一行（仅用于\\ ctexcap 及文档类，默认无）}\\ 
+        中文编码 & \ttfamily GBK & 使用 GBK 编码，但对 \XeTeX 无效 \\ 
+         & \ttfamily UTF8 & 使用 UTF8 编码 \\ 
+        \XeTeX 中文字库 & \ttfamily nofonts & 不设定中文字体，需要在文中自己定义 \\
+         & \ttfamily winfonts & 设定 Windows 操作系统预装的中文字体（默认值 ）\\ 
+         & \ttfamily adobefonts & 设定 Adobe 中文字体 \\ 
+         排版风格 & \ttfamily cap & 使用中文标题、编号、日期等（默认值） \\ 
+         & \ttfamily nocap & 保留英文标题、编号、日期等 \\ 
+         & \ttfamily punct & 启用标点压缩（默认值） \\ 
+        & \ttfamily nopunct & 关闭标点压缩 \\ 
+        & \ttfamily indent & 标题后首行缩进（默认值） \\
+        & \ttfamily noindent & 标题后首行不缩进 \\ 
+        宏包蒹容 & \ttfamily fancyhdr & 调用 fancyhdr 并与之兼容（默认无） \\ 
+        & \ttfamily hyperref & 调用 hyperref 并自动设置防止标签乱码选项（默认无）\\ 
+        & \ttfamily fntef & 调用 CJKfntef 并定义等价的 \verb|\CTEX| 开头的命令（默认无） \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\verb|\paragraph| 和 \verb|\subparagraph| 的标题在标准文档类中与其后的正文段在同一行，使用  \verb|sub3section| 和 \verb|sub4section| 选项可以使它们的标题单独占用一行。
+
+ctex 宏包有选择编码的选项 \verb|GBK| 和 \verb|UTF8| ，但它们主要是为旧方案中使用 CJK 宏包处理中文所准备的；在 \XeLaTeX 编译的文档中，总是相当于使用了 UTF8 编码选项。如果需要使用处理 GBK 编码的中文文档，可以在每个文件的开头使用 \XeTeX 原始命令 \verb|\XeTeXinputencoding| 选择编码：
+
+\begin{lstlisting}
+    \XeTeXinputencoding "GBK"
+    \documentclass{ctexart}
+    \begin{document}
+        GBK 编码的中文文档。
+    \end{document}
+\end{lstlisting}
+
+ctex 宏包以前对 UTF-8 编码的支持是由另外单独的文件而不是选项实现的，现在为了兼容也保留了 ctexutf8 ， ctexcaputf8 两个格式和 ctexartutf8 ， ctexreputf8, ctexbookutf8三个文档类，相当于加了 \verb|UTF8| 选项。
+
+关于 ctex 宏包提供的其他功能可进一步参考宏包的文档 。
