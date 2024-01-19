@@ -51,11 +51,19 @@
 \newcommand{\proref}[1]{命题\ref{#1}}
 \newcommand{\defref}[1]{定义\ref{#1}}
 \newcommand{\exref}[1]{例\ref{#1}}
+\newcommand{\thmref}[1]{定理\ref{#1}}
 \newcommand{\abs}[1]{\mid #1 \mid}
 \newcommand{\eqtref}[1]{式(\ref{#1})}
-\newcommand{\homework}{\vspace{0.5cm}
+\newcommand{\figref}[1]{图\ref{#1}}
+\newcommand{\homework}{\vspace{0.5cm}\begin{center}
+\textcolor{green!40!black}{\zihao{3} \kaishu 习题\thesection } \\
+\textcolor{green!40!black}{\rule{8cm}{0.01cm}}
+\end{center}
+\vspace{0.1cm}\setcounter{practice}{0}}
+
+\newcommand{\chapterhomework}{\vspace{0.5cm}
 \begin{center}
-\textcolor{green!40!black}{\zihao{3} \kaishu 习题 \thesection } \\
+\textcolor{green!40!black}{\zihao{3} \kaishu 第 \thechapter 章总习题} \\
 \textcolor{green!40!black}{\rule{8cm}{0.01cm}}
 \end{center}
 \vspace{0.1cm}\setcounter{practice}{0}}
@@ -66,6 +74,10 @@
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\biyao}{\textcolor{blue!70!green}{{$\Longrightarrow$)\quad}}}
 \newcommand{\chongfen}{\textcolor{blue!70!green}{$\Longleftarrow$)\quad}}
+\newcommand{\sgn}{\mbox{sgn}\hspace{3pt}}
+\newcommand{\setset}[2]{\{#1\mid#2\}}
+\newcommand{\arccot}{\mbox{arccot} \hspace{1pt}}
+
 \abovedisplayskip=0cm
 \belowdisplayskip=0cm
 \abovedisplayshortskip=0cm

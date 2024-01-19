@@ -1,0 +1,309 @@
+\chapterhomework
+
+\begin{practice}
+    设 $a,b\in \R$, 证明:
+
+    (1) $\max \{a,b\} = \frac{1}{2}(a+b+\abs{a-b})$
+
+    (2) $\min \{a,b\} = \frac{1}{2}(a+b-\abs{a-b})$
+\end{practice}
+
+\begin{proof}
+    设 $a>b$,则 $\max \{a,b\}=a,\min \{a,b\} =b$.
+
+    (1) $\frac{1}{2}(a+b+\abs{a-b})=\frac{1}{2}(a+b+a-b)=a=\max \{a,b\}$.
+
+    (1) $\frac{1}{2}(a+b-\abs{a-b})=\frac{1}{2}(a+b-a+b)=b=\min \{a,b\}$.
+\end{proof}
+
+\begin{practice}\label{prac:maxmin}
+    设 $f$ 和 $g$ 都是 $D$ 上的初等函数.定义 $M(x)=\max \{f(x),g(x)\},m(x)=\min \{f(x),g(x)\},x\in D$. 试问 $M(x)$ 和 $m(x)$ 是否为初等函数？
+\end{practice}
+
+\begin{solve}
+    由 习题\ref{prac:maxmin} 得，
+\[
+    M(x)=\frac{1}{2}(f+g+\abs{f-g}) = \frac{1}{2}(f+g+\sqrt{(f-g)^2})
+\]
+\[
+    m(x)=\frac{1}{2}(f+g-\abs{f-g}) = \frac{1}{2}(f+g-\sqrt{(f-g)^2})
+\]
+
+故 $M(x),m(X)$ 由初等函数经过四则运算和复合运算得来,均为初等函数.
+\end{solve}
+
+\begin{practice}
+    设 $f(x)=\frac{1-x}{1+x}$ ， 求 $f(-x),f(x+1),f(x)+1,f(\frac{1}{x}),\frac{1}{f(x)},f(x^2),f(f(x))$.
+\end{practice}
+
+\begin{solve}
+    $f(-x) = \frac{1+x}{1-x}$. $f(x+1)=\frac{1-(x+1)}{1+(x+1)}=\frac{-x}{x+2}$ .
+
+    $f(x)+1=\frac{1-x}{1+x}+1=\frac{2}{1+x}$. $f(\frac{1}{x})=\frac{1-\frac{1}{x}}{1+\frac{1}{x}}=\frac{x-1}{x+1}$.
+
+    $\frac{1}{f(x)}=\frac{1+x}{1-x}$. $f(x^2)=\frac{1-x^2}{1+x^2}$. $f(f(x))=\frac{1-\frac{1-x}{1+x}}{1+\frac{1-x}{1+x}}=\frac{2x}{2}=x$
+\end{solve}
+
+\begin{practice}
+    已知 $f(\frac{1}{x})=x+\sqrt{1+x^2}$，求 $f(x)$.
+\end{practice}
+
+\begin{solve}
+    令 $t=\frac{1}{x}$,则 $x=\frac{1}{t}$,代入表达式得 $f(t)=\frac{1}{t}+\sqrt{1+\frac{1}{t^2}}$.即 $f(x)=\frac{1}{x}+\sqrt{1+\frac{1}{x^2}},x\ne 0$.
+\end{solve}
+
+\begin{practice}
+    利用函数 $y=\lfloor x \rfloor$ 求解：
+
+    (1) 某系各班级推选学生代表，每 5 人推选 1 名代表，余额满 3 人可增选 1 名.写出可推选代表数 $y$ 与班级学生数 $x$ 之间的函数关系.
+
+    (2) 正数 $x$ 经四舍五入后得到整数 $y$ ,写出 $y$ 与 $x$ 的函数关系.
+\end{practice}
+
+\begin{solve}
+    (1) 余额满 3 人可增选 1 名 ，可加上 2 人后再取整，即 $y=\lfloor \frac{x+2}{5} \rfloor$
+
+    (2)小数部分超过 0.5 可进 1.  $y=\lfloor x+0.5 \rfloor$
+\end{solve}
+
+\begin{practice}
+    已知函数 $y=f(x)$ 的图像，试作下列各函数的图像：
+
+    (1) $y=-f(x)$ \qquad (2) $y=f(-x)$ \qquad (3) $y=-f(-x)$ \qquad (4) $y=\abs{f(x)}$ 
+
+    (5) $y=\sgn f(x)$ \qquad (6) $y=\frac{1}{2} [\abs{f(x)}+f(x)]$  \qquad (7) $y=\frac{1}{2} [\abs{f(x)}-f(x)]$
+\end{practice}
+
+\begin{solve}
+    (1) $x$值相同，$y$值相反. 二者图像关于 $x$ 轴对称.
+
+    (2) $x$值相反，$y$值相同. 二者图像关于 $y$ 轴对称.
+
+    (3) $x$值相反，$y$值相反. 二者图像关于原点对称.
+
+    (4) $x$值相同,$y$值非负则相等,$y$值为负则相反. 相当于把原图像$y$值为负的部分关于 x 轴对称.
+
+    (5) $y$ 值为正则为 1，$y$值为0则为0, $y$ 值为负则为 -1. 相当于取原函数值的正负.
+
+    (6) $x$值相同,$y$值非负则相等,$y$值为负则为0. 相当于把原图像$y$值为负的部分设置为0.
+
+    (6) $x$值相同,$y$值为正则为0,$y$值为负则相反. 相当于把原图像$y$值为正的部分设置为0，并将原图像$y$值为负的部分关于 $x$ 轴对称.
+\end{solve}
+
+\begin{practice}
+    已知函数 $f$ 和 $g$ 的图像，试作下列函数的图像：
+
+    (1) $\varphi(x)=\max\{f(x),g(x)\}$ \qquad $\psi(x)=\min\{f(x),g(x)\}$
+\end{practice}
+
+\begin{solve}
+    将函数 $f$ 和 $g$ 的图像绘制在同一坐标轴上，始终取上方的曲线，得到 $\varphi(x)=\max\{f(x),g(x)\}$;始终取下方的曲线，得到 $\psi(x)=\min\{f(x),g(x)\}$ 
+\end{solve}
+
+\begin{practice}
+    设 $f,g$ 和 $h$ 为增函数，满足 $f(x)\le g(x)\le h(x),x\in \R$. 证明: $f(f(x))\le g(g(x)) \le h(h(x))$.
+\end{practice}
+
+\begin{proof}
+    $f(f(x))\le f(g(x))\le g(g(x)) \le g(h(x)) \le h(h(x)).$
+\end{proof}
+
+\begin{practice}
+    设  $f$ 和 $g$  都为 区间 $(a,b)$ 上的增函数，证明第7题中定义的函数 $\varphi(x)$ 和 $\psi(x)$ 也都是 $(a,b)$ 上的增函数.
+\end{practice}
+
+\begin{proof}
+    任意的 $x_1<x_2\in (a,b)$, 都有 $f(x_1)\le f(x_2),g(x_1)\le g(x_2)$. 
+    
+    又 $f(x_2)\le \max\{f(x_2),g(x_2)\},g(x_2)\le \max\{f(x_2),g(x_2)\}$ . 
+    
+    则 $f(x_1)\le \max\{f(x_2),g(x_2)\},g(x_1)\le \max\{f(x_2),g(x_2)\}$. 
+    
+    故 $\max\{f(x_1),g(x_1)\}\le \max\{f(x_2),g(x_2)\}$.
+
+    又 $f(x_1)\ge \min\{f(x_1),g(x_1)\},g(x_1)\ge \min\{f(x_1),g(x_1)\}$ . 
+    
+    则 $f(x_2)\ge \min\{f(x_1),g(x_1)\},g(x_2)\ge \min\{f(x_1),g(x_1)\}$. 
+    
+    故 $\min\{f(x_2),g(x_2)\}\ge \min\{f(x_1),g(x_1)\}$.
+\end{proof}
+
+\begin{practice}
+    设 $f$ 为 $[-a,a]$ 上的奇(偶)函数. 证明:若 $f$ 在 $[0,a]$ 上增，则$f$ 在 $[-a,0]$ 上增(减).
+\end{practice}
+
+\begin{proof}
+    若 $f$ 为 在$[0,a]$上单调增的奇函数. 任取 $x_1<x_2\in [-a,0]$,则 $-x_1>-x_2\in [0,a]$, 则 $f(-x_1)\ge f(-x_2)\iff -f(x_1) \ge  -f(x_2) \iff f(x_1) \le f(x_2) $, 故 $f$ 在 $[-a,0]$ 上增.
+
+    若 $f$ 为 在$[0,a]$上单调增的偶函数, 则 $f(-x_1)\ge f(-x_2)\iff f(x_1) \ge  f(x_2)$, 故 $f$ 在 $[-a,0]$ 上减.
+\end{proof}
+
+\begin{practice}
+    证明：
+
+    (1)两个奇函数之和为奇函数，其积为偶函数.
+
+    (2)两个偶函数之和与积都为偶函数.
+
+    (3)奇函数与偶函数之积为奇函数.
+\end{practice}
+
+\begin{proof}
+    (1)设 $f(x)$ 和 $g(x)$ 为奇函数，$h(x)=f(x)+g(x),m(x)=f(x)g(x)$.则 $h(-x)=f(-x)+g(-x)=-f(x)-g(x)=-h(x)$,$m(-x)=f(-x)g(-x)=f(x)g(x)=m(x)$.即两个奇函数之和为奇函数，其积为偶函数.
+
+    (2)，(3)同理可得.
+\end{proof}
+
+\begin{practice}
+    设  $f$ 和 $g$  为 $D$ 上的有界函数.证明：
+
+    (1) $\inf_{x\in D} \{f(x)+g(x)\} \le \inf_{x\in D} f(x)+\sup_{x\in D} g(x)$
+
+    (2) $\sup_{x\in D} f(x)+\inf_{x\in D} g(x) \le \sup_{x\in D} \{f(x)+g(x)\}$
+\end{practice}
+
+\begin{proof}
+    (1) 由下确界的定义得,$\forall \varepsilon>0,\exists x_1\in D$,有 $f(x_1)<\inf_{x\in D} f(x)+ \varepsilon$.
+    
+    又显然有 $g(x_1)\le \sup_{x\in D} g(x)$. 则 $\inf_{x\in D} \{f(x)+g(x)\} \le f(x_1)+g(x_1) < \inf_{x\in D} f(x)+ \varepsilon + \sup_{x\in D} g(x).$
+
+    由 $\varepsilon$ 的任意性得,$\inf_{x\in D} \{f(x)+g(x)\} \le \inf_{x\in D} f(x)+\sup_{x\in D} g(x)$.
+
+    (2) 由上确界的定义得,$\forall \varepsilon>0,\exists x_1\in D$,有 $\sup_{x\in D} f(x) - \varepsilon < f(x_1)$.
+    
+    又显然有 $\inf_{x\in D} g(x) \le g(x_1)$. 则 $\sup_{x\in D} f(x)- \varepsilon + \inf_{x\in D} g(x) < f(x_1)  + g(x_1) \le \sup_{x\in D} f(x) + \inf_{x\in D} g(x).$
+
+    由 $\varepsilon$ 的任意性得,$\sup_{x\in D} f(x)+\inf_{x\in D} g(x) \le \sup_{x\in D} \{f(x)+g(x)\}$.
+\end{proof}
+
+\begin{practice}
+    设  $f$ 和 $g$  为 $D$ 上的非负有界函数.证明：
+
+    (1) $\inf_{x\in D} f(x) \cdot \inf_{x\in D} g(x) \le \inf_{x\in D} \{f(x)g(x)\}$
+
+    (2) $\sup_{x\in D} \{f(x)g(x)\} \le \sup_{x\in D} f(x) \cdot \sup_{x\in D} g(x)$
+\end{practice}
+
+\begin{proof}
+    (1) 有 $0 \le \inf_{x\in D} f(x) \le f(x),0\le \inf_{x\in D} g(x) \le g(x)$.则 $\inf_{x\in D} f(x) \cdot \inf_{x\in D} g(x) \le f(x)g(x)$. 
+    
+    因此 $\inf_{x\in D} f(x) \cdot \inf_{x\in D} g(x)$ 是 $f(x)g(x)$ 的一个下界.  故 $\inf_{x\in D} f(x) \cdot \inf_{x\in D} g(x) \le \inf_{x\in D} \{f(x)g(x)\}$.
+    
+    (2)  有 $0 \le f(x) \le \sup_{x\in D} f(x),0\le g(x) \le \sup_{x\in D} g(x) $.则 $f(x)g(x) \le \sup_{x\in D} f(x) \cdot \sup_{x\in D} g(x)$. 
+    
+    因此 $\sup_{x\in D} f(x) \cdot \sup_{x\in D} g(x)$ 是 $f(x)g(x)$ 的一个上界.  故 $\sup_{x\in D} \{f(x)g(x)\} \le \sup_{x\in D} f(x) \cdot \sup_{x\in D} g(x)$.
+\end{proof}
+
+\begin{practice}
+    将定义在 $(0,+\infty)$ 上的函数 $f$ 延拓到 $\R$ 上，使延拓后的函数为 (i) 奇函数 (ii)偶函数. 设 
+
+    (1) $f(x)=\sin x+1$
+
+    (2) $f(x)=\begin{cases}
+        1-\sqrt{1-x^2} & 0<x\le 1 \\ 
+        x^3 & x>1
+    \end{cases}$
+\end{practice}
+
+\begin{solve}
+    (1) (i) $f(0)=-f(0)\implies f(0)=0$. 若 $x<0$,则 $f(x)=-f(-x)=-(\sin(-x)+1)=\sin x -1$. 即 $f(x)=\begin{cases}
+        \sin x+1 & x>0 \\ 
+        0 & x = 0 \\
+        \sin x - 1 & x<0
+    \end{cases}$
+
+    (ii) 若 $x<0$,则 $f(x)=f(-x)=\sin (-x) + 1=-\sin x+1$. 即 $f(x)=\begin{cases}
+        \sin x+1 & x>0 \\ 
+        c & x = 0 \\
+        -\sin x+1 & x<0
+    \end{cases}$
+
+    (2) (i) $f(0)=-f(0)\implies f(0)=0$.若 $x<0$,
+    
+    则 $f(x)=-f(-x)=\begin{cases}
+        \sqrt{1-(-x)^2}-1 &  0<-x\le 1\\ 
+        -(-x)^3 &  -x>1
+    \end{cases}=\begin{cases}
+        \sqrt{1-x^2}-1 &  -1\le x<0\\ 
+        x^3 & x<-1
+    \end{cases}$.
+
+    即 $f(x)=\begin{cases}
+        1-\sqrt{1-x^2} & 0<x\le 1 \\ 
+        x^3 & x>1 \\
+        0 & x=0 \\
+        \sqrt{1-x^2}-1 &  -1\le x<0\\ 
+        x^3 & x<-1
+    \end{cases}$
+
+    (ii) 若 $x<0$,
+    
+    则 $f(x)=f(-x)=\begin{cases}
+        1-\sqrt{1-(-x)^2} &  0<-x\le 1\\ 
+        (-x)^3 &  -x>1
+    \end{cases}=\begin{cases}
+        1-\sqrt{1-x^2} &  -1\le x<0\\ 
+        -x^3 & x<-1
+    \end{cases}$.
+
+    即 $f(x)=\begin{cases}
+        1-\sqrt{1-x^2} & 0<x\le 1 \\ 
+        x^3 & x>1 \\
+        c & x=0 \\
+        1-\sqrt{1-x^2} &  -1\le x<0\\ 
+        -x^3 & x<-1
+    \end{cases}$
+\end{solve}
+
+\begin{practice}
+    设 $f$ 为定义在 $\R$ 上的以 $h$ 为周期的函数, $a$ 为实数. 证明: 若 $f$ 在 $[a,a+h]$ 上有界,则 $f$ 在 $\R$ 上有界.
+\end{practice}
+
+\begin{proof}
+    设 $\forall x\in [a,a+h]$,有 $f(x)\le M$.
+    
+    任意的 $x\in \R$ , 有 $x+(\frac{a-x+h}{h})h = a+h$.
+
+    又 $\frac{a-x+h}{h}-1< \lfloor\frac{a-x+h}{h}\rfloor \le \frac{a-x+h}{h}$.
+
+    则 $x+(\frac{a-x+h}{h}-1)h<x+\lfloor\frac{a-x+h}{h}\rfloor h\le x+(\frac{a-x+h}{h})h$.
+
+    即 $a<x+\lfloor\frac{a-x+h}{h}\rfloor h\le a+h$.
+
+    故 $f(x)=f(x+\lfloor\frac{a-x+h}{h}\rfloor h)\le M$. 即 $f$ 在 $\R$ 上有界.
+\end{proof}
+
+\begin{practice}
+    设 $f$ 在区间 $I$ 上有界. 记 $M=\sup_{x\in I} f(x),m=\inf_{x\in I}f(x)$.                                 
+    
+    证明: $\sup_{x',x''\in I} \abs{f(x')-f(x'')}=M-m$.
+\end{practice}
+
+\begin{proof}
+    显然有 $m-M\le f(x')-f(x'')\le M-m$,即 $\abs{f(x')-f(x'')}\le M-m $. 
+
+    由确界的最小上界性得, $\sup_{x',x''\in I} \abs{f(x')-f(x'')}\le M-m$.
+
+    由确界的定义得,$\forall \varepsilon>0,\exists x_1,x_2\in I$, 使得 $f(x_1)>M-\varepsilon,f(x_2)<m+\varepsilon\iff -f(x_2)>-m-\varepsilon$. 则 $f(x_1)-f(x_2)>M-m-2\varepsilon$. 
+    
+    可取足够小的 $\varepsilon$, 使得 $M-m-2\varepsilon>0$,则 $\abs{f(x_1)-f(x_2)}>M-m-2\epsilon>0$
+    
+    由 $\varepsilon$ 的任意性得,$\sup_{x',x''\in I} \abs{f(x')-f(x'')} \ge \abs{f(x_1)-f(x_2)}\ge M-m$.
+
+     综上,$\sup_{x',x''\in I} \abs{f(x')-f(x'')}=M-m$.
+\end{proof}
+
+
+
+\begin{practice}
+    设 $f(x)=\begin{cases}
+        p & \mbox{当} x=\frac{q}{p}(p,q\in \N_+,\frac{q}{p} \mbox{为既约真分数},0<q<p) \\ 
+        0 & x\mbox{为}(0,1)\mbox{中的无理数}
+    \end{cases}$
+
+    证明: 对任意 $x_0\in (0,1)$.任意正数 $\delta$,$(x_0-\delta,x_0+\delta)\subset (0,1)$,有 $f(x)$ 在 $(x_0-\delta,x_0+\delta)$ 上无界.
+\end{practice}
+
+\begin{proof}
+    $\forall M>0$, 都存在 $x_0 = \frac{q}{M+1}\in (x_0-\delta,x_0+\delta)$, 使得 $f(x_0)=M+1>M$. 故 $f(x)$ 在 $(x_0-\delta,x_0+\delta)$ 上无界.
+\end{proof}
