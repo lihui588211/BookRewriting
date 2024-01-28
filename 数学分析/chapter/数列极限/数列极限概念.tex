@@ -1,0 +1,346 @@
+\section{数列极限概念}
+
+若函数 $f$ 的定义域为全体正整数集合 $\N_+$,则称 $f:\N_+\to \R$ 或 $f(n),n\in \N_+$ 为\textbf{数列}.由于正整数集 $\N_+$ 的元素可按从小到大的顺序排列为 $1,2,\cdots,n,\cdots$,故数列 $f(n)$ 也可以写作 $a_1,a_2,\cdots,a_n,\cdots$,或者简记为 $\{a_n\}$.其中,$a_n$称为该数列的\textbf{通项}.
+
+关于数列极限，先举一个我国古代有关数列的例子.
+
+\begin{example}
+    古代哲学家庄周所著《庄子·天下篇》曾引用过一句话:“一尺之锤,日取其半，万世不竭.”其含义为:一根长为一尺的木棒，每天截下一半，这样的过程可以无限进行下去.
+\end{example}
+
+把每天截下部分的长度列出（单位为尺）：第1天截下 $\frac{1}{2}$,第2天截下$\frac{1}{2^2}$,$\cdots$,第$n$天截下 $\frac{1}{2^n},\cdots$.这样就得到一个数列 $\frac{1}{2},\frac{1}{2^2},\cdots,\frac{1}{2^n},\cdots$. 也即 $\{\frac{1}{2^n}\}$.
+
+不难看出，数列 $\{\frac{1}{2^n}\}$ 的通项 $\frac{1}{2^n}$ 随着 $n$ 的无限增大而无限地趋于0.一般而言，对于数列 $\{a_n\}$,当 $n$ 无限增大时,$a_n$ 能无限地接近某一个常数 $a$, 则称此数列为收敛数列,常数$a$ 称为它的极限.不具备这种性质的数列就不是收敛数列.
+
+收敛数列的特性是 “随着 $n$ 的无限增大,$a_n$ 无限地趋于某一常数 $a$”. 这也就是说，当 $n$ 充分大时,数列的通项 $a_n$ 与常数 $a$ 之差的绝对值可以任意小。下面我们给出收敛数列及其极限的精确定义.
+
+\begin{definition}[数列极限]\label{def:shulie}
+    设 $\{a_n\}$ 为数列，$a$ 为定数.若对任意的正数 $\varepsilon$ ，总存在正整数 $N$,使得当 $n>N$时,有 $\abs{a_n-a}<\varepsilon$,则称\textbf{数列 $\{a_n\}$ 收敛于 a},定数 $a$ 称为数列 $\{a_n\}$ 的\textbf{极限},并记作
+\[
+    \lim\limits_{n\to \infty} a_n = a\quad \text{或} \quad a_n\to a(n\to \infty)
+    \]
+
+    若数列 $\{a_n\}$ 没有极限，则称 $\{a_n\}$ 不收敛，或称 $\{a_n\}$ 为\textbf{发散数列}.
+\end{definition}
+
+\defref{def:shulie} 常称为 \textbf{数列极限的$\varepsilon-N$ 定义}.下面举例说明如何根据 $\varepsilon-N$ 定义 来验证数列极限.
+
+\begin{example}\label{ex:na}
+    证明 $\lim_{n\to \infty}\frac{1}{n^\alpha}=0$,这里 $\alpha$ 为正数. 
+\end{example}
+
+\begin{proof}
+    令 $\abs{\frac{1}{n^\alpha}-0}=\frac{1}{n^\alpha}<\varepsilon$,解得 $n>\frac{1}{\varepsilon^{\frac{1}{\alpha}}}$.
+
+    于是,
+    $\forall \varepsilon>0,\exists N=\lfloor \frac{1}{\varepsilon^{\frac{1}{\alpha}}} \rfloor + 1$,使得 $n>N$ 时,有 $\abs{\frac{1}{n^\alpha}-0}<\varepsilon$. 即 $\lim_{n\to \infty}\frac{1}{n^\alpha}=0$.
+\end{proof}
+
+\begin{example}\label{ex:fangda}
+    证明 $\lim_{n\to \infty} \frac{3n^2}{n^2-3}=3$.
+\end{example}
+
+\begin{proof}
+    $\abs{\frac{3n^2}{n^2-3}-3}=\abs{\frac{3n^2-3n^2+9}{n^2-3}}=\frac{9}{n^2-3}\le \frac{9}{n}\quad (n\ge 3,n^2-n-3\ge 0)$
+
+    解 $\frac{9}{n}< \varepsilon$ 得 $n>\frac{9}{\varepsilon}$.
+
+    于是,$\forall \varepsilon>0,\exists N=\max \{ \lfloor \frac{9}{\varepsilon} \rfloor + 1,3\}$,使得 $n>N$ 时,有 $\abs{\frac{3n^2}{n^2-3}-3}<\varepsilon$. 
+    
+    即 $\lim_{n\to \infty} \frac{3n^2}{n^2-3}=3$.
+\end{proof}
+
+\begin{annotation}
+    在\exref{ex:fangda}中,我们将 $\abs{a_n-a}$ 稍作放大，使得求 $N$ 的过程更加简便. 而且,\defref{def:shulie} 中的 $N$ 其实不一定要为正整数，只要是正数即可等价.
+\end{annotation}
+
+\begin{example}\label{ex:qn}
+    证明 $\lim_{n\to \infty} q^n=0$,这里 $\abs{q}<1$.
+\end{example}
+
+\begin{proof}
+    若 $q=0$ , 结果是显然的.
+
+    若 $0<\abs{q}<1$,则可令 $h=\frac{1}{\abs{q}}-1>0$.
+
+    $\abs{q^n-0}=\abs{q}^n=\frac{1}{(1+h)^n}=\frac{1}{1+nh+C_n^2h^2+\cdots}<\frac{1}{1+nh}<\frac{1}{nh}$
+
+    解 $\frac{1}{nh}<\varepsilon$ 得 $n>\frac{1}{h\varepsilon}$.
+
+    于是,$\forall \varepsilon>0,\exists N=\frac{1}{h\varepsilon}$,使得 $n>N$ 时,有 $\abs{q^n-0}<\varepsilon$.即 $\lim_{n\to \infty} q^n=0$.
+
+    也可以利用对数函数 $y=\lg x$ 的严格单调增性质(\anref{an:log}) 来证明:
+
+    $\abs{q^n-0}<\varepsilon \iff n\ln \abs{q} < \ln \varepsilon \iff n>\frac{\ln \varepsilon}{\ln \abs{q}}$ (假定 $0<\varepsilon<1$)
+\end{proof}
+
+\begin{example}\label{ex:an}
+    证明 $\lim_{n\to \infty}\sqrt[n]{a}=1$,其中 $a>0$.
+\end{example}
+
+\begin{proof}
+    当 $a=1$ 时,结果是显然的.
+
+    若 $a>1$, 则可令 $h=\sqrt[n]{a}-1>0$
+
+    则 $a=(1+h)^n=1+nh+C_n^2h^2+\cdots\ge 1+nh$
+
+    即 $\abs{\sqrt[n]{a}-1} =h \le \frac{a-1}{n}$. 解 $\frac{a-1}{n}<\varepsilon$ 得 $n>\frac{a-1}{\varepsilon}$
+
+    于是,$\forall \varepsilon>0,\exists N=\frac{a-1}{\varepsilon}$,使得 $n>N$ 时,有 $\abs{\sqrt[n]{a}-1}<\varepsilon$.即 $\lim_{n\to \infty}\sqrt[n]{a}=1$.
+
+    若 $a<1$,令 $h=\frac{1}{\sqrt[n]{a}}-1>0$.
+
+    则 $\frac{1}{a}=(1+h)^n\ge 1+nh \implies \abs{\sqrt[n]{a}-1}<h\le \frac{1-a}{an}$.解 $\frac{1-a}{an}<\varepsilon$ 得 $n>\frac{1-a}{a\varepsilon}$
+\end{proof}
+
+\begin{example}\label{ex:ann}
+    证明 $\lim_{n\to \infty} \frac{a^n}{n!}=0$.
+\end{example}
+
+\begin{proof}
+    若 $a=0$,结论显然成立.
+
+    若 $a\ne 0$, 取 $k=\lfloor \abs{a} \rfloor+1$,则 $\abs{a}< k$. 当 $n>k$ 时,有
+
+    $\abs{\frac{a^n}{n!}-0}=\frac{\abs{a}^n}{n!}=\frac{\abs{a} \cdot \cdots \abs{a} \cdots  \cdot \abs{a}}{1\cdot 2 \cdots \cdot k \cdots\cdot  n}<K\frac{\abs{a}}{n}$
+
+    其中,$K=\frac{\abs{a} \cdot \cdots \abs{a} }{1\cdot 2 \cdots \cdot k }$. 解 $K\frac{\abs{a}}{n}<\varepsilon$ 得 $n>\frac{K\abs{a}}{\varepsilon}$.
+
+    于是,$\forall \varepsilon>0,\exists N=\max \{k,\frac{K\abs{a}}{\varepsilon}\}$,使得 $n>N$ 时,有 $\abs{\frac{a^n}{n!}-0}<\varepsilon$.即 $\lim_{n\to \infty} \frac{a^n}{n!}=0$.
+\end{proof}
+
+关于数列极限的 $\varepsilon-N$ 定义，通过以上几个小例子，读者已经有了初步的认识.对此，还应该着重注意一下以下几点:
+
+\begin{enumerate}
+    \item \textbf{$\varepsilon$ 的任意性}\quad  \defref{def:shulie} 中正数 $\varepsilon$ 的作用在于衡量数列通项 $a_n$ 与定数 $a$ 的接近程度，$\varepsilon$ 越小，代表二者接近得越好;而正数 $\varepsilon$ 可以任意小,这说明 $a_n$ 和 $a$ 可以接近到任意程度.然而，尽管 $\varepsilon$ 有其任意性，只要它已经给出，就暂时被确定下来，以便根据它来求出 $N$. 又由于 $\varepsilon$ 是任意小的正数，那么 $\frac{\varepsilon}{2},3\varepsilon,\varepsilon^2$ 等也是任意小的正数，因此 \defref{def:shulie} 中的 $\varepsilon$ 可以用 $\frac{\varepsilon}{2},3\varepsilon,\varepsilon^2$ 等来替代。同时，正由于 $\varepsilon$ 是任意小的正数，我们可以限定 $\varepsilon$ 小于一个确定的正数(如\exref{ex:qn} 中限定 $0<\varepsilon<1$).另外, \defref{def:shulie} 中的 $\abs{a_n-a}<\varepsilon$ 也可以改为 $\abs{a_n-a}\le \varepsilon$.
+    \item \textbf{$N$的相应性} \quad 一般而言,$N$ 随着 $\varepsilon$ 的变小而变大,由此常把 $N$ 写作 $N(\varepsilon)$,来强调 $N$ 是依赖于 $\varepsilon$ 的,但这并不是意味着 $N$ 是由 $\varepsilon$ 唯一确定的.比如，当 $N=100$ 时,能使 $n>N$时有 $\abs{a_n-a}<\varepsilon$,则 $N=101$ 或更大时此不等式自然也成立.这里重要的是$N$的存在性，而不在于它的值的大小. 另外,\defref{def:shulie} 中的 $n>N$ 也可以改为 $n\ge N$.
+    \item \textbf{几何意义} \quad “当 $n>N$ 时,$\abs{a_n-a}<\varepsilon$” 意味着:所有下标大于 $N$ 的项 $a_n$ 都落在邻域$U(a,\varepsilon)$ 内;而在邻域$U(a,\varepsilon)$外的项最多只有 $N$个(有限个).反之,若数列 $\{a_n\}$在邻域$U(a,\varepsilon)$外的项最多只有有限个,取这有限个项的最大下标为 $N$,则当 $n>N$ 时,$a_n$ 落在$U(a,\varepsilon)$ 内,即 $\abs{a_n-a}<\varepsilon$.根据以上所述，我们可以给出数列极限的一种等价定义如下.
+\end{enumerate}
+
+\begin{definition}[极限的邻域定义]\label{def:ujixian}
+    任给$\varepsilon>0$,若在 $U(a,\varepsilon)$ 之外数列 $\{a_n\}$ 只有有限项，则称数列 $\{a_n\}$ 收敛于极限 $a$.
+\end{definition}
+
+由\defref{def:ujixian}得,若存在某个 $\varepsilon_0$ ,使得在$U(a,\varepsilon_0)$ 之外数列 $\{a_n\}$ 有无穷项，则 $\{a_n\}$ 一定不以 $a$ 为极限.
+
+\begin{example}\label{ex:fasan}
+    证明 $\{n^2\},\{(-1)^n\}$ 都是发散数列.
+\end{example}
+
+\begin{proof}
+    对任何 $a$,取 $\varepsilon_0=1$,则 $U(a,\varepsilon_0)=U(a,1)$ 之外有 $\{n^2\}$ 的无穷多项 $\{n^2 \mid n>a+1\}$. 故任何 $a$ 都不是 $\{n^2\}$ 的极限，$\{n^2\}$ 发散.
+
+    若 $a=1$,取 $\varepsilon_0=1$,则$U(a,\varepsilon_0)=U(1,1)$ 之外有 $\{(-1)^n\}$ 的无穷多个奇数项 -1.若 $a\ne 1$,取 $\varepsilon_0=\frac{a-1}{2}$,则$U(a,\varepsilon_0)=U(a,\frac{a-1}{2})$ 之外有 $\{(-1)^n\}$ 的无穷多个偶数项 1.故任何 $a$ 都不是 $\{(-1)^n\}$ 的极限，$\{(-1)^n\}$ 发散.
+\end{proof}
+
+\begin{example}\label{ex:jiouzilie}
+    设 $\lim_{n\to\infty} a_n=a,\lim_{n\to\infty} b_n=b$. 作数列 $\{z_n\}$ 为 $x_1,y_1,x_2,y_2,\cdots,x_n,y_n,\cdots$. 求证: 数列 $\{z_n\}$ 收敛的充分必要条件是 $a=b$.
+\end{example}
+
+\begin{proof}
+    \chongfen 若 $a=b$,则数列 $\{a_n\},\{b_n\}$  落在 $U(a,\varepsilon)$ 之外的项是有限个的，自然而然数列 $\{z_n\}$  落在 $U(a,\varepsilon)$ 之外的项是有限个的. 从而$\{z_n\}$ 收敛于 $a$.
+    
+    \biyao 设 $\lim_{n\to\infty} z_n=a$,则 $\{z_n\}$  落在 $U(a,\varepsilon)$ 之外的项是有限个的，自然而然数列 $\{x_n\},\{y_n\}$  落在 $U(a,\varepsilon)$ 之外的项也是有限个的.从而$\{x_n\},\{y_n\}$ 均收敛于 $a$.
+\end{proof}
+
+\begin{example}
+    设 $\{a_n\}$ 为给定的数列, $\{b_n\}$ 为对 $\{a_n\}$ 增加、减少或改变有限项之后得到的数列.证明:数列 $\{b_n\}$ 与 $\{a_n\}$ 同时收敛或发散，且在收敛时两者的极限相等.
+\end{example}
+
+\begin{proof}
+    设 $\{a_n\}$ 为收敛数列,且 $\lim_{n\to \infty} a_n=a$.任意的 $\varepsilon>0$,在 $U(a,\varepsilon)$ 之外都只有 $\{a_n\}$ 的有限项.$\{b_n\}$ 为对 $\{a_n\}$ 增加、减少或改变有限项之后得到的数列,则从某一个下标开始,$\{b_n\}$的项都是$\{a_n\}$ 中的一项.则$U(a,\varepsilon)$ 之外只有 $\{b_n\}$ 的有限项(这个下标之前的有限项与之后$\{a_n\}$ 中的有限项之并).则 $\{b_n\}$ 为收敛数列,且$\lim_{n\to\infty} b_n=a$.
+
+    若 $\{a_n\}$ 发散,假设 $\{b_n\}$ 收敛,又 $\{a_n\}$ 也可以看作 $\{b_n\}$ 增加、减少或改变有限项之后得到的数列,则由已证可知 $\{a_n\}$收敛,这产生矛盾.所以 $\{a_n\}$ 发散时 $\{b_n\}$ 也发散.
+\end{proof}
+
+在所有的收敛数列中,有一类重要的数列,称为无穷小数列.其定义如下.
+
+\begin{definition}[无穷小数列]
+    若 $\lim_{n\to\infty} a_n=0$,则称 $\{a_n\}$ 为无穷小数列. 
+\end{definition}
+
+由无穷小数列的定义，读者不难证明如下定理:
+
+\begin{theorem}\label{thm:small}
+    数列 $\{a_n\}$ 收敛于 $a$ 的充要条件是 $\{a_n-a\}$ 为无穷小数列.
+\end{theorem}
+
+最后我们介绍一下无穷大数列的概念.
+
+\begin{definition}[无穷大数列]
+    若数列 $\{a_n\}$ 满足:对任意正数 $M>0$,总存在正整数 $N$,使得当 $n>N$ 时,有 $\abs{a_n}>M$,则称数列 $\{a_n\}$ 发散于无穷大,并记作 $\lim_{n\to\infty}a_n=\infty$ 或 $a_n\to \infty$.
+\end{definition}
+
+\begin{annotation}
+    若 $\lim_{n\to\infty}a_n=\infty$,则称 $\{a_n\}$ 是一个无穷大数列或无穷大量.
+\end{annotation}
+
+\begin{definition}
+    若数列 $\{a_n\}$ 满足:对任意正数 $M>0$,总存在正整数 $N$,使得当 $n>N$ 时,有 $a_n>M$($a_n<-M$),则称数列 $\{a_n\}$ 发散于正无穷大(负无穷大),并记作 $\lim_{n\to\infty}a_n=+\infty$ 或 $a_n\to +\infty$ ($\lim_{n\to\infty}a_n=-\infty$ 或 $a_n\to -\infty$).
+\end{definition}
+
+例如数列 $\{n\}$,$\{(-1)^n\frac{n^2+1}{n}\}$ 均是无穷大量;而数列 $\{[1+(-1)^n]n\}$ 虽然是无界数列,但却并不是无穷大量.
+
+\homework
+
+\begin{practice}
+    设 $a_n=\frac{1+(-1)^n}{n},n=1,2,\cdots$. $a=0$.
+
+    (1) 对下列 $\varepsilon$ 分别求出极限定义中相应的 $N$: $\varepsilon_1=0.1,\varepsilon_2=0.01,\varepsilon_3=0.001$.
+
+    (2) 对 $\varepsilon_1,\varepsilon_2,\varepsilon_3$ 可找到对应的 $N$,这是否证明了 $a_n$ 趋于0? 应该怎样做才对.
+
+    (3) 对给定的 $\varepsilon$ 是否只能找到一个 $N$?
+\end{practice}
+
+\begin{solve}
+    (1) 偶数项全为0,奇数项为 $\frac{1}{n}$.对应的 $N$ 可以取为 $N_1=11,N_2=101,N_3=1001$.
+
+    (2) 对 $\varepsilon_1,\varepsilon_2,\varepsilon_3$ 可找到对应的 $N$,并不能证明 $a_n$ 趋于0.要对任意的 $\varepsilon>0$ 找到对应的 $N(\varepsilon)$ 
+
+    (3) 不是只能找到一个 $N$.假设找到 $N_0$,那么任何大于 $N_0$ 的数都可以满足条件.
+\end{solve}
+
+\begin{practice}
+    按 $\varepsilon-N$ 定义证明:
+
+    (1) $\lim_{n\to\infty} \frac{n}{n+1}=1$ \quad (2) $\lim_{n\to\infty} \frac{3n^2+n}{2n^2-1}=\frac{3}{2}$ \quad (3) $\lim_{n\to\infty} \frac{n!}{n^n}=0$
+
+    (4) $\lim_{n\to\infty} \sin \frac{\pi}{n}=0$ \quad (5)$\lim_{n\to\infty} \frac{n}{a^n}=0(a>1)$
+\end{practice}
+
+\begin{proof}
+    (1) $\abs{\frac{n}{n+1}-1}=\frac{1}{n+1}<\frac{1}{n}<\varepsilon \implies n>\frac{1}{\varepsilon}$
+
+    (2) $\abs{\frac{3n^2+n}{2n^2-1}-\frac{3}{2}}=\abs{\frac{2n+3}{2(2n^2-1)}}<\frac{2n+3n}{4n^2-2n}=\frac{5}{4n-2}<\varepsilon \implies n>\frac{5}{4\varepsilon}+\frac{1}{2}$
+
+    (3) $\abs{\frac{n!}{n^n}-0}=\frac{n!}{n^n}=\frac{1\cdot 2\cdot \cdots (n-1)
+    \cdot n }{n\cdot n\cdot \cdots n
+    \cdot n}<\frac{n}{n^2}=\frac{1}{n}<\varepsilon \implies n>\frac{1}{\varepsilon}$
+
+    (4) $\abs{\sin \frac{\pi}{n}-0}=\abs{\sin \frac{\pi}{n}}<\frac{\pi}{n}<\varepsilon \implies n>\frac{\pi}{\varepsilon} \quad n>1$
+
+    (5) $\abs{\frac{n}{a^n}-0}=\abs{\frac{n}{a^n}}=\frac{n}{(a-1+1)^n}=\frac{n}{1+n(a-1)+\frac{n(n-1)}{2}(a-1)^2+\cdots}<\frac{n}{\frac{n(n-1)}{2}(a-1)^2}
+    $
+    
+    $=\frac{2}{(a-1)^2(n-1)}<\varepsilon \implies n>\frac{2}{(a-1)^2\varepsilon}+1$
+\end{proof}
+
+\begin{practice}
+    根据\exref{ex:na},\exref{ex:qn},\exref{ex:an}的结果求以下极限,并指出哪些是无穷小数列.
+
+    (1) $\lim_{n\to\infty} \frac{1}{\sqrt{n}}$ \quad (2) $\lim_{n\to\infty} \sqrt[n]{3}$ \quad (3) $\lim_{n\to\infty} \frac{1}{n^3}$ \quad (4) $\lim_{n\to\infty} \frac{1}{3^n}$ 
+
+    (5) $\lim_{n\to\infty} \frac{1}{\sqrt{2^n}}$ \quad (6) $\lim_{n\to\infty} \sqrt[n]{10} \quad (7) \lim_{n\to\infty}\frac{1}{\sqrt[n]{2}}$
+\end{practice}
+
+\begin{solve}
+    (1) $\lim_{n\to\infty} \frac{1}{\sqrt{n}}=\lim_{n\to\infty} \frac{1}{n^{\frac{1}{2}}}=0$ \quad (2)$\lim_{n\to\infty} \sqrt[n]{3}=1$ \quad (3) $\lim_{n\to\infty} \frac{1}{n^3}=0$
+
+    (4) $\lim_{n\to\infty} \frac{1}{3^n}=\lim_{n\to\infty}(\frac{1}{3})^n=0$ \quad (5)  $\lim_{n\to\infty} \frac{1}{\sqrt{2^n}}=\lim_{n\to\infty} (\frac{1}{\sqrt{2}})^n=0$
+
+    (6)$\lim_{n\to\infty} \sqrt[n]{10}=1$\quad (7) $\lim_{n\to\infty}\frac{1}{\sqrt[n]{2}}=\lim_{n\to\infty} \sqrt[n]{\frac{1}{2}}=1$
+
+    其中,$\{\frac{1}{\sqrt{n}}\},\{\frac{1}{n^3}\},\{\frac{1}{3^n}\},\{\frac{1}{\sqrt{2^n}}\}$ 是无穷小数列.
+\end{solve}
+
+\begin{practice}
+    若 $\lim_{n\to\infty} a_n=a$,则对任一正整数 $k$, 有 $\lim_{n\to\infty} a_{n+k}=a$.
+\end{practice}
+
+\begin{proof}
+    若 $\lim_{n\to\infty} a_n=a$,则 $\forall \varepsilon>0,\exists N>0$,使得 $n>N$ 时,有 $\abs{a_n-a}<\varepsilon$. 
+    
+    又 $n+k>N$,则 $\abs{a_{n+k}-a}<\varepsilon$.故 $\lim_{n\to\infty} a_{n+k}=a$.
+\end{proof}
+
+\begin{practice}
+    试用\defref{def:ujixian} 证明:
+
+    (1) 数列 $\{\frac{1}{n}\}$ 不以 1 为极限
+
+    (2) 数列 $\{n^{(-1)^n}\}$ 发散
+\end{practice}
+
+\begin{proof}
+    (1) 取 $\varepsilon_0=\frac{1}{2}$,则 $U(1,\varepsilon_0)=(\frac{1}{2},\frac{3}{2})$ 之外有 $\{\frac{1}{n}\}$ 的无限个项 $\{\frac{1}{n}\mid n>2\}$.
+
+    (2) 对于任意的 $a$, 取 $\varepsilon_0=1$,则 $U(a,\varepsilon_0)=(a-1,a+1)$ 之外有 $\{n^{(-1)^n}\}$ 的无限个项 $\{n\mid n\text{为偶数且}n>a+1\}$
+\end{proof}
+
+\begin{practice}
+     试证明\thmref{thm:small},并应用它证明数列 $\{1+\frac{(-1)^n}{n}\}$ 的极限是1.
+\end{practice}
+
+\begin{proof}
+    \thmref{thm:small}:数列 $\{a_n\}$ 收敛于 $a$ 的充要条件是 $\{a_n-a\}$ 为无穷小数列.
+
+    \chongfen 若$\{a_n-a\}$ 为无穷小数列,则 $\lim_{n\to\infty} (a_n-a)=0$. $\forall \varepsilon>0,\exists N>0$,使得 $n>N$ 时,有 $\abs{a_n-a-0}=\abs{a_n-a}<\varepsilon$.故 $\lim_{n\to\infty} a_n=a$.
+
+    \biyao 若数列 $\{a_n\}$ 收敛于 $a$,则 $\forall \varepsilon>0,\exists N>0$,使得 $n>N$ 时,有 $\abs{a_n-a}=\abs{a_n-a-0}<\varepsilon$.故 $\lim_{n\to\infty}(a_n-a)=0$.
+
+    $(1+\frac{(-1)^n}{n})-1=\frac{(-1)^n}{n}\to 0$. $\abs{\frac{(-1)^n}{n}-0}=\frac{1}{n}<\varepsilon \implies n>\frac{1}{\varepsilon}$.
+\end{proof}
+
+\begin{practice}
+    在下列数列中哪些数列是有界数列、无界数列以及无穷大数列:
+
+    (1) $\{[1+(-1)^n]\sqrt{n}\}$ \quad (2) $\{\sin n\}$ \quad (3) $\{\frac{n^2}{n-\sqrt{5}}\}$ \quad (4) $\{2^{(-1)^nn}\}$
+\end{practice}
+
+\begin{proof}
+    (1) 任意 $M>0$,存在数 $n>M^2$ 且 $n$ 为偶数使得 $a_n=2M>M$.故 $\{a_n\}$ 无界.任意 $N$,都存在$n>N$ 且 $n$ 为偶数,使得 $a_n=0<M$.故 $a_n$ 不是无穷大数列.
+
+    (2) 存在 $M=1$,使得任意$n$,都有 $\sin n\le M$.故 $\{\sin n\}$ 有界.存在 $M_0=2$,使得对于任意 $N$,都存在$n>N$,使得 $\sin n\le 1<M_0$.故 $\{\sin n\}$ 不是无穷大数列.
+
+    (3) $\{\frac{n^2}{n-\sqrt{5}}\}=\infty$.故 $\{\frac{n^2}{n-\sqrt{5}}\}$ 无界且为无穷大数列.
+
+    (4) $a_{2n}=2^{2n}\to \infty,a_{2n+1}=(\frac{1}{2})^{2n+1}\to 0$. 故 $\{2^{(-1)^nn}\}$ 无界但不是无穷大数列.
+\end{proof}
+\begin{practice}
+    证明:若 $\lim_{n\to\infty} a_n=a$,则 $\lim_{n\to\infty} \abs{a_n}=\abs{a}$. 当且仅当 $a$ 为何值时反之也成立? 
+\end{practice}
+
+\begin{proof}
+    若 $\lim_{n\to\infty} a_n=a$,则 $\forall \varepsilon>0,\exists N>0,$ 使得 $n>N$ 时,有 $\abs{a_n-a}<\varepsilon$.
+    
+    则 $\abs{\abs{a_n}-\abs{a}}\le \abs{a_n-a}<\varepsilon$. 故 $\lim_{n\to\infty} \abs{a_n}=\abs{a}$.
+
+    若要反之也成立,则需 $\abs{a_n-a}\le \abs{\abs{a_n}-\abs{a}}$.这只有 $a=0$ 时才一定成立.
+\end{proof}
+
+\begin{practice}
+    按照 $\varepsilon-N$ 定义证明:
+
+    (1) $\lim_{n\to\infty} (\sqrt{n+1}-\sqrt{n})=0$ \quad (2) $\lim_{n\to\infty} \frac{1+2+3+\cdots+n}{n^3}=0$
+
+    (3) $\lim_{n\to\infty} a_n=1$,其中 $a_n=\begin{cases}
+        \frac{n-1}{n} & n \text{为偶数} \\
+        \\
+        \frac{\sqrt{n^2+n}}{n} & n \text{为奇数}
+    \end{cases}$ 
+\end{practice}
+
+\begin{proof}
+    (1) $\abs{\sqrt{n+1}-\sqrt{n}-0}=\sqrt{n+1}-\sqrt{n}=\frac{1}{\sqrt{n+1}+\sqrt{n}}<\frac{1}{2\sqrt{n}}<\varepsilon \implies n>\frac{1}{4\varepsilon^2}$.
+
+    (2) $\abs{\frac{1+2+3+\cdots+n}{n^3}-0}=\frac{1+2+3+\cdots+n}{n^3}=\frac{n(n+1)}{2n^3}=\frac{n+1}{2n^2}\le \frac{n+n}{2n^2}=\frac{1}{n}<\varepsilon \implies n>\frac{1}{\varepsilon}$
+
+    (3) $\abs{a_n-1}=\begin{cases}
+        1-\frac{n-1}{n}=\frac{1}{n} & n \text{为偶数} \\
+        \\
+        \frac{\sqrt{n^2+n}}{n}-1=\frac{\sqrt{n^2+n}-n}{n}=\frac{1}{\sqrt{n^2+n}+n}<\frac{1}{n} & n \text{为奇数}
+    \end{cases}$
+
+    $\frac{1}{n}<\varepsilon \implies n>\frac{1}{\varepsilon}$.
+\end{proof}
+
+\begin{practice}
+    设 $a_n\ne 0$. 证明 $\lim_{n\to\infty} a_n=0$ 的充分必要条件是 $\lim_{n\to\infty}\frac{1}{a_n}=\infty$.
+\end{practice}
+
+\begin{proof}
+    $\lim_{n\to\infty} a_n=0\iff$ $\forall \epsilon>0,\exists N>0$, 使得 $n>N$ 时,有 $\abs{a_n}<\varepsilon$.$\iff $ $\forall M=\frac{1}{\varepsilon}>0,\exists N>0$, 使得 $n>N$ 时,有 $\abs{\frac{1}{a_n}}>\frac{1}{\varepsilon}=M\iff \lim_{n\to\infty}\frac{1}{a_n}=\infty$.
+\end{proof}
+

@@ -1,0 +1,355 @@
+\section{收敛数列的性质}
+
+收敛数列有如下一些重要性质.
+
+\begin{theorem}[极限的唯一性]
+    若数列 $\{a_n\}$ 收敛,则它只有一个极限.
+\end{theorem}
+
+\begin{proof}
+    设 $a$ 是 $\{a_n\}$ 的一个极限.下面证明:任何数 $b\ne a$ 都不是 $\{a_n\}$ 的极限.由\defref{def:ujixian}得,取 $\varepsilon_0=\frac{1}{2}\abs{b-a}$, $U(a,\varepsilon_0)$ 外只存在 $\{a_n\}$ 的有限项.而 $U(b,\varepsilon_0)$ 在$U(a,\varepsilon_0)$ 外,因此  $U(b,\varepsilon_0)$ 中只有 $\{a_n\}$ 中的有限项. 从而$b$ 不是 $\{a_n\}$ 的极限.
+\end{proof}
+
+一个收敛数列一般含有无穷多个数,而它的极限只是一个数.我们单凭这一个数就能精确地估计出几乎全体项的大小.以下收敛数列的一些性质,大都基于这一事实.
+
+\begin{theorem}[收敛数列的有界性]
+    若数列 $\{a_n\}$ 收敛,则 $\{a_n\}$ 为有界数列,即存在正数 $M$,使得对于一切正整数 $n$,都有 $\abs{a_n}\le M$.
+\end{theorem}
+
+\begin{proof}
+    设 $\lim_{n\to\infty} a_n = a$,则 $\forall \varepsilon>0,\exists N>0 $,使得 $ n>N$ 时,有 $\abs{a_n-a}<\varepsilon\iff a-\varepsilon < a_n <a+\varepsilon$. 取 $M=\max \{a_1,a_2,\cdots,a_N,\abs{a-\varepsilon},\abs{a+\varepsilon}\}$,对于一切正整数 $n$,都有 $\abs{a_n}\le M$.
+\end{proof}
+
+\begin{annotation}
+    数列收敛能推出数列有界,但反过来不一定成立.例如,数列$\{(-1)^n\}$ 有界,但它并不收敛(\exref{ex:fasan}).
+\end{annotation}
+
+\begin{theorem}[极限的保序性1]\label{thm:xu1}
+    若 $\lim_{n\to\infty} a_n=a<b(\text{或}>b)$,则存在正数 $N$,使得 $n>N$ 时,有 $a_n<b$ (或 $a_n>b$).
+\end{theorem}
+
+\begin{proof}
+    设 $a<b$. 则取$ \varepsilon_0=b-a>0,\exists N>0$,使得 $ n>N$ 时,有 $\abs{a_n-a}<\varepsilon_0=b-a$. 即 $b-2a<a_n<b$ .由此得 $a_n<b$.对于 $a>b$ 的情形也可以类似得证.
+\end{proof}
+
+\begin{annotation}
+    在应用极限的保序性时,通常取 $b=\frac{a}{2}$.
+\end{annotation}
+
+\begin{conclusion}
+    设 $\lim_{n\to\infty} a_n=a,\lim_{n\to\infty} b_n=b,a<b$,则存在 $N>0$,使得 $n>N$ 时, 有 $a_n<b_n$.
+\end{conclusion}
+
+\begin{proof}
+    $a<\frac{a+b}{2}<b\implies $ 存在 $N_1>0$,$n>N_1$ 时 $a_n<\frac{a+b}{2}$,存在 $N_0,n>N_2$ 时 $\frac{a+b}{2}<b_n$.
+
+    $\implies$ 取 $N=\max \{N_1,N_2\}$, $n>N$ 时有 $a_n<\frac{a+b}{2}<b_n$.
+\end{proof}
+ 
+\begin{theorem}[极限的保序性2]\label{thm:xu2}
+    设 $\{a_n\}$ 与 $\{b_n\}$ 均为收敛数列.若存在正数 $N_0$,使得 $n>N_0$ 时,有 $a_n\le b_n$,则 $\lim_{n\to\infty} a_n\le \lim_{n\to\infty} b_n$.
+\end{theorem}
+
+\begin{proof}
+    设 $\lim_{n\to\infty} a_n=a,\lim_{n\to\infty} b_n=b$. $\forall \varepsilon>0,\exists N_1,N_2>0$,使得 $ n>N_1$ 时,有 $a-\varepsilon<a_n<a+\varepsilon$,$ n>N_2$ 时,有 $b-\varepsilon<b_n<b+\varepsilon$. 取 $N=\max\{N_0,N_1,N_2\}$,则 $n>N$ 时,有 $a-\varepsilon<a_n\le b_n<b+\varepsilon$.由此得 $a<b+2\varepsilon$. 由 $\varepsilon$ 的任意性得,$a\le b$. 
+\end{proof}
+
+\begin{annotation}
+    \thmref{thm:xu2}中,即使条件改为 $a_n<b_n$, 结论也不能改为 $\lim_{n\to\infty} a_n< \lim_{n\to\infty} b_n$.例如,$a_n=\frac{1}{n},b_n=\frac{2}{n},a_n< b_n$但 $\lim_{n\to\infty} a_n= \lim_{n\to\infty} b_n=0$.
+\end{annotation}
+
+\begin{example}
+    设 $a_n\ge 0(n=1,2,\cdots)$.证明:若 $\lim_{n\to\infty} a_n=a$,则 $\lim_{n\to\infty} \sqrt{a_n}=\sqrt{a}$.
+\end{example}
+
+\begin{proof}
+    由\thmref{thm:xu2}得, $a\ge 0$.
+
+    若 $a=0$,则对于 $\varepsilon^2>0,\exists N>0$,使得 $ n>N$ 时,有 $\abs{a_n-0}=a_n<\varepsilon^2$.则 $\abs{\sqrt{a_n}-0}=\sqrt{a_n}<\varepsilon$ .即 $\lim_{n\to\infty} \sqrt{a_n}=\sqrt{a}=0$.
+
+    若 $a>0$,则对于 $
+    \sqrt{a}\varepsilon>0,\exists N>0$,使得 $ n>N$ 时,有 $\abs{a_n-a}<\sqrt{a}\varepsilon$.则 $\abs{\sqrt{a_n}-\sqrt{a}}=\frac{\abs{a_n-a}}{\sqrt{a_n}+\sqrt{a}}<\frac{\abs{a_n-a}}{\sqrt{a}}<\varepsilon$ .即 $\lim_{n\to\infty} \sqrt{a_n}=\sqrt{a}$.
+\end{proof}
+
+\begin{theorem}[数列的迫敛性]\label{thm:polian}
+    设收敛数列 $\{a_n\},\{b_n\}$ 都以 $a$ 为极限,数列 $\{c_n\}$ 满足:存在正数 $N_0$,当$n>N_0$ 时,有 $a_n\le c_n \le b_n$,则数列 $\{c_n\}$ 收敛,且 $\lim_{n\to\infty} c_n=a$.
+\end{theorem}
+
+\begin{proof}
+    $\forall \varepsilon>0,\exists N_1,N_2 $,使得 $ n>N_1$ 时,有 $a-\varepsilon<a_n<a+\varepsilon$,$ n>N_2$ 时,有 $a-\varepsilon<b_n<a+\varepsilon$.
+    取 $N=\max\{N_0,N_1,N_2\}$,则 $n>N$ 时,有 $a-\varepsilon<a_n\le c_n\le b_n<a+\varepsilon$,即 $\abs{c_n-a}<\varepsilon$. 故 $\lim_{n\to\infty} c_n=a$.
+\end{proof}
+
+\thmref{thm:polian}不仅给出了判定数列收敛的一种方法,而且提供了一个求极限的工具.
+
+\begin{example}
+    求数列 $\{\sqrt[n]{n}\}$ 的极限.
+\end{example}
+
+\begin{solve}
+    记 $a_n=\sqrt[n]{n}=1+h_n$,这里 $h_n>0(n>1)$,则有 
+    
+    $n=(1+h_n)^n=1+nh_n+\frac{n(n-1)}{2}h_n^2>\frac{n(n-1)}{2}h_n^2\implies h_n<\sqrt{\frac{2}{n-1}}$.
+
+    于是 $1\le a_n<1+\sqrt{\frac{2}{n-1}}\to 1$. 故 $\lim_{n\to\infty} \sqrt[n]{n}=1$.
+\end{solve}
+
+\begin{example}
+    求证:$\lim_{n\to\infty} \frac{1}{\sqrt[n]{n!}}=0$.
+\end{example}
+
+\begin{proof}
+    对于任给的正数列 $\{\varepsilon_n\}$,因为 $\lim_{n\to\infty} \frac{(\frac{1}{\varepsilon})^n}{n!}=0$(由\exref{ex:ann}得).从而由极限的保序性得,存在 $N>0$,使得 $n>N$ 时,$\frac{(\frac{1}{\varepsilon_n})^n}{n!}<1\implies \frac{1}{\sqrt[n]{n!}}<\varepsilon_n$. 从而 $0\le \frac{1}{\sqrt[n]{n!}}<\varepsilon_n\to 0$. 从而 $\lim_{n\to\infty} \frac{1}{\sqrt[n]{n!}}=0$.
+\end{proof}
+
+在求数列极限时,常需要使用极限的四则运算法则.
+
+\begin{theorem}[极限的四则运算法则]
+    若 $\{a_n\}$ 与 $\{b_n\}$ 为收敛数列,则$\{a_n+b_n\}$,$\{a_n\cdot b_n\}$ 也都是收敛数列,且有 $\lim_{n\to\infty} a_n\pm b_n=\lim_{n\to\infty} a_n\pm \lim_{n\to\infty} b_n$,$\lim_{n\to\infty} a_n\cdot b_n=\lim_{n\to\infty} a_n\cdot\lim_{n\to\infty} b_n$.
+
+    若再假设 $b_n\ne 0$及 $\lim_{n\to\infty} b_n\ne 0$,则 $\{\frac{a_n}{b_n}\}$ 也是收敛数列,且有 $\lim_{n\to\infty} \frac{a_n}{b_n}=\frac{\lim\limits_{n\to\infty} a_n}{\lim\limits_{n\to\infty} b_n}$
+\end{theorem}
+
+\begin{proof}
+    由于 $a_n-b_n=a+(-1)b_n$ 及 $\frac{a_n}{b_n}=a_n\cdot \frac{1}{b_n}$,因此我们只需证明关于和、积与倒数运算即可.
+
+    设$\lim_{n\to\infty} a_n=a,\lim_{n\to\infty} b_n=b$,则对任给的$\varepsilon>0$,分别存在正数 $N_1$ 与 $N_2$,使得$n>N_1$ 时, $\abs{a_n-a}<\varepsilon$,$n>N_2$ 时, $\abs{b_n-b}<\varepsilon$.取 $N=\max\{N_1,N_2\}$,则当 $n>N$ 时,上述两个不等式同时成立,从而有
+
+    1.$\abs{(a_n+b_n)-(a+b)}\le \abs{a_n-a}+\abs{b_n-b}<2\varepsilon\implies \lim_{n\to\infty} (a_n+b_n)=a+b
+    $
+
+    2.$\abs{a_nb_n-ab}=\abs{(a_n-a)b_n+a(b_n-b)}\le \abs{a_n-a}\abs{b_n}+\abs{a}\abs{b_n-b}$
+
+    由收敛数列的有界性得,存在 $M>0$,使得对一切的 $n$ 都有 $\abs{b_n}<M$. 于是,当 $n>N$ 时, $\abs{a_nb_n-ab}<(M+\abs{a})\varepsilon$.这就证明 $\lim_{n\to\infty} a_n\cdot b_n=\lim_{n\to\infty} a_n\cdot\lim_{n\to\infty} b_n$.
+
+    3. 由于 $\lim_{n\to\infty} b_n=b\ne 0$,根据收敛数列的保序性,存在正数 $N_3$, 使得 $n>N_3$ 时,有$\abs{b_n}>\frac{1}{2}\abs{b}$. 取 $N'=\max \{N_2,N_3\}$, 则当 $n>N'$ 时,有 $\abs{\frac{1}{b_n}-\frac{1}{b}}=\frac{\abs{b_n-b}}{\abs{b_nb}}<\frac{2\abs{b_n-b}}{b^2}<\frac{2\varepsilon}{b^2}$.这就证明 $\lim_{n\to\infty} \frac{1}{b_n}=\frac{1}{b}.$
+\end{proof}
+
+\begin{example}[抓大头]
+    求 $\lim_{n\to\infty} \frac{a_mn^{m}+a_{m-1}n^{m-1}+\cdots +a_1n+a_0}{b_kn^{k}+b_{k-1}n^{k-1}+\cdots +b_1n+b_0}$. 其中 $m\le k,a_n\ne 0,b_k\ne 0$.
+\end{example}
+
+\begin{solve}
+    上下同乘 $n^{-k}$,所求极限化为 $\lim_{n\to\infty} \frac{a_mn^{m-k}+a_{m-1}n^{m-1-k}+\cdots +a_1n^{1-k}+a_0n^{-k}}{b_k+b_{k-1}n^{-1}+\cdots +b_1n^{1-k}+b_0n^{-k}}$.由\exref{ex:na}得 $\alpha>0$ 时 $\lim_{n\to\infty} n^{-\alpha}=0$.于是,$m=k$时,上式除了 $\lim_{n\to\infty} a_mn^{m-k}=a_m$ 和 $\lim_{n\to\infty} b_k=b_k$ 外,其余项极限均为0;当 $m<k$ 时,分子极限均为0,分母极限仍为 $b_k$.
+
+    综上所述,$\lim_{n\to\infty} \frac{a_mn^{m}+a_{m-1}n^{m-1}+\cdots +a_1n+a_0}{b_kn^{k}+b_{k-1}n^{k-1}+\cdots +b_1n+b_0}=\begin{cases}
+        \frac{a_m}{b_k} & k=m \\
+        0 & k>m
+    \end{cases}$
+\end{solve}
+
+\begin{example}
+    求 $\lim_{n\to\infty} \frac{a^n}{a^n+1}$,其中 $a\ne -1$.
+\end{example}
+
+\begin{solve}
+    若 $a=1$,则显然有 $\lim_{n\to\infty} \frac{a^n}{a^n+1}=\frac{1}{2}$.
+
+    若$\abs{a}<1$,则由 $\lim a^n=0$ 得 $\lim_{n\to\infty} \frac{a^n}{a^n+1}=\frac{\lim\limits_{n\to\infty} a^n}{1+\lim\limits_{n\to\infty} a_n}=0.$
+
+    若 $\abs{a}>1$,则 $\lim_{n\to\infty} \frac{a^n}{a^n+1}=\lim_{n\to\infty} \frac{1}{1+\frac{1}{a^n}}=\frac{1}{1+0}=1$.
+\end{solve}
+
+\begin{example}
+    求 $\lim_{n\to\infty} \sqrt{n}(\sqrt{n+1}-\sqrt{n})$.
+\end{example}
+
+\begin{solve}
+    $\lim_{n\to\infty} \sqrt{n}(\sqrt{n+1}-\sqrt{n})=\lim_{n\to\infty} \frac{\sqrt{n}}{\sqrt{n+1}+\sqrt{n}}=\lim_{n\to\infty} \frac{1}{\sqrt{1+\frac{1}{n}}+1}=\frac{1}{1+1}=\frac{1}{2}$.
+\end{solve}
+
+最后,我们给出数列的子类概念和关于子列的一个重要定理.
+
+\begin{definition}[子列]
+    设 $\{a_n\}$ 为数列,$\{n_k\}$ 为正整数集 $N_+$ 的无限子集,且 $n_1<n_2<\cdots<n_k<\cdots$,则数列 $a_{n_1},a_{n_2},\cdots,a_{n_k},\cdots$ 称为数列 $\{a_n\}$ 的一个\textbf{子列},记为 $\{a_{n_k}\}$. 
+\end{definition}
+
+\begin{annotation}
+    由定义可见,$\{a_n\}$ 的子列 $\{a_{n_k}\}$ 的各项都取自 $\{a_n\}$,且保持这些项在 $\{a_n\}$ 中的先后次序不变. $\{a_{n_k}\}$ 中的第 $k$ 项是 $\{a_n\}$ 中的第 $n_k$ 项,故总有 $n_k\ge k$.实际上,$\{n_k\}$ 本身也是正整数列 $\{n\}$ 的子列.
+\end{annotation}
+
+例如,子列 $\{a_{2k}\}$ 由数列 $\{a_n\}$ 的所有偶数项所组成,而子列 $\{a_{2k-1}\}$ 则由$\{a_n\}$ 的所有奇数项所组成. $\{a_n\}$ 本身也是自己的一个子列,此时 $n_k=k,k=1,2,\cdots$.
+
+\begin{theorem}\label{thm:zilie}
+    数列 $\{a_n\}$ 收敛于$a$ $\iff$ $\{a_n\}$ 的任何子列都收敛于 $a$.
+\end{theorem}
+
+\begin{proof}
+    \chongfen $\{a_n\}$ 本身也是自己的一个子列,结论显然.
+
+    \biyao 设 $\lim_{n\to\infty} a_n=a,\{a_{n_k}\}$ 是 $\{a_n\}$ 的任一子列.$\forall \varepsilon>0,\exists N>0 $,使得 $ k>N$ 时,有 $\abs{a_k-a}<\varepsilon$.又 $n_k\ge k>N$,则 $\abs{a_{n_k}-a}<\varepsilon$.故 $\{a_{n_k}\}$ 收敛于同一极限 $a$.
+\end{proof}
+
+由上述定理及其证明可知,若数列 $\{a_n\}$ 有一个子列发散,或者两个子列分别收敛于不同的极限,则数列 $\{a_n\}$ 必定发散.例如,数列 $\{(-1)^n\}$ ,其偶数项组成的子列 $\{(-1)^{2k}\}$ 收敛于 1,其奇数项组成的子列 $\{(-1)^{2k-1}\}$ 收敛于 -1,从而 $\{(-1)^n\}$ 发散.再如,数列 $\{\sin \frac{n\pi}{2}\}$ ,它的奇数项组成的子列 $\{\sin \frac{2k-1}{2}\pi\}$ 即为 $\{(-1)^{k-1}\}$ ,由于这个子列发散,故 $\{\sin \frac{n\pi}{2}\}$ 必定发散.由此可见,\thmref{thm:zilie} 是判断数列是否发散的有力工具.
+
+这里应该注意:若数列 $\{a_n\}$ 满足 $\lim_{k\to\infty} a_{2k-1}=\lim_{k\to\infty} a_{2k}=A$,则由\exref{ex:jiouzilie} 得 $\lim_{n\to\infty} a_n=A$.
+
+\homework
+
+\begin{practice}
+    求以下极限:
+
+    (1)$\lim_{n\to\infty} \frac{n^3+3n^2+1}{4n^3+2n+3}$ \qquad (2)$\lim_{n\to\infty} \frac{1+2n}{n^2}$
+
+    (3)$\lim_{n\to\infty} \frac{(-2)^n+3^n}{(-2)^{n+1}+3^{n+1}}$ \qquad (4) $\lim_{n\to\infty} (\sqrt{n^2+n}-n)$
+
+    (5) $\lim_{n\to\infty} (\sqrt[n]{1}+\sqrt[n]{2}+\cdots+\sqrt[n]{10})$
+    \qquad(6) $\lim_{n\to\infty} \frac{\frac{1}{2}+\frac{1}{2^2}+\cdots+\frac{1}{2^n}}{\frac{1}{3}+\frac{1}{3^2}+\cdots+\frac{1}{3^n}}$
+\end{practice}
+
+\begin{solve}
+    (1) $\lim_{n\to\infty} \frac{n^3+3n^2+1}{4n^3+2n+3}=\lim_{n\to\infty} \frac{1+3n^{-1}+n^{-3}}{4+2n^{-2}+3n^{-3}}=\frac{1}{4}$
+
+    (2) $\lim_{n\to\infty} \frac{1+2n}{n^2}=\lim_{n\to\infty}(\frac{1}{n^2}+\frac{2}{n})=0+0=0$
+
+    (3) $\lim_{n\to\infty} \frac{(-2)^n+3^n}{(-2)^{n+1}+3^{n+1}}=\lim_{n\to\infty} \frac{\frac{1}{3}(-\frac{2}{3})^n+\frac{1}{3}}{(-\frac{2}{3})^{n+1}+1}=\frac{\frac{1}{3}}{1}=\frac{1}{3}$
+
+    (4)$\lim_{n\to\infty} (\sqrt{n^2+n}-n)=\lim_{n\to\infty}\frac{n}{\sqrt{n^2+n}+n}=\lim_{n\to\infty}\frac{1}{\sqrt{1+\frac{1}{n}}+1}=\frac{1}{1+1}=\frac{1}{2}$
+
+    (5) $\lim_{n\to\infty} (\sqrt[n]{1}+\sqrt[n]{2}+\cdots+\sqrt[n]{10})=1+1+\cdots+1=10$
+
+    (6) $\lim_{n\to\infty} \frac{\frac{1}{2}+\frac{1}{2^2}+\cdots+\frac{1}{2^n}}{\frac{1}{3}+\frac{1}{3^2}+\cdots+\frac{1}{3^n}}=\lim_{n\to\infty} \frac{\frac{\frac{1}{2}(1-\frac{1}{2^n})}{1-\frac{1}{2}}}{\frac{\frac{1}{3}(1-\frac{1}{3^n})}{1-\frac{1}{3}}}=\lim_{n\to\infty} \frac{2(1-\frac{1}{2^n})}{1-\frac{1}{3^n}}=\frac{2}{1}=2$.
+\end{solve}
+
+\begin{practice}
+    设 $\{a_n\}$ 为无穷小数列,$\{b_n\}$ 为有界数列,证明 $\{a_nb_n\}$ 为无穷小数列.
+\end{practice}
+
+\begin{proof}
+    由于 $\{b_n\}$有界,因此存在$M>0$,对任意的 $n$,$b_n\le M$.$\{a_n\}$ 为无穷小数列,则 $\lim_{n\to\infty} a_n=0$,对于 $\frac{\varepsilon}{M}>0,\exists N>0$,使得 $ n>N$ 时,有 $\abs{a_n}<\frac{\varepsilon}{M}$,则 $\abs{a_nb_n-0}<\abs{b_n}\frac{\varepsilon}{M}\le \varepsilon$. 故 $\lim_{n\to\infty} a_nb_n=0$,即$\{a_nb_n\}$ 为无穷小数列.
+\end{proof}
+
+\begin{practice}
+    求下列极限:
+
+    (1)$\lim_{n\to\infty} (\frac{1}{1\cdot 2}+\frac{1}{2\cdot 3}+\cdots+\frac{1}{n(n+1)})$ \qquad (2) $\lim_{n\to\infty} (\sqrt{2}\sqrt[4]{2}\sqrt[8]{2}\cdots \sqrt[2^n]{2})$
+
+    (3) $\lim_{n\to\infty} (\frac{1}{2}+\frac{3}{2^2}+\cdots+\frac{2n-1}{2^n})$ \qquad (4) $\lim_{n\to\infty} \sqrt[n]{1-\frac{1}{n}}$
+
+    (5) $\lim_{n\to\infty} (\frac{1}{n^2}+\frac{1}{(n+1)^2}+\cdots+\frac{1}{(2n)^2})$ \qquad (6) $\lim_{n\to\infty} (\frac{1}{\sqrt{n^2+1}}+\frac{1}{\sqrt{n^2+2}}+\cdots+\frac{1}{\sqrt{n^2+n}})$ 
+\end{practice}
+
+\begin{solve}
+    (1) $\lim_{n\to\infty} (\frac{1}{1\cdot 2}+\frac{1}{2\cdot 3}+\cdots+\frac{1}{n(n+1)})=\lim_{n\to\infty} (1-\frac{1}{2}+\frac{1}{2}-\frac{1}{3}+\cdots+\frac{1}{n}-\frac{1}{n+1})=\lim_{n\to\infty} (1-\frac{1}{n+1})=0$
+
+    (2) $\lim_{n\to\infty} (\sqrt{2}\sqrt[4]{2}\sqrt[8]{2}\cdots \sqrt[2^n]{2})=\lim_{n\to\infty} 2^{\frac{1}{2}+\frac{1}{2^2}+\cdots+\frac{1}{2^n}}=\lim_{n\to\infty} 2^{\frac{\frac{1}{2}(1-\frac{1}{2^n})}{1-\frac{1}{2}}}=\lim_{n\to\infty} 2^{1-\frac{1}{2^n}}=2$.
+
+    (3) 记 $S_n=\frac{1}{2}+\frac{3}{2^2}+\cdots+\frac{2n-1}{2^n}+0$,则 $\frac{1}{2}S_n=0+\frac{1}{2^2}+\cdots+\frac{2n-3}{2^n}+\frac{2n-1}{2^{n+1}}$. 
+    
+    $S_n=2(S_n-\frac{1}{2}S_n)=2(\frac{1}{2}+\frac{2}{2^2}+\frac{2}{2^3}+\cdots+\frac{2}{2^n}-\frac{2n-1}{2^{n+1}})=2(\frac{1}{2}+\frac{\frac{2}{2^2}(1-\frac{1}{2^{n-1}})}{1-\frac{1}{2}}-\frac{2n-1}{2^{n+1}})=1+2(1-\frac{1}{2^n})-\frac{2n-1}{2^n}$. 故 $\lim_{n\to\infty} S_n=1+2-0=3$.
+
+    (4)$\lim_{n\to\infty} \sqrt[n]{1-\frac{1}{n}}=\lim_{n\to\infty} \frac{\sqrt[n]{n-1}}{\sqrt[n]{n}}=\frac{\lim\limits_{n\to\infty} \sqrt[n]{n-1}}{\lim\limits_{n\to\infty}\sqrt[n]{n}}$. 
+    
+    又 $1\le \sqrt[n]{n-1} < \sqrt[n]{n}\to 1(n>1)$, 则 $\lim\limits_{n\to\infty} \sqrt[n]{n-1}=1$. $\lim_{n\to\infty} \sqrt[n]{1-\frac{1}{n}}=1$
+
+    (5) $\frac{n+1}{4n^2}=\frac{n+1}{(2n)^2}\le \frac{1}{n^2}+\frac{1}{(n+1)^2}+\cdots+\frac{1}{(2n)^2} \le \frac{n+1}{n^2}$. 又 $\lim_{n\to\infty} \frac{n+1}{4n^2}=\lim_{n\to\infty} \frac{n+1}{n^2}=0$.
+    
+    由收敛数列的迫敛性得,$\lim_{n\to\infty} (\frac{1}{n^2}+\frac{1}{(n+1)^2}+\cdots+\frac{1}{(2n)^2})=0$.
+
+    (6)$\frac{n}{\sqrt{n^2+n}}\le \frac{1}{\sqrt{n^2+1}}+\frac{1}{\sqrt{n^2+2}}+\cdots+\frac{1}{\sqrt{n^2+n}}\le \frac{n}{\sqrt{n^2+1}}$. 
+    
+    $\lim_{n\to\infty} \frac{n}{\sqrt{n^2+n}}=\lim_{n\to\infty} \frac{1}{\sqrt{1+\frac{1}{n}}}=1$. $\lim_{n\to\infty} \frac{n}{\sqrt{n^2+1}}=\lim_{n\to\infty} \frac{1}{\sqrt{1+\frac{1}{n^2}}}=1$.
+
+    由收敛数列的迫敛性得,$\lim_{n\to\infty} (\frac{1}{\sqrt{n^2+1}}+\frac{1}{\sqrt{n^2+2}}+\cdots+\frac{1}{\sqrt{n^2+n}})=1$.
+\end{solve}
+
+\begin{practice}
+    设 $\{a_n\}$ 收敛,$\{b_n\}$ 发散. 证明 $\{a_n\pm b_n\}$ 是发散数列.又问 $\{a_nb_n\} $ 和 $\{\frac{a_n}{b_n}\},(b_n\ne 0)$ 是否必为发散数列.
+\end{practice}
+
+\begin{proof}
+    假设 $\{a_n\pm b_n\}$ 是收敛数列,则由收敛数列的四则运算法则得,$\{a_n\pm b_n - a_n\}$ 为收敛数列,即 $\{\pm b_n\}$是收敛数列. 这与 $\{b_n\}$ 是发散数列相矛盾.则$\{a_n\pm b_n\}$ 发散.
+
+    不一定. 如$a_n=\frac{1}{n},b_n=n,$则 $a_nb_n=1$,$\frac{a_n}{b_n}=\frac{1}{n^2}.$ 很明显,$\{a_nb_n\}$ 和 $\{\frac{a_n}{b_n}\}$ 均收敛.
+\end{proof}
+
+\begin{practice}
+    证明以下数列发散:
+
+    (1)$\{(-1)^n\frac{n}{n+1}\}$\quad (2)$\{n^{(-1)^n}\}$ \quad (3)$\{\cos \frac{n\pi}{4}\}$
+\end{practice}
+
+\begin{proof}
+    (1) $a_{2k}=\frac{2k}{2k+1}\to 1$. $a_{2k-1}=-\frac{2k-1}{2k}\to -1$. 两个子列 $\{a_{2k}\}$ 和 $\{a_{2k-1}\}$ 收敛于不同数,故 $\{(-1)^n\frac{n}{n+1}\}$ 发散.
+
+    (2) $a_{2k}=2k\to \infty$. 子列 $\{a_{2k}\}$ 发散,故 $\{n^{(-1)^n}\}$ 发散.
+
+    (3) $a_{1+8k}=\cos (\frac{\pi}{4}+2k\pi)=1$. $a_{3+8k}=\cos (\frac{3\pi}{4}+2k\pi)=-1$.两个子列 $\{a_{1+8k}\}$ 和 $\{a_{3+8k}\}$ 收敛于不同数,故 $\{\cos \frac{n\pi}{4}\}$ 发散.
+\end{proof}
+
+\begin{practice}
+    判断下列结论是否成立:
+
+    (1) 若 $\{a_{2k-1}\}$ 和 $a_{2k}$ 都收敛,则 $\{a_n\}$ 收敛.
+
+    (2) 若 $\{a_{3k-2}\}$,$\{a_{3k-1}\}$ 和 $a_{3k}$ 都收敛于同一个数 $a$,则 $\{a_n\}$ 收敛于 $a$.
+\end{practice}
+
+\begin{solve}
+    (1) 不成立. 如 $\{(-1)^n\}$.
+
+    (2) 成立. $\{a_{3k-2}\}$,$\{a_{3k-1}\}$ 和 $a_{3k}$ 都收敛于同一个数 $a$,则 $\forall \varepsilon>0,\exists K_1,K_2,K_3>0$,使得 $ k>K_1$ 时,有 $\abs{a_{3k-2}-a}<\varepsilon$, $ k>K_2$ 时,有 $\abs{a_{3k-1}-a}<\varepsilon$, $ k>K_3$ 时,有 $\abs{a_{3k}-a}<\varepsilon$. 取 $N=\max\{3K_1-2,3K_2-1,3K_3\}$,则 $n>N$ 时, 若 $n=3k-2$,则 $k>K_1$,$\abs{a_n-a}<\varepsilon$;若 $n=3k-1$,则 $k>K_2$,$\abs{a_n-a}<\varepsilon$;若 $n=3k$,则 $k>K_3,\abs{a_n-a}<\varepsilon$.
+\end{solve}
+
+\begin{practice}
+    求下列极限:
+
+    (1) $\lim_{n\to\infty} \frac{1}{2}\cdot\frac{3}{4}\cdot \cdots \cdot \frac{2n-1}{2n}$ \qquad (2) $\lim_{n\to\infty} \frac{\sum\limits_{p=1}^{n}p!}{n!}$
+
+    (3) $\lim_{n\to\infty} [(n+1)^\alpha-n^\alpha],0<\alpha<1$. \qquad (4) $\lim_{n\to\infty} (1+\alpha)(1+\alpha^2)\cdots(1+\alpha^{2^n}),\abs{\alpha}<1$.
+\end{practice}
+
+\begin{solve}
+    (1) 设 $T=\frac{1}{2}\cdot\frac{3}{4}\cdot \cdots \cdot \frac{2n-1}{2n}$. 
+    
+    则 $0<T^2=\frac{1}{2}\cdot \frac{1}{2}\cdot\frac{3}{4}\cdot \frac{3}{4} \cdots \frac{2n-1}{2n} \cdot \frac{2n-1}{2n}=\frac{1}{2}\cdot \frac{3}{2}\cdot\frac{3}{4}\cdot \frac{5}{4} \cdots \frac{2n-1}{2n} \cdot \frac{2n+1}{2n} \cdot \frac{1}{2n+1}$
+
+    $=(1-\frac{1}{2^2})(1-\frac{1}{4^2})\cdots(1-\frac{1}{(2n)^2})\frac{1}{2n+1}<\frac{1}{2n+1}\implies 0<T<\frac{1}{\sqrt{2n+1}}\to 0$. 
+
+    由收敛数列的迫敛性得,$\lim_{n\to\infty} \frac{1}{2}\cdot\frac{3}{4}\cdot \cdots \cdot \frac{2n-1}{2n}=0$.
+
+    (2) $n!<\sum\limits_{p=1}^{n}p!<(n-2)(n-2)!+(n-1)!+n!<2(n-1)!+n!$,
+    
+    因此 $1<\frac{\sum\limits_{p=1}^{n}p!}{n!}<\frac{2(n-1)!+n!}{n!}=1+\frac{2}{n} \to 1$. 由收敛数列的迫敛性得,$\lim_{n\to\infty} \frac{\sum\limits_{p=1}^{n}p!}{n!}=1$.
+
+    (3) $0<\alpha<1\implies \alpha-1<0 \implies (n+1)^{\alpha-1}<n^{\alpha-1}$
+    
+    $\implies (n+1)^{\alpha}<(n+1)n^{\alpha-1}=n^{\alpha}+n^{\alpha-1}\implies 0<(n+1)^{\alpha}-n^{\alpha}<n^{\alpha-1}\to 0$.
+
+    由收敛数列的迫敛性得,$\lim_{n\to\infty} [(n+1)^\alpha-n^\alpha]=0,0<\alpha<1$.
+
+    (4) 记$P_n=(1+\alpha)(1+\alpha^2)\cdots(1+\alpha^{2^n}),$ 
+    
+    则$(1-\alpha)P_n=(1-\alpha)(1+\alpha)(1+\alpha^2)\cdots(1+\alpha^{2^n})=1-\alpha^{2^{n+1}}\implies P_n=\frac{1-\alpha^{2^{n+1}}}{1-\alpha}\to \frac{1}{1-\alpha}$.
+\end{solve}
+
+\begin{practice}
+    设 $a_1,a_2,\cdots,a_m$ 为 $m$ 个正数,证明:
+    $\lim_{n\to\infty} \sqrt[n]{a_1^n+a_2^n+\cdots+a_m^n}=\max \{a_1,a_2,\cdots,a_m\}$. 
+\end{practice}
+
+\begin{proof}
+    设 $a_{max}=\max \{a_1,a_2,\cdots,a_m\}$,
+    
+    则 $a_{max}=\sqrt[n]{a_{max}^n}<\sqrt[n]{a_1^n+a_2^n+\cdots+a_m^n}<\sqrt[n]{ma_{max}^n}=\sqrt[n]{m}a_{max}\to a_{max}$.
+
+    由收敛数列的迫敛性得,$\lim_{n\to\infty} \sqrt[n]{a_1^n+a_2^n+\cdots+a_m^n}=a_{max}$. 
+\end{proof}
+
+\begin{practice}
+    设 $\lim_{n\to\infty} a_n=a$. 证明:
+
+    (1)$\lim_{n\to\infty} \frac{\lfloor na_n\rfloor}{n}=a$
+
+    (2)若 $a>0,a_n>0$,则 $\lim_{n\to\infty} \sqrt[n]{a_n}=1$
+\end{practice}
+
+\begin{proof}
+    (1) $na_n-1<\lfloor na_n \rfloor \le na_n \implies a_n-\frac{1}{n}<\frac{\lfloor na_n\rfloor}{n}\le a_n$.
+
+    $\lim_{n\to\infty} (a_n-\frac{1}{n}) = \lim_{n\to\infty} a_n =a$. 由极限的迫敛性得,$\lim_{n\to\infty} \frac{\lfloor na_n\rfloor}{n}=a$.
+
+    (2) 对于 $\varepsilon_0=\frac{a}{2}>0$,$\exists N>0$,使得 $n>N$ 时,有 $a-\varepsilon_0<a_n<a+\varepsilon_0$,即 $\frac{a}{2}<a_n<\frac{3a}{2}$. 
+    
+    故 $\sqrt[n]{\frac{a}{2}}<\sqrt[n]{a_n}<\sqrt[n]{\frac{3a}{2}}$. $\lim_{n\to\infty} \sqrt[n]{\frac{a}{2}}=\lim_{n\to\infty} \sqrt[n]{\frac{3a}{2}}=1$, 由收敛数列迫敛性得$\lim_{n\to\infty} \sqrt[n]{a_n}=1$.
+\end{proof}

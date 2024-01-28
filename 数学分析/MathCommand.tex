@@ -19,6 +19,7 @@
 \newtheorem{annotation}{\indent 注}
 \newtheorem{proposition}{\indent 命题}
 \newtheorem{theorem}{\indent 定理}
+\newtheorem{conclusion}{\indent 推论}
 
 {
 \theorembodyfont{\kaishu}
@@ -47,6 +48,7 @@
 \tcolorboxenvironment{definition}{breakable}
 \tcolorboxenvironment{proposition}{breakable,colframe=blue!40!white,colback=blue!10!white}
 \tcolorboxenvironment{theorem}{breakable,colframe=green!60!black,colback=green!5!white}
+\tcolorboxenvironment{conclusion}{breakable,colframe=yellow!60!black,colback=yellow!5!white}
 
 \newcommand{\proref}[1]{命题\ref{#1}}
 \newcommand{\defref}[1]{定义\ref{#1}}
@@ -55,6 +57,7 @@
 \newcommand{\abs}[1]{\mid #1 \mid}
 \newcommand{\eqtref}[1]{式(\ref{#1})}
 \newcommand{\figref}[1]{图\ref{#1}}
+\newcommand{\anref}[1]{注\ref{#1}}
 \newcommand{\homework}{\vspace{0.5cm}\begin{center}
 \textcolor{green!40!black}{\zihao{3} \kaishu 习题\thesection } \\
 \textcolor{green!40!black}{\rule{8cm}{0.01cm}}
