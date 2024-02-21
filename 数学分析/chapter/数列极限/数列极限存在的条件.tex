@@ -1,0 +1,395 @@
+\section{数列极限存在的条件}
+
+在研究比较复杂的数列极限问题时,通常先考察该数列是否有极限(极限的存在性问题);若有极限,再考虑如何计算此极限(极限值的计算问题). 这是极限理论的两个基本问题.在实际应用中,解决了数列 $\{a_n\}$ 极限的存在性问题之后,即使极限值的计算较为困难,但由于当$n$ 充分大时, $a_n$ 能充分接近其极限 $a$,故可用 $a_n$ 作为 $a$ 的近似值. 本节将重点讨论极限的存在性问题.
+
+为了确定某个数列是否存在极限,当然并不可能将每个实数依定义一一验证,根本的方法是直接从数列本身的特征来作出判断.
+
+首先讨论单调数列,其定义与单调函数相仿.
+
+\begin{definition}[单调数列]
+    若数列 $\{a_n\}$ 的各项满足关系式 $a_n\le a_{n+1} (a_n\ge a_{n+1})$,则称 $\{a_n\}$ 为\textbf{递增(递减)数列}.
+\end{definition}
+
+递增数列和递减数列统称为\textbf{单调数列}. 如 $\{\frac{1}{n}\}$ 为递减数列; $\{\frac{n}{1+n}\}$ 与 $\{n^2\}$ 为递增数列;而 $\{\frac{(-1)^n}{n}\}$  则不是单调数列,但 $\{\frac{(-1)^n}{n}\}$ 的奇数项子列与偶数项子列分别是单调的.
+
+\begin{theorem}[单调有界定理]
+    在实数系中,有界的单调数列必定收敛.
+\end{theorem}
+
+\begin{proof}
+    不妨设 $\{a_n\}$ 为有上界的单调递增数列. 由确界原理,数列 $\{a_n\}$ 有上确界,记 $a=\sup {a_n}$. 下证 $a$ 就是 $\{a_n\}$ 的极限.事实上,任给 $\varepsilon>0$,按照上确界的定义,存在数列 $\{a_n\}$ 中的某一项 $a_N$, 使得 $a-\varepsilon<a_N$.又由 $\{a_n\}$ 的递增性,有 $n>N$ 时, $a-\varepsilon<a_N<a_n$. 同时,$a$ 为 $a_n$ 的一个上界,则 $a_n\le a<a+\varepsilon$. 综上所述, $n>N$ 时,$a-\varepsilon<a_n<a+\varepsilon$.即 $\lim_{n\to\infty} a_n=a$.
+    
+    当$\{a_n\}$ 为有下界的单调递减数列时,也可类似证明.
+\end{proof}
+
+\begin{example}
+    设 $a_n=1+\frac{1}{2^\alpha}+\cdots+\frac{1}{n^{\alpha}},\alpha>1$.证明: $\{a_n\}$ 收敛.
+\end{example}
+
+\begin{proof}
+    显然 $\{a_n\}$ 递增.$n\ge 2$时,
+    
+    $a_n<a_{2n}=1+\frac{1}{2^\alpha}+\cdots+\frac{1}{(2n)^{\alpha}}=(1+\frac{1}{3^n}+\cdots+\frac{1}{(2n-1)^{\alpha}})+(\frac{1}{2^\alpha}+\cdots+\frac{1}{(2n)^\alpha})$
+
+    $<1+(\frac{1}{3^\alpha}+\cdots+\frac{1}{(2n-1)^{\alpha}}+\frac{1}{(2n+1)^\alpha})+(\frac{1}{2^\alpha}+\cdots+\frac{1}{(2n)^\alpha})$
+    
+    $<1+2(\frac{1}{2^\alpha}+\cdots+\frac{1}{(2n)^\alpha})=1+2\frac{a_n}{2^\alpha}=1+\frac{a_n}{2^{\alpha-1}}$. 
+
+    故 $(1-\frac{1}{2^{\alpha-1}})<1\implies a_n<\frac{1}{1-\frac{1}{2^{\alpha-1}}}$.
+
+    $\{a_n\}$ 单调增且有上界,由单调有界定理得,$\{a_n\}$ 收敛.
+\end{proof}
+
+\begin{example}
+    证明数列 $\sqrt{2},\sqrt{2+\sqrt{2}},\cdots,\underbrace{\sqrt{2+\sqrt{2+\cdots+\sqrt{2}}}}_{n\text{个根号}},\cdots$ 收敛,并求其极限.
+\end{example}
+
+\begin{proof}
+    $a_1=\sqrt{2}<2$. 假设 $a_n<2$,则$a_{n+1}=\sqrt{2+a_n}<\sqrt{2+2}=2$. 因此 $\{a_n\}$ 有上界 $2$.
+    
+    $a_{n+1}^2-a_n^2=2+a_n-a_n^2>2+2-2^2=0$. 因此 $\{a_n\}$ 单调递增.
+
+    由单调有界定理得, $\{a_n\}$ 收敛. 记 $\lim_{n\to\infty} a_n=a$.
+
+    对$a_{n+1}=\sqrt{2+a_n}<\sqrt{2+2}=2$两边取极限,有等式 $a=\sqrt{2+a}\implies a^2-a-2=0$,解得 $a=-1\text{或}2$. $a_n>0$, 由极限的保序性及唯一性得,只能取 $a=2$.
+\end{proof}
+
+\begin{example}
+    设 $S$ 为有界数集.证明:若 $\sup S=a\notin S$,则存在严格递增数列 $\{x_n\}\subset S$,使得 $\lim_{n\to\infty} x_n=a$. 
+\end{example}
+
+\begin{proof}
+    由于 $a$ 是 $S$ 的上确界,故对任给的 $\varepsilon>0$,存在 $x\in S$,使得 $x>a-\varepsilon$.又 $a\notin S$,故 $x<a$,从而有 $a-\varepsilon<x<a$.
+
+    取 $\varepsilon_1=1$,则存在 $x_1\in S$,使得 $a-\varepsilon_1<x_1<a$. 再取 $\varepsilon_2=\min\{\frac{1}{2},a-x_1\}>0$,则存在 $x_2\in S$,使得 $a-\varepsilon_2<x_2<a$ 且有 $x_2>a-\varepsilon_2\ge a-(a-x_1)=x_1$.
+
+    一般地,按上述步骤得到 $x_{n-1}\in S$ 之后,取 $\varepsilon_n=\min\{\frac{1}{n},a-x_{n-1}\}$, 则存在 $x_n\in S$,使得 $a-\varepsilon_n<x_n<a$,且有 $x_n>a-\varepsilon_n\ge a-(a-x_{n-1})=x_{n-1}$.
+    
+    上述过程无限地进行下去,得到数列 $\{x_n\}\subset S$,它是严格递增数列,且满足 $0< \abs{x_n-a}<\varepsilon_n\le \frac{1}{n} \to 0$. 这就证明了 $\lim_{n\to\infty} x_n=a$.
+\end{proof}
+
+\begin{example}
+    证明极限 $\lim_{n\to\infty} (1+\frac{1}{n})^n$ 存在.
+\end{example}
+
+\begin{proof}
+    记 $a_n=(1+\frac{1}{n})^n,n=1,2,\cdots$. 由二项式定理得,
+    \begin{align*}
+        a_n&=(1+\frac{1}{n})^n=1+C_n^1\frac{1}{n}+\cdots+C_n^k\frac{1}{n^k}+\cdots+C_n^n\frac{1}{n^n} \\
+        & = 2+\frac{n(n-1)}{2!}\frac{1}{n^2}+\cdots+\frac{n(n-1)\cdots[n-(k-1)]}{k!}\frac{1}{n^k}+\cdots +\frac{n(n-1)\cdots [n-(n-1)]}{n!}\frac{1}{n^n} \\
+        & = 2+\frac{1}{2!}(1-\frac{1}{n})+\cdots+\frac{1}{n!}(1-\frac{1}{n})(1-\frac{2}{n})\cdots(1-\frac{k-1}{n})+\cdots+\frac{1}{k!}(1-\frac{1}{n})\cdots(1-\frac{n-1}{n}) \\
+        & < 2+\frac{1}{2!}(1-\frac{1}{n+1})+\cdots+\frac{1}{k!}(1-\frac{1}{n+1})(1-\frac{2}{n+1})\cdots(1-\frac{k-1}{n+1})\\
+        & +\cdots+\frac{1}{n!}(1-\frac{1}{n+1})\cdots(1-\frac{n-1}{n+1})+\frac{1}{(n+1)!}(1-\frac{1}{n+1})\cdots(1-\frac{n}{n+1}) = a_{n+1}
+    \end{align*}
+
+    故 $\{a_n\}$ 是严格递增的.由上式可推得 
+    \begin{align*}
+        a_n&<2+\frac{1}{2!}+\cdots+\frac{1}{k!}+\cdots+\frac{1}{n!}<2+\frac{1}{1\cdot 2}+\cdots+\frac{1}{(k-1)k}+\cdots+\frac{1}{(n-1)n}  \\ 
+        &=2+1-\frac{1}{2}+\frac{1}{2}-\frac{1}{3}+\cdots+\frac{1}{n-1}-\frac{1}{n}=3-\frac{1}{n}<3
+    \end{align*}
+
+    故 $\{a_n\}$ 有上界 3.由单调有界定理推知极限 $\lim_{n\to\infty} (1+\frac{1}{n})^n$ 存在.
+\end{proof}
+
+通常用拉丁字母 $e$ 代表 $\{(1+\frac{1}{n})^n\}$ 的极限,即 $\lim_{n\to\infty} (1+\frac{1}{n})^n=e$, 它是一个无理数(待证),其前十三位数字是 $e\approx 2.718,281,828,459$.以 $e$ 为底的对数称为 \textbf{自然对数},通常记 $\ln x=\log_e x$.
+
+\begin{example}\label{ex:jiediao}
+    任何数列都存在单调子列.
+\end{example}
+
+\begin{proof}
+    设数列为 $\{a_n\}$.下面分两种情形进行讨论:
+
+    1.若对任何正整数 $p$,数列 $\{a_{p+k}\}$ 有最大项. 设 $\{a_{1+k}\}$ 的最大项为 $a_{n_1}$,因 $\{a_{n_1+k}\}$ 也有最大项,设其最大项为 $a_{n_2}$,显然有 $n_2>n_1$,且因 $\{a_{n_1+k}\}$ 是 $\{a_{1+k}\}$ 的一个子列,故 $a_{n_2}\le a_{n_1}$.
+
+    同理存在 $n_3>N_2$,使得 $a_{n_3}\le a_{n_2}$
+
+    继续下去,可得到一个单调递减的子列 $\{a_{n_k}\}$.
+
+    2. 至少存在某个正整数 $p$,使得子列 $\{a_{p+k}\}$ 没有最大项. 先取 $n_1=p+1$,因为 $\{a_{p+k}\}$ 没有最大项,故 $a_{n_1}$ 后面总存在项 $a_{n_2}(n_2>n_1)$, 使得 $a_{n_2}>a_{n_1}$. 同理存在 $a_{n_2}$ 后面的项 $a_{n_3}(n_3>n_2)$,使得 $a_{n_3}>a_{n_2}$.
+    
+    继续下去,可得到一个严格单调递增的子列 $\{a_{n_k}\}$.
+\end{proof}
+
+\begin{theorem}[致密性定理]
+    任何有界数列必定有收敛子列.
+\end{theorem}
+
+\begin{proof}
+    设 $\{a_n\}$ 为有界数列,由\exref{ex:jiediao} 得,$\{a_n\}$存在单调且有界的子列 $\{a_{n_k}\}$. 由单调有界定理得,$\{a_{n_k}\}$ 收敛.
+\end{proof}
+
+\begin{example}
+    设数列 $\{a_n\}$ 无上界,则存在 $\{a_n\}$ 的子列 $\{a_{n_k}\}$ ,有 $\lim_{k\to\infty} a_{n_k}=+\infty$.
+\end{example}
+
+\begin{proof}
+    因为 $\{a_n\}$ 无上界,所以对于任意的正数 $M$,存在 $a_{n_0}$,使得 $a_{n_0}>M$.
+
+    取 $M_1=1$,存在 $a_{n_1}$,使得$a_{n_1}>1$;
+
+    取 $M_2=\max\{2,\abs{a_1},\abs{a_2},\cdots,\abs{a_{n_1}}\},$ 存在 $a_{n_2}(n_2>n_1)$,使得$a_{n_2}>M_2$.
+
+    $\cdots\cdots$
+
+    取 $M_k=\max\{k,\abs{a_1},\abs{a_2},\cdots,\abs{a_{n_{k-1}}}\},$ 存在 $a_{n_k}(a_{n_{k}}>a_{n_{k-1}})$,使得$a_{n_k}>M_k$.
+
+    $\cdots\cdots$
+
+    由此得到 $\{a_n\}$ 的一个子列 $\{a_{n_k}\}$,满足 $a_{n_k}>M_k\ge k$, 推得 $\lim_{k\to\infty} a_{n_k}=+\infty$.
+\end{proof}
+
+单调有界定理只是数列收敛的一个充分条件. 下面给出在实数系中数列收敛的充分必要条件.它从理论上完全解决了数列极限的存在性问题.
+
+\begin{theorem}[柯西收敛准则]
+    数列 $\{a_n\}$ 收敛 $\iff$ 对任给的 $\varepsilon>0$,存在 $N>0$,使得当 $m,n>N$ 时,有 $\abs{a_m-a_n}<\varepsilon$.
+\end{theorem}
+
+\begin{proof}
+    \biyao 若 $\lim_{n\to\infty} a_n=a$,则对任给的 $\varepsilon>0$,存在 $N>0$,使得当 $m,n>N$ 时,有 $\abs{a_m-a}<\frac{\varepsilon}{2}$ 且 $\abs{a_n-a}<\frac{\varepsilon}{2}$,则 $\abs{a_m-a_n}=\abs{(a_m-a)-(a_n-a)}\le \abs{a_m-a}+\abs{a_n-a}<\frac{\varepsilon}{2}+\frac{\varepsilon}{2}=\varepsilon$.
+
+    \chongfen 先证明该数列必定有界. 取 $\varepsilon_0=1$,由于 $\{a_n\}$ 满足柯西条件,所以 $\exists N_0$, $\forall n>N_0$,有 $\abs{a_n-a_{N_0+1}}<1$.令 $M=\max\{\abs{a_1},\abs{a_2},\cdots,\abs{a_{N_0},\abs{a_{N_0+1}}+1}\}$,则对一切的 $n$,成立 $\abs{a_n}\le M$.
+
+    由致密性定理,在 $\{a_n\}$ 中必有收敛子列 $\lim_{n\to\infty} a_{n_k}=\xi $.
+
+    由条件,$\forall \varepsilon>0,\exists N,$ 当 $m,n>N$ 时,有 $\abs{a_m-a_n}<\frac{\varepsilon}{2}$. 在式中取 $a_n=a_{n_k}$,其中 $k$ 充分大,满足 $n_k>N$,并且令 $k\to \infty$,于是得到 $\abs{a_m-\xi}\le \frac{\varepsilon}{2}<\varepsilon$. 即 $\{a_n\}$ 收敛于 $\xi$.
+\end{proof}
+
+柯西收敛准则的条件称为\textbf{柯西条件},它反映这样的事实:收敛数列各项的值越到后面,彼此之间越接近,以至于充分后面的任何两项之差的绝对值可以小于预先给定的任意小正数.或者形象地说,收敛数列的各项越到后面就越是``挤''在一起.另外,柯西收敛准则把 $\varepsilon-N$ 定义中 $a_n$ 与 $a$ 的关系换成了 $a_n$ 与 $a_m$ 的关系,其好处在于无需借助数列以外的数 $a$ ,只要根据数列本身的特征就能鉴别其敛散性.
+
+\begin{example}
+    证明:任何一个无限十进制小数 $\alpha=0.b_1b_2\cdots b_n\cdots$ 的 $n$ 位不足近似值 $(n=1,2,\cdots)$ 所组成的数列 $\frac{b_1}{10},\frac{b_1}{10}+\frac{b_2}{10^2},\cdots,\frac{b_1}{10}+\frac{b_2}{10^2}+\cdots+\frac{b_n}{10^n},\cdots$ 满足柯西条件,其中 $b_i$ 为 $0,1,2,\cdots,9$ 中的一个数,$k=1,2,\cdots$.
+\end{example}
+
+\begin{proof}
+    记 $a_n=\frac{b_1}{10}+\frac{b_2}{10^2}+\cdots+\frac{b_n}{10^n}$. 不妨设 $n>m$,则有
+    \begin{align*}
+        \abs{a_n-a_m}=&\frac{b_{m+1}}{10^{m+1}}+\frac{b_{m+2}}{10^{m+2}}+\cdots+\frac{b_n}{10^n} \\ 
+        <&9(\frac{1}{10^{m+1}}+\frac{1}{10^{m+2}}+\cdots+\frac{1}{10^n})=9\frac{\frac{1}{10^{m+1}}(1-\frac{1}{10^{n-m}})}{1-\frac{1}{10}} \\ 
+        = & \frac{1}{10^m}(1-\frac{1}{10^{n-m}})<\frac{1}{10^m}<\frac{1}{m}
+    \end{align*}
+    对任给的 $\varepsilon>0$,取 $N=\frac{1}{\varepsilon}$,则对一切的 $n>m>N$,有 $\abs{a_n-a_m}<\frac{1}{m}<\varepsilon$. 这就证明了数列 $\{a_n\}$ 满足柯西条件.
+\end{proof}
+
+循环小数 $0.\overset{\cdot }{9}$ 的不足近似值组成的数列为 $a_n=\frac{9}{10}+\frac{9}{10^2}+\cdots+\frac{9}{10^n},n=1,2,\cdots.$ $\lim_{n\to\infty} a_n= \lim_{n\to\infty}\frac{\frac{9}{10}(1-\frac{1}{10^n})}{1-\frac{1}{10}}=1$. 这就是为什么可以将无限小数 $0.\overset{\cdot }{9}$ 表示为 1 的一个原因.
+
+\homework
+
+\begin{practice}\label{prac:ee}
+    利用 $\lim_{n\to\infty} (1+\frac{1}{n})^n=e$ 求下列极限.
+
+    (1) $\lim_{n\to\infty} (1-\frac{1}{n})^n$
+    \quad (2) $\lim_{n\to\infty} (1+\frac{1}{n})^{n+1}$ 
+    \quad (3) $\lim_{n\to\infty} (1+\frac{1}{n+1})^n$
+
+    (4) $\lim_{n\to\infty} (1+\frac{1}{2n})^n$
+    \quad 
+    (5) $\lim_{n\to\infty} (1+\frac{1}{n^2})^n$
+\end{practice}
+
+\begin{solve}
+    $\lim_{n\to\infty} a_n=a>0,\lim_{n\to\infty} b_n=b,$则 $\lim_{n\to\infty} a_n^{b_n}=\lim_{n\to\infty} e^{b_n\ln a_n}=e^{\lim\limits_{n\to\infty} b_n\ln a_n}=e^{b\ln a}=a^b$.
+
+    (1) $\lim_{n\to\infty} (1-\frac{1}{n})^n=\lim\limits_{n\to\infty} [1+(\frac{1}{-n})]^{(-n)(-1)}=e^{-1}$
+    
+    (2) $\lim_{n\to\infty} (1+\frac{1}{n})^{n+1}=\lim_{n\to\infty} [(1+\frac{1}{n})^{n}]^\frac{n+1}{n}=e^{\lim\limits_{n\to\infty}\frac{n+1}{n}}=e$ 
+    
+    (3) $\lim_{n\to\infty} (1+\frac{1}{n+1})^n=\lim_{n \to \infty} [(1+\frac{1}{n+1})^{n+1}]^{\frac{n}{n+1}}=e^{\lim\limits_{n\to\infty}\frac{n}{n+1}}=e$
+
+    (4) $\lim_{n\to\infty} (1+\frac{1}{2n})^n=\lim_{n\to\infty} [(1+\frac{1}{2n})^{2n}]^{\frac{1}{2}}=e^{\frac{1}{2}}$
+    
+    (5) $\lim_{n\to\infty} (1+\frac{1}{n^2})^n=\lim_{n\to\infty} [(1+\frac{1}{n^2})^{n^2}]^{\frac{n}{n^2}}=e^{\lim\limits_{n\to\infty}\frac{1}{n}}=e^0=1$
+\end{solve}
+
+\begin{practice}
+    试问下面的解题方法是否正确?
+
+    求 $\lim_{n \to \infty} 2^n$.
+
+    解:设 $a_n=2^n$ 及 $\lim_{n \to \infty} a_n=a$. 由于 $a_n=2a_{n-1}$,两边取极限($n\to\infty$) 得 $a=2a$,所以 $a=0$.
+\end{practice}
+
+\begin{solve}
+    不正确.只有证明数列的极限确实存在后,才可以设 $\lim_{n \to \infty} a_n=a$.事实上,$\{2^n\}$ 单调递增且无上界,是个发散数列.
+\end{solve}
+
+\begin{practice}
+    证明下列数列极限存在并求其值.
+
+    (1) 设$a_1=\sqrt{2},a_{n+1}=\sqrt{2a_n},n=1,2,\cdots$.
+
+    (2) 设 $a_1=\sqrt{c}(c>0),a_{n+1}=\sqrt{c+a_n},n=1,2\cdots$
+
+    (3) $a_n=\frac{c^n}{n!}(c>0),n=1,2,\cdots$
+\end{practice}
+
+\begin{solve}
+    (1) $a_1=\sqrt{2}<2$. 假设 $a_n<2$,则 $a_{n+1}=\sqrt{2a_n}<2$. 故对于任何的 $n$,都有 $a_n<2$. 故 $\{a_n\}$ 有上界. $a_{n+1}^2-a_n^2=2a_n-a_n^2>2\cdot 2-2^2=0 $,故 $\{a_n\}$ 单调递增. 由单调有界定理得, $\{a_n\}$ 收敛.
+
+    设 $\lim_{n\to\infty} a_n=a$,则 $a=\sqrt{2a}\implies a=0\text{或}a=2$. 又 $a_n\ge \sqrt{2}$,由极限的保序性得 $a\ge \sqrt{2}$. 故 $a=2$.即 $\lim_{n\to\infty} a_n=2$.
+
+    (2) $a_1=\sqrt{c}<\frac{1+\sqrt{1+4c}}{2}$. 假设 $a_n<\frac{1+\sqrt{1+4c}}{2}$,
+    
+    则 $a_{n+1}=\sqrt{c+a_n}<\sqrt{c+\frac{1+\sqrt{1+4c}}{2}}=\frac{1}{2}\sqrt{4c+2+2\sqrt{1+4c}}=\frac{1}{2}(1+\sqrt{1+4c})$. 故对于任何的 $n$,都有 $a_n<\frac{1+\sqrt{1+4c}}{2}$. 故 $\{a_n\}$ 有上界. $a_{n+1}^2-a_n^2=c+a_n-a_n^2>0 $,故 $\{a_n\}$ 单调递增. 由单调有界定理得, $\{a_n\}$ 收敛.
+
+    设 $\lim_{n\to\infty} a_n=a$,则 $a=\sqrt{c+a}\implies a^2-a-c=0\implies a=\frac{1+\sqrt{1\pm 4c}}{2}$. 又 $a_n>0$,由极限的保序性得 $a>0$. 故 $a=\frac{1+\sqrt{1+4c}}{2}$.即 $\lim_{n\to\infty} a_n=\frac{1+\sqrt{1+4c}}{2}$.
+
+    (3) 取正整数 $N=\lfloor c \rfloor$,则 $n>N$ 时,
+
+    $0<\frac{c^n}{n!}=\frac{C^N}{1\cdot 2\cdots N}\cdot \frac{c^{n-N}}{(N+1)\cdots n}<\frac{C^N}{1\cdot 2\cdots N}\cdot \frac{c^{n-N}}{(N+1)^{n-N}}\to 0$. 
+    
+    由收敛数列的迫敛性得,$\{a_n\}$ 收敛且 $\lim_{n\to\infty} a_n=0$.
+\end{solve}
+
+\begin{practice}
+    利用 $\{(1+\frac{1}{n})^n\}$ 为递增数列的结论,证明 $\{(1+\frac{1}{n+1})^n\}$ 为递增数列.
+\end{practice}
+
+\begin{proof}
+    记 $a_n=(1+\frac{1}{n+1})^n$,则 $a_{n+1}=(1+\frac{1}{n+2})^{n+1}=(1+\frac{1}{n+2})^{n+2}\frac{n+2}{n+3}$
+
+    $\ge (1+\frac{1}{n+1})^{n+1}\frac{n+2}{n+3} =(1+\frac{1}{n+1})^n\frac{(n+2)^2}{(n+1)(n+3)}=(1+\frac{1}{n+1})^n\frac{n^2+4n+4}{n^2+4n+3}$
+    
+    $\ge (1+\frac{1}{n+1})^n = a_n$
+\end{proof}
+
+\begin{practice}
+    应用柯西收敛准则,证明以下数列 $\{a_n\}$ 收敛:
+
+    (1) $a_n=\frac{\sin 1}{2}+\frac{\sin 2}{2^2}+\cdots+\frac{\sin n}{2^n}$ 
+    \qquad 
+    (2) $a_n=1+\frac{1}{2^2}+\frac{1}{3^2}+\cdots+\frac{1}{n^2}$
+\end{practice}
+
+\begin{proof}
+    (1) 不妨设 $n>m$.
+    
+    $\abs{a_n-a_m}=\abs{\frac{\sin (m+1)}{2^{m+1}}+\frac{\sin (m+2)}{2^{m+2}}+\cdots+\frac{\sin n}{2^n}}<\frac{1}{2^{m+1}}+\frac{1}{2^{m+2}}+\cdots+\frac{1}{2^n}$
+
+    $=\frac{\frac{1}{2^{m+1}}(1-\frac{1}{2^{n-m}})}{1-\frac{1}{2}}<\frac{1}{2^{m}}<\frac{1}{m}<\varepsilon$.
+
+    故 $\forall \varepsilon>0,\exists N=\frac{1}{\varepsilon},$ 使得 $\forall m,n>N$, 都有 $a_n-a_m<\varepsilon$. 由柯西收敛准则, $\{a_n\}$ 收敛.
+
+    (2) 不妨设 $n>m$. 
+
+    $\abs{a_n-a_m}=\frac{1}{{(m+1)}^2}+\frac{1}{{(m+2)}^2}+\cdots+\frac{1}{n^2}$
+    
+    $<\frac{1}{m(m+1)}+\frac{1}{(m+1)(m+2)}+\cdots+\frac{1}{(n-1)n}$
+
+    $=\frac{1}{m}-\frac{1}{m+1}+\frac{1}{m+2}-\frac{1}{m+3}+\cdots+\frac{1}{n}-\frac{1}{n+1}$
+
+    $=\frac{1}{m+1}-\frac{1}{n+1}<\frac{1}{m+1}<\frac{1}{m}$
+
+    故 $\forall \varepsilon>0,\exists N=\frac{1}{\varepsilon},$ 使得 $\forall m,n>N$, 都有 $a_n-a_m<\varepsilon$. 由柯西收敛准则, $\{a_n\}$ 收敛.
+\end{proof}
+
+\begin{practice}
+    证明:如单调数列 $\{a_n\}$ 含有一个收敛子列,则 $\{a_n\}$ 收敛.
+\end{practice}
+
+\begin{proof}
+    设单调数列 $\{a_n\}$ 有一个子列 $\{a_{n_k}\}$ 收敛于$a$.  $\{a_{n_k}\}$ 也是单调的,则$a_{n_k}\le a$.
+
+    对于任意的 $k$,有 $k\le n_k$, 则 $a_k\le a_{n_k}\le a$. 故 $\{a_n\}$ 有界.
+
+    由单调有界定理得, $\{a_n\}$ 收敛.
+\end{proof}
+
+\begin{practice}
+    证明:若 $a_n>0$,且 $\lim_{n\to\infty} \frac{a_n}{a_{n+1}}=l>1$, 则 $\lim_{n\to\infty} a_n=0$.
+\end{practice}
+
+\begin{proof}
+    (解法一)$a_n=a_1\frac{a_2}{a_1}\frac{a_3}{a_2}\cdots \frac{a_n}{a_{n-1}}=a_1\frac{1}{l^{n-1}}\to 0$.
+
+    (解法二) 存在 $N>0$,使得 $n>N$ 时, $\frac{a_n}{a_{n+1}}>1$.即 $n>N$ 时, $a_n>a_{n+1}$. $\{a_n\}$ 单调减且有下界 $0$,由单调有界定理得, $\{a_n\}$ 收敛.
+
+    由保序性得,$\lim_{n\to\infty} a_n\ge 0$. 若 $\lim_{n\to\infty} a_n=a>0$, 则 $\lim_{n\to\infty} \frac{a_n}{a_{n+1}}=\frac{a}{a}=1$,产生矛盾. 故 $\lim_{n\to\infty} a_n=0$.
+\end{proof}
+
+\begin{practice}
+    证明: 若 $\{a_n\}$ 为递增(递减)有界数列,则 $\lim_{n\to\infty} a_n=\sup \{a_n\} (\inf \{a_n\}).$ 又问逆命题是否成立?
+\end{practice}
+
+\begin{proof}
+    记 $a=\sup \{a_n\}$,则对任意的 $\varepsilon>0$, 都存在 $N>0$, 使得 $a_N>a-\varepsilon$.
+
+    当 $n>N$ 时,有 $a-\varepsilon<a_N<a_n\le a<a+\varepsilon$. 故 $\lim_{n\to\infty} a_n=a$.
+
+    逆命题不成立.如 $\{1,\frac{3}{2},\cdots,\frac{1}{2k-1},\frac{3}{2k},\cdots\}$
+\end{proof}
+
+\begin{practice}\label{prac:eee}
+    利用不等式 $b^{n+1}-a^{n+1}>(n+1)a^n(b-a),b>a>0$, 证明 : $\{(1+\frac{1}{n})^{n+1}\}$ 为递减数列,并由此推出 $\{(1+\frac{1}{n})^n\}$ 为有界数列.
+\end{practice}
+
+\begin{proof}
+    由不等式得 $b^{n+1}>a^n[(n+1)(b-a)+a]=a^n[(n+1)b-na]$
+
+    取 $a=1+\frac{1}{n+1},b=1+\frac{1}{n}$,
+
+    有 $(1+\frac{1}{n})^{n+1}>(1+\frac{1}{n+1})^n[(n+1)(1+\frac{1}{n})+1-n(1+\frac{1}{n+1})]$
+    
+    $=(1+\frac{1}{n+1})^n[1+\frac{1}{n(n+1)}+\frac{2}{n+1}]>(1+\frac{1}{n+1})^n(1+\frac{1}{n+1})^2=(1+\frac{1}{n+1})^{n+2}$
+
+    故 $\{(1+\frac{1}{n})^{n+1}\}$ 为递减数列. 又 $\{(1+\frac{1}{n})^{n+1}\}$ 有下界 0,则 $\{(1+\frac{1}{n})^{n+1}\}$ 收敛.
+
+    $(1+\frac{1}{n})^n<(1+\frac{1}{n})^{n+1}<(1+1)^2=4$. 故 $\{(1+\frac{1}{n})^n\}$ 为有界数列.
+\end{proof}
+
+\begin{practice}
+    证明: $\abs{e-{(1+\frac{1}{n})}^n}<\frac{3}{n}$
+\end{practice}
+
+\begin{proof}
+    由 \ref{prac:eee} 得, $\{(1+\frac{1}{n})^{n+1}\}$ 单调减且有下界,故收敛,且 $\lim_{n\to\infty} (1+\frac{1}{n})^{n+1}=\inf\{ (1+\frac{1}{n})^{n+1}\}$.
+
+    又由 \ref{prac:ee} 得 , $\lim_{n\to\infty} (1+\frac{1}{n})^{n+1}=e$. 故 $e=\inf\{ (1+\frac{1}{n})^{n+1}\}\implies e< (1+\frac{1}{n})^{n+1}$.
+
+    下证$(1+\frac{1}{n})^{n+1}-{(1+\frac{1}{n})}^n<\frac{3}{n}$. 即 $(1+\frac{1}{n})^{n}\frac{1}{n}<\frac{3}{n}\iff (1+\frac{1}{n})^{n}<3$. 由 $(1+\frac{1}{n})^{n}<e<3$ 易得.
+
+    综上,$\abs{e-{(1+\frac{1}{n})}^n}=e-{(1+\frac{1}{n})}^n<(1+\frac{1}{n})^{n+1}-{(1+\frac{1}{n})}^n<\frac{3}{n}$.
+\end{proof}
+
+\begin{practice}
+    给定两个正数 $a_1>b_1$ , 作出其等差中项 $a_2=\frac{a_1+b_1}{2}$ 与 等比中项 $b_2=\sqrt{a_1b_1}$. 一般地，令 $a_{n+1}=\frac{a_n+b_n}{2}$, $b_{n+1}=\sqrt{a_nb_n},n=1,2,\cdots,n,\cdots$.
+    证明: $\lim_{n\to\infty} a_n$ 与 $\lim_{n\to\infty} b_n$  存在且相等.
+\end{practice}
+
+\begin{proof}
+    易得 $b_1<b_{n}<b_{n+1}<a_{n+1}<a_n<a_1$, 故 $\{a_n\}$ 单调减有下界, $\{b_n\}$ 单调增有上界. 由单调有界定理得, $\lim_{n\to\infty} a_n$ 与 $\lim_{n\to\infty} b_n$  存在. 
+
+    对 $2a_{n+1}=a_n+b_n$ 两边取极限得, $\lim_{n\to\infty} a_n=\lim_{n\to\infty} b_n$.
+\end{proof}
+
+\begin{practice}
+    设 $\{a_n\}$ 为有界数列,记 
+    $\bar{a}_n=\sup\{a_n,a_{n+1},\cdots\}$,$\text{\underbar{$a$}}_n=\inf\{a_n,a_{n+1},\cdots\}$. 证明:
+    
+    (1) 对任何正整数 $n$, $\bar{a}_n \ge \text{\underbar{$a$}}_n$
+
+    (2) $\{\bar{a}_n\}$ 为递减有界数列， $\{\text{\underbar{$a$}}_n\}$ 为递增有界数列，且对任何正整数 $n,m$,有 $\bar{a}_n \ge \text{\underbar{$a$}}_m$ 
+
+    (3)设 $\bar{a}$ 和 $\underbar{a}$ 分别是 $\{\bar{a}_n\}$ 和  $\{\text{\underbar{$a$}}_n\}$ 的极限，则 $\bar{a} \ge \text{\underbar{$a$}}$
+    
+    (4) $\{a_n\}$ 收敛的充要条件是 $\bar{a}=\text{\underbar{$a$}}$.
+\end{practice}
+
+\begin{proof}
+    (1) 对任何正整数 $n$ ,有$\text{\underbar{$a$}}_n \le a_n \le \bar{a}_n$
+
+    (2) $\bar{a}_{n+1}=\sup\{a_{n+1},\cdots\}\le \sup\{a_n,a_{n+1},\cdots\}=\bar{a}_{n}$, 故 $\{\bar{a}_n\}$ 为递减有界数列. 
+
+    $\text{\underbar{$a$}}_{n+1}=\inf\{a_{n+1},\cdots\}\ge \inf\{a_n,a_{n+1},\cdots\}=\text{\underbar{$a$}}_n$,故 $\{\text{\underbar{$a$}}_n\}$ 为递增有界数列.
+
+    当 $n>m$ 时, $\bar{a}_n \ge \text{\underbar{$a$}}_n \ge \text{\underbar{$a$}}_m$. 当 $n<m$ 时, $\bar{a}_n \ge \bar{a}_m \ge \text{\underbar{$a$}}_m$. 当 $n=m$ 时, $\bar{a}_n \ge \text{\underbar{$a$}}_n = \text{\underbar{$a$}}_m$.
+
+    (3) $\{\bar{a}_n\}$ 为递减有界数列， $\{\text{\underbar{$a$}}_n\}$ 为递增有界数列,极限均存在.对任何正整数 $n$ ,有$\text{\underbar{$a$}}_n \le \bar{a}_n$, 由极限的保序性得, $\bar{a} \ge \text{\underbar{$a$}}$.
+
+    (4) \chongfen 若$\bar{a}=\text{\underbar{$a$}}$,则 $\lim_{n\to\infty} \bar{a}_n = \lim_{n\to\infty} \text{\underbar{$a$}}_n$, 又 $\text{\underbar{$a$}}_n \le a_n \le \bar{a}_n$, 由数列的迫敛性得, $\{a_n\}$ 收敛.
+
+    \biyao 若$\{a_n\}$ 收敛于 $a$, 则 $\forall \varepsilon>0,\exists N>0$,使得 $ n>N$ 时,有 $a-\frac{\varepsilon}{2}<a_n<a+\frac{\varepsilon}{2}$. 
+
+    由确界的定义得,$n>N$ 时, $\bar{a}_n\le a+\frac{\varepsilon}{2}$ 且 $\text{\underbar{$a$}}_n \ge a-\frac{\varepsilon}{2}$. 则 $\bar{a} - \text{\underbar{$a$}}<\varepsilon$. 由 $\varepsilon$ 的任意性得, $\bar{a}=\text{\underbar{$a$}}$.
+\end{proof}
+\newsection
