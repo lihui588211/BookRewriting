@@ -1,0 +1,228 @@
+\chapterhomework
+
+\begin{practice}
+    求下列数列的极限:
+
+    (1) $\lim_{n\to\infty} \sqrt[n]{n^3+3^n}$ \qquad (2) $\lim_{n\to\infty} \frac{n^5}{e^n}$
+
+    (3) $\lim_{n\to\infty} (\sqrt{n+2}-2\sqrt{n+1}+\sqrt{n})$.
+\end{practice}
+
+\begin{solve}
+    (1) $n>3$ 时, $n^3<3^n$. 故 $3<\sqrt[n]{n^3+3^n}<\sqrt[n]{3^n+3^n}=3\sqrt[n]{2}\to 3$.
+    
+    由数列的迫敛性得, $\lim_{n\to\infty} \sqrt[n]{n^3+3^n} = 3$.
+
+    (2) 解法1. 设 $e=1+h$,则 $h>0$ 且 $e^n = (1+h)^n=1+C_n^1 h +\cdots + C_n^6 h^6+\cdots>C_n^6 h^6$
+
+    于是 $0<\frac{n^5}{e^n} < \frac{n^5}{C_n^6 h^6} = 
+    \frac{6!n^5}{n(n-1)\cdots(n-5)h^6}\to 0$. 由数列的迫敛性得, $\lim_{n\to\infty} \frac{n^5}{e^n}=0$.
+
+    解法2. 根据 \ref{prac:nnplus} 的结论, 设 $a_n=\frac{n^5}{e^n}>0$, 由于 $\lim_{n\to\infty} \frac{a_n}{a_{n+1}} = \lim_{n\to\infty} \frac{n^5e^{n+1}}{(n+1)^5e^n}
+    = e>1$ , 故 $\lim_{n\to\infty} \frac{n^5}{e^n}=0$.
+
+    解法3. 用单调有界定理, 设  $a_n=\frac{n^5}{e^n}>0$,则  $\frac{a_{n+1}}{a_n} = \frac{(n+1)^5}{n^5e} =
+    = \frac{1}{e}(1+\frac{1}{n})^5$. 由于 $\lim_{n\to\infty} (1+\frac{1}{n})^5 = 1 < e$, 故存在 $N>0$, 当 $n>N$ 时, $(1+\frac{1}{n})^5<e \implies \frac{a_{n+1}}{a_n}<1$. 故 $\{a_n\}$  自第 $N$ 项起单调减. 又 $\{a_n\}$ 又有下界 0 , 故收敛. 设 $\lim_{n\to\infty} a_n=a$, 对 $a_{n+1}=\frac{1}{e}(1+\frac{1}{n})^5 a_n$ 两边取极限, 得 $a=\frac{1}{e}\cdot a$. 故 $a=0$. 
+
+    (3) $\lim_{n\to\infty} (\sqrt{n+2}-2\sqrt{n+1}+\sqrt{n})
+    = \lim_{n\to\infty} [(\sqrt{n+2}-\sqrt{n+1})-(\sqrt{n+1}-\sqrt{n})]
+    $
+
+    $
+    = \lim_{n\to\infty} [\frac{(n+2)-(n+1)}{\sqrt{n+2}+\sqrt{n+1}}-\frac{(n+1)-(n)}{\sqrt{n+1}+\sqrt{n}}]=\lim_{n\to\infty} [\frac{1}{\sqrt{n+2}+\sqrt{n+1}}-\frac{1}{\sqrt{n+1}+\sqrt{n}}]=0 $
+\end{solve}
+
+\begin{practice}
+    证明: (1)  $\lim_{n\to\infty} n^2q^n=0(\abs{q}<1)$ 
+    \qquad (2) $\lim_{n\to\infty} \frac{\lg n}{n^{\alpha}}=0    \left(\alpha \geqslant1 \right).$
+\end{practice}
+
+\begin{proof}
+    (1) 当 $q$=0 时,显然成立. 当 $0<\abs{q}<1$ 时,设 $q=\frac{1}{1+h},h>0$. $(1+h)^n=1+C_n^1+C_n^2h^2+C_n^3h^3+\cdots>C_n^3h^3$. 
+    
+    于是 $n^2q^n=\frac{n^2}{(1+h)^2}<\frac{n^2}{C_n^3h^3}=\frac{n^23!}{n(n-1)(n-2)h^3}\to 0$.
+
+    (2) 由于 $\lg x<x$,则 $0<\frac{\lg n}{n^{\alpha}}=\frac{2\lg \sqrt{n}}{n^{\alpha}}<\frac{2\sqrt{n}}{n^{\alpha}}=\frac{2}{n^{\alpha-\frac{1}{2}}}\to 0$
+\end{proof}
+
+\begin{practice}
+设$\lim_{n\to\infty} a_n=a$,
+证明：
+
+(1) $\lim_{n\to\infty}\frac{a_1+a_2+\cdots+a_n}n=a$. 
+(又问由此等式能否反过来推出 $\lim_{n\to\infty} a_n=a$)
+
+(2) 若 $a_n>0(n=1,2,\cdots)$, 则 $\lim_{n\to\infty}\sqrt[n]{a_1a_2\cdots a_n}=a$
+\end{practice}
+
+\begin{proof}
+    (1) 由极限定义知,$\forall \varepsilon>0,\exists N_1>0 $,使得 $ n>N_1$ 时,有 $\abs{a_n-a}<\frac{\varepsilon}{2}$.故当 $n>N_1$ 时,有 
+    
+    $\begin{aligned}
+        \left|\frac{a_{1}+a_{2}+\cdots+a_{n}}{n}-a\right|& =\left|\frac{a_1+a_2+\cdots+a_n-na}n\right|  \\
+        &\leqslant\frac{\mid a_1-a\mid+\mid a_2-a\mid+\cdots+\mid a_{N_1}-a\mid}n \\
+        &+\frac{\mid a_{N_1+1}-a\mid+\mid a_{N_1+2}-a\mid+\cdots+\mid a_n-a\mid}n \\
+        &\leqslant\frac{\mid a_1-a\mid+\mid a_2-a\mid+\cdots+\mid a_{N_1}-a\mid}n+\frac{n-N_1}n\cdot\frac\varepsilon2
+    \end{aligned}$ 
+
+    记常数 $c=\mid a_1-a\mid+\mid a_2-a\mid+\cdots+\mid a_{N_1}-a\mid $,则 $\lim_{n\to\infty} \frac{c}{n}=0$.故 $\exists N_2>0$,使得 $ n>N_2$ 时,有 $\frac{c}{n}<\frac{\varepsilon}{2}$. 
+    
+    取 $N=\max\{N_1,N_2\}$,当 $n>N$ 时,$\left|\frac{a_1+a_2+\cdots+a_n}{n}-a\right|\leqslant\frac{c}{n}+\frac{n-N_1}{n}\cdot\frac{\varepsilon}{2}<\frac{\varepsilon}{2}+\frac{\varepsilon}{2}=\varepsilon $.
+
+    即证 $\lim_{n\to\infty}\frac{a_1+a_2+\cdots+a_n}n=a$.反之不成立,如 $\{(-1)^n\}$.
+
+    (2) 有均值不等式 $\dfrac{n}{\dfrac{1}{a_1}+\dfrac{1}{a_2}+\cdots+\dfrac{1}{a_n}}\leqslant\sqrt[n]{a_1a_2\cdots a_n}\leqslant\frac{a_1+a_2+\cdots+a_n}n$
+
+    由(1) 得 $\lim_{n\to\infty}\frac{a_1+a_2+\cdots+a_n}n=a$. 又 $a_n>0$,则 $\lim_{n\to\infty} \frac{1}{a_n}=\frac{1}{a}$.
+    
+    故 $\lim_{n\to\infty} \dfrac{\dfrac{1}{a_1}+\dfrac{1}{a_2}+\cdots+\dfrac{1}{a_n}}{n}=\frac{1}{a}
+    \implies \lim_{n\to\infty} \dfrac{n}{\dfrac{1}{a_1}+\dfrac{1}{a_2}+\cdots+\dfrac{1}{a_n}}=a$.
+
+    由数列的迫敛性得,$\lim_{n\to\infty}\sqrt[n]{a_1a_2\cdots a_n}=a$.
+\end{proof}
+
+\begin{practice}
+    应用上一题的结论,证明下列极限:
+
+    (1) $\lim_{n\to\infty} \frac{1+\frac12+\frac13+\cdots+\frac1n}n=0$ \qquad (2) $\lim_{n\to\infty}\sqrt[n]{a}=1\text{($a>0$)}$
+
+    (3) $\lim_{n\to\infty}\sqrt[n]{n}=1$ \qquad (4) $\lim_{n\to\infty}\frac1{\sqrt[n]{n!}}=0$
+
+    (5) $\lim_{n\to\infty}\frac{n}{\sqrt[n]{n!}}=\text{e}$ \qquad (6) $\lim_{n\to\infty}\frac{1+\sqrt{2}+\sqrt[3]{3}+\cdots+\sqrt[n]{n}}{n}=1$
+
+    (7) 若$\lim_{n\to\infty}\frac{b_{n+1}}{b_{n}}=a(b_{n}>0)$,则 $\lim_{n\to\infty}\sqrt[n]{b_{n}}=a$
+    
+    (8) 若 $\lim_{n\to\infty}(a_n-a_{n-1})=d$,则$\lim_{n\to\infty}\frac{a_n}n=d$
+\end{practice}
+
+\begin{proof}
+    (1) 令 $a_n=\frac{1}{n},$ 则  $\lim_{n\to\infty} \frac{1+\frac12+\frac13+\cdots+\frac1n}n=\lim_{n\to\infty}\frac{a_1+a_2+\cdots+a_n}n=\lim_{n\to\infty} a_n=0$.
+
+    (2) 令 $a_1=a,a_n=1$, 则 $\lim_{n\to\infty}\sqrt[n]{a}=\lim_{n\to\infty}\sqrt[n]{a_1a_2\cdots a_n}=\lim_{n\to\infty} a_n= 1$.
+
+    (3) 令 $a_1=1,a_n=\frac{n}{n-1}$,则 $\lim_{n\to\infty}\sqrt[n]{n}=\lim_{n\to\infty}\sqrt[n]{1\cdot \frac{2}{1}\cdot \frac{3}{2}\cdots \frac{n}{n-1}}=\lim_{n\to\infty} a_n= 1$.
+
+    (4) 令 $a_n=\frac{1}{n}$, 则 $\lim_{n\to\infty}\frac1{\sqrt[n]{n!}}=\lim_{n\to\infty} \sqrt[n]{1\cdot \frac{1}{2}\cdot \frac{1}{3}\cdots \frac{1}{n}\cdots}=\lim_{n\to\infty} \frac{1}{n}=0$.
+
+    (5) 令 $a_n=(1+\frac{1}{n})^n=\frac{(n+1)^n}{n^n}$,则 $a_1a_2\cdots a_n = \frac{2^1}{1^1}\cdot \frac{3^2}{2^2}\cdots \frac{{(n+1)}^{n}}{{n}^{n}}=\frac{(n+1)^n}{n!}$. 故 $\lim_{n\to\infty} \frac{n+1}{\sqrt[n]{n!}} =\lim_{n\to\infty} \sqrt[n]{\frac{(n+1)^n}{n!}} = \lim_{n\to\infty} a_n = \text{e}$. 于是 $\lim_{n\to\infty}\frac{n}{\sqrt[n]{n!}}=\lim_{n\to\infty} \frac{n+1}{\sqrt[n]{n!}}\cdot \frac{n}{n+1}=\text{e}$.
+
+    (6) 令 $a_n=\sqrt[n]{n}$, 则 $\lim_{n\to\infty}\frac{1+\sqrt{2}+\sqrt[3]{3}+\cdots+\sqrt[n]{n}}{n}=\lim_{n\to\infty}\frac{a_1+a_2+\cdots+a_n}n=\lim_{n\to\infty} a_n=1$
+
+    (7) 令 $a_1=b_1,a_n=\frac{b_{n}}{b_{n-1}}$, 则 $\lim_{n\to\infty}\sqrt[n]{b_{n}}
+    =\lim_{n\to\infty}\sqrt[n]{b_1\frac{b_{2}}{b_{1}}\frac{b_{3}}{b_{2}}\cdots \frac{b_{n}}{b_{n-1}}}=\lim_{n\to\infty}\sqrt[n]{a_1a_2\cdots a_n}=\lim_{n\to\infty} a_n=a$.
+
+    (8) $\lim_{n\to\infty} \frac{a_n-a_1}{n}=\lim_{n\to\infty} \frac{(a_n-a_{n-1})+(a_{n-1}-a_{n-2})+\cdots + (a_2-a_1)}{n}=\lim_{n\to\infty} (a_n-a_{n-1})=d$. 故 $\lim_{n\to\infty}\frac{a_n}n=\lim_{n\to\infty} [\frac{a_n-a_1}n+\frac{a_1}{n}]=d+0=d$.
+\end{proof}
+
+\begin{practice}
+    证明：若$\{a_n\}$为递增数列，$\{b_n\}$为递减数列，且$\lim\limits_{n\to\infty} (a_n-b_n)=0$,则$\lim\limits_{n\to \infty} a_n$与$\lim\limits_{n\to \infty}b_n$都存在且相等.
+\end{practice}
+
+\begin{proof}
+    $\{a_n-b_n\}$ 为递增数列,又 $\lim\limits_{n\to\infty} (a_n-b_n)=0$, 则 $a_n-b_n\le 0 \implies a_1\le a_n\le b_n\le b_1$.
+
+    故 $\{a_n\}$ 为有上界的递增数列,$\{b_n\}$ 为有下界的递减数列,两者均有极限. $\lim_{n\to\infty} a_n-\lim_{n\to\infty} b_n=\lim_{n\to\infty} (a_n-b_n)=0\implies \lim_{n\to\infty} a_n=\lim_{n\to\infty} b_n$.
+\end{proof}
+
+\begin{practice}
+    设数列 $\{a_n\}$ 满足:存在正数 $M$,使得对一切的 $n$,都有
+    $$A_n=\abs{a_2-a_1}+\abs{a_3-a_2}+\cdots+\abs{a_n-a_{n-1}}\le M$$
+    证明:数列 $\{a_n\}$ 和 $\{A_n\}$ 均收敛.
+\end{practice}
+
+\begin{proof}
+    $\{A_n\}$ 单调增, 且有上界 $M$ , 故收敛.
+
+    根据柯西收敛准则,$\forall \varepsilon>0,\exists N>0$,使得 $ n-1>N$ 时,有 $\abs{A_n-A_{n-1}}=\abs{a_n-a_{n-1}}<\varepsilon$,则当 $n>m>N$ 时,有 $\abs{a_n-a_m}=\abs{a_n-a_{n-1}+a_{n-1}-a_{n-2}+\cdots？+a_{m+1}-a_m}\le \abs{a_n-a_{n-1}}+\abs{a_{n-1}-a_{n-2}}+\cdots+\abs{a_{m+1}-a_m}< (n-m)\varepsilon$. 由柯西收敛准则, $\{a_n\}$ 收敛.
+\end{proof}
+
+\begin{practice}
+    设 $a>0,\sigma<0,a_1=\frac{1}{2}(a+\frac{\sigma}{a}),a_{n+1}=\frac{1}{2}(a_n+\frac{\sigma}{a_n}),n=1,2,\cdots$,证明: 数列 $\{a_n\}$ 收敛且 $\lim_{n\to\infty} a_n=\sqrt{\sigma}$.
+\end{practice}
+
+\begin{proof}
+    $a_{n+1}=\frac{1}{2}(a_n+\frac{\sigma}{a_n})\ge \frac{1}{2}(2\sqrt{a_n\cdot \frac{\sigma}{a_n}})=\sqrt{\sigma}$.
+
+    $\frac{a_{n+1}}{a_n}=\frac{1}{2}+\frac{\sigma}{2a_n^2}\le \frac{1}{2}+\frac{\sigma}{2(\sqrt{\sigma})^2}=1$, 则 $\{a_n\}$ 单调减有下界, 故 $\{a_n\}$ 收敛.
+
+    设 $\lim_{n\to\infty} a_n=A$,则对 $a_{n+1}=\frac{1}{2}(a_n+\frac{\sigma}{a_n})$ 两边取极限,得 $A=\frac{1}{2}(A+\frac{\sigma}{A})\implies A=\sqrt{\sigma}(>0)$.
+\end{proof}
+
+\begin{practice}
+    设 $a_{1}>b_{1}>0$ , 记 $a_{n}=\frac{a_{n-1}+b_{n-1}}{2},\quad b_{n}=\frac{2a_{n-1}b_{n-1}}{a_{n-1}+b_{n-1}},n=2,3,\cdots$.
+
+    证明: 数列 $\{a_n\}$ 与 $\{b_n\}$ 的极限都存在,且等于 $\sqrt{a_1b_1}$.
+\end{practice}
+
+\begin{proof}
+    $$a_n-b_n=\frac{a_{n-1}+b_{n-1}}{2}-\frac{2a_{n-1}b_{n-1}}{a_{n-1}+b_{n-1}}=\frac{(a_{n-1}+b_{n-1})^2-4a_{n-1}b_{n-1}}{2(a_{n-1}+b_{n-1})}=\frac{(a_{n-1}-b_{n-1})^2}{2(a_{n-1}+b_{n-1})}\ge 0$$.
+
+    $a_n-a_{n-1}=\frac{b_{n-1}-a_{n-1}}{2}\le 0$. 
+
+    $\frac{b_n}{b_{n-1}}=\frac{2a_{n-1}}{a_{n-1}+b_{n-1}}\ge \frac{2a_{n-1}}{2a_{n-1}}=1$. 
+
+    故 $b_1\le b_{n-1} \le b_n  \le a_n \le a_{n-1} \le a_1$. 
+
+    由单调有界定理得, $\{a_n\}$ 与 $\{b_n\}$ 均收敛.
+
+    设 $\lim_{n\to\infty} a_n=a,\lim_{n\to\infty} b_n=b$,对 $a_{n}=\frac{a_{n-1}+b_{n-1}}{2}$  两边同时取极限,得 $a=\frac{a+b}{2} \implies a = b $. 
+    
+    将 $a_n$ 与 $b_n$ 的递推式相乘,得 $a_nb_n=a_{n-1}b_{n-1}=a_1b_1$,两边取极限得 $a^2=a_1b_1\implies a=b=\sqrt{a_1b_1}$.
+\end{proof}
+
+\begin{practice}
+    按柯西收敛准则叙述数列 $\{a_n\}$ 发散的充要条件,并用它证明下列数列 $\{a_n\}$ 是发散的:
+
+    (1) $a_n=(-1)^n n$ \qquad (2) $a_n=\sin \frac{n\pi}{2}$ \qquad (3) $a_n=1+\frac{1}{2}+\cdots+\frac{1}{n}$.
+\end{practice}
+
+\begin{proof}
+    $\{a_n\}$ 发散 $\iff $ 存在 $\varepsilon_0>0$, 使得对任意的 $N>0$ , 存在 $n_0>m_0>N$ ,有 $\abs{a_{n_0}-a_{m_0}}\ge \varepsilon_0$. 
+
+    (1) 存在 $\varepsilon_0=1$, 使得对任意的 $N>0$ , 存在 $n_0=N+3,m_0=N+1,$ ,有$n_0>m_0>N$,且 $\abs{a_{n_0}-a_{m_0}}=2>\varepsilon_0$. 
+
+    (2) 存在 $\varepsilon_0=1$, 使得对任意的 $N>0$ , 存在 $n_0=4N+3>m_0=4N+1> N$ ,有 $\abs{a_{n_0}-a_{m_0}} = \abs{(-1)-1}=2> \varepsilon_0$. 
+
+    (3) 存在 $\varepsilon_0=\frac{1}{3}$, 使得对任意的 $N>0$ , 存在 $n_0=2N+2>m_0=N+1>N$ ,有 $\abs{a_{n_0}-a_{m_0}}=\frac{1}{m_0+1}+\cdots+\frac{1}{n_0}\ge \frac{n_0-m_0}{n_0} = \frac{N+1}{2N+2}=\frac{1}{2} \ge \varepsilon_0$. 
+\end{proof}
+
+\begin{practice}
+    记 $\lim_{n\to\infty} a_n=a,\lim_{n\to\infty} b_n=b,S_n=\max\{a_n,b_n\},T_n=\min\{a_n,b_n\},n=1,2,\cdots$
+
+    证明: (1) $\lim_{n\to\infty} S_n = \max\{a,b\}$ \qquad (2) $\lim_{n\to\infty} T_n = \min\{a,b\}$
+    
+\end{practice}
+
+\begin{proof}
+    (1) $S_n=\max\{a_n,b_n\}=\frac{1}{2}(a_n+b_n+\abs{a_n-b_n}) \to \frac{1}{2}(a+b+\abs{a-b})=\max\{a,b\}$.
+
+    (2) $S_n=\min\{a_n,b_n\}=\frac{1}{2}(a_n+b_n-\abs{a_n-b_n}) \to \frac{1}{2}(a+b-\abs{a-b})=\min\{a,b\}$.
+\end{proof}
+
+\begin{practice}
+    设 $\{a_n\}$ 是无界数列,$\{b_n\}$ 是无穷大数列. 证明: $\{a_nb_n\}$ 必为无界数列.
+\end{practice}
+
+\begin{proof}
+    $\{b_n\}$ 是无穷大数列,则对任意的 $M>0$,存在 $N>0$, 使得 $n>N$ 时,有 $b_n> \sqrt{M}$. 
+
+    $\{a_n\}$ 是无界数列, 则对于 $M$,存在 $n_k>N$, 有 $a_{n_{k}}>\sqrt{M}$. 
+
+    于是 $a_{n_{k}}b_{n_k}>M$. 即$\{a_nb_n\}$ 为无界数列.
+\end{proof}
+
+\begin{practice}
+    倘若 $\{a_n\},\{b_n\}$ 都是无界数列,试问 $\{a_nb_n\}$ 是否必为无界数列.
+\end{practice}
+
+\begin{solve}
+    不一定.如:
+
+    $\{a_n\}=\{1,\frac{1}{2},3,\frac{1}{4},\cdots\}$ 
+
+    $\{b_n\}=\{1,2,\frac{1}{3},4,\cdots\}$ 
+
+    $\{a_nb_n\}=\{1,1,1,1,\cdots\}$
+\end{solve}
+
+\newsection
